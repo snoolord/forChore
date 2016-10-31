@@ -1,6 +1,6 @@
 # forChore #
 +[Heroku Link]
-
++[forChore Trello Link](https://trello.com/b/oCKx2RWj/forchore)
 
 ## Minimum Viable Product ##
 forChore is a web application that aims to help people live better together through a streamlined chores interface.
@@ -56,6 +56,9 @@ Objective: Allow users to see a news feed of chores as they are completed
 ### Bonus (tbd) ###
 
 *Gmail login
+
 *Hover/click housemates to make chores and send Reminders
+
 *Reminders
+
 *Google Calendar integration
