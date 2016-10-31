@@ -1,4 +1,4 @@
-==Component Hiearchy
+# Hierarchy #
 
 ## Main Page Container ##
 * Header
