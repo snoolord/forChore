@@ -1,8 +1,8 @@
-==forChore
+# forChore #
 +[Heroku Link]
 
 
-==Minimum Viable Product
+## Minimum Viable Product ##
 forChore is a web application that aims to help people live better together through a streamlined chores interface.
 By the end of week 9, forChore will satisfy the following criteria
 
@@ -14,12 +14,12 @@ By the end of week 9, forChore will satisfy the following criteria
 *Finishing chores/Reminders
 *Production README sample
 
-==Design Docs
- 
+## Design Docs ##
+
 [View Wireframes](./docs/wireframe)
 [Api EndPoints](./docs/api-endpoints.md)
 [Component Hierarchy](./docs/component-hierarchy)
 [Sample State](./docs/sample-state.md)
 [Schema](./docs/schema.md)
 
-==Implementation Timeline
+## Implementation Timeline ##
