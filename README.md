@@ -1,19 +1,19 @@
 # forChore #
-+[Heroku Link]
++ [Heroku Link]
 
-+[forChore Trello Link](https://trello.com/b/oCKx2RWj/forchore)
++ [forChore Trello Link](https://trello.com/b/oCKx2RWj/forchore)
 
 ## Minimum Viable Product ##
 forChore is a web application that aims to help people live better together through a streamlined chores interface.
 By the end of week 9, forChore will satisfy the following criteria
 
-*Hosting on Heroku
-*New account creation, login, guest/demo login
-*Creating groups/houses
-*Assigning chores
-*Finishing chores
-*Chores NewsFeed
-*Production README sample
+* Hosting on Heroku
+* New account creation, login, guest/demo login
+* Creating groups/houses
+* Assigning chores
+* Finishing chores
+* Chores NewsFeed
+* Production README sample
 
 ## Design Docs ##
 
@@ -56,10 +56,10 @@ Objective: Allow users to see a news feed of chores as they are completed
 
 ### Bonus (tbd) ###
 
-*Gmail login
+* Gmail login
 
-*Hover/click housemates to make chores and send Reminders
+* Hover/click housemates to make chores and send Reminders
 
-*Reminders
+* Reminders
 
-*Google Calendar integration
+* Google Calendar integration

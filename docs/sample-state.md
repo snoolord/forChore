@@ -22,32 +22,34 @@
     createGroup: { errors: ["Email does not match any usernames"]}
   }
 
-  housemates: {
-    user1: {
-      chores: {
-        1: {
-          chore_body: "Clean dishes",
-          date_complete: "11/11/16",
-          complete: false,
-          reminded: 0
-        }
-      }
-    }  
-  }
 
   group: {
-    requests: {
-      user1: {
-        id: 1,
-        username: "winston",
-        accepted: false
+    1: {
+      requests: {
+        user1: {
+          id: 1,
+          username: "winston",
+          accepted: false
+        }
+        user2: {
+          id: 2,
+          username: "bob",
+          accepted: false
+        }
       }
-      user2: {
-        id: 2,
-        username: "bob",
-        accepted: false
+      housemates: {
+        user1: {
+          chores: {
+            1: {
+              chore_body: "Clean dishes",
+              date_complete: "11/11/16",
+              complete: false,
+              reminded: 0
+            }
+          }
+        }  
       }
     }
-  }  
+  }
 
 }

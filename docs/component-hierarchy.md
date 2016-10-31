@@ -37,16 +37,3 @@
 ## Me Container
   * Chore List
   * Complete Chore Form
-
-
-     Routes       | Component
-    ------------- | -------------
-    "/"           | "MainPage Container"
-    "/signup"     | "AuthFormContainer2"
-    "/signin"     | "AuthFormContainer2"
-    "/dashboard"  | "DashboardContainer"
-    "/dashboard/current_user/:current_user | "MeContainer"
-    "/dashboard/housemate/:housemate_id" | "HousemateHoverClickContainer"
-    "/dashboard/addchore" | "MainDashAddChoreContainer"
-    "/joingroup" | "JoinGroupContainer"
-    "creategroup" | "CreateGroupContainer"
