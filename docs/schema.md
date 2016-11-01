@@ -10,29 +10,21 @@
 password_digest  | string    | not null
 session_token    | string    | not null, indexed, unique
 
-## Requested Groups ##
-    column name | data-type | details
-    ------------ | --------- | -------
-         id     | integer   | not null, primary_key
-      user_id   | integer   | not null, foreign_key, indexed
-      group_id  | integer   | not null, foreign_key, indexed
-      accepted  | boolean   |
 
-## Invited Groups ##
+## Groups/Users Join Table ##
 
         column name | data-type | details
        ------------ | --------- | -------
              id     | integer   | not null, primary_key
           user_id   | integer   | not null, foreign_key, indexed
           group_id  | integer   | not null, foreign_key, indexed
-          accepted  | boolean   |
 
 ## Groups ##
 
           column name | data-type | details
          ------------ | --------- | -------
                id     | integer   | not null, primary_key
-            user_id   | integer   | not null, foreign_key, indexed
+         creator_id   | integer   | not null, foreign_key, indexed
             title     | string    | not null
 
 ## Chores ##
