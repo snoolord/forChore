@@ -13,3 +13,28 @@
  *= require_tree .
  *= require_self
  */
+
+ .main-header {
+   font-size: 50px;
+   font-family: sans-serif;
+   display: block;
+   border-bottom: solid 1px black;
+   position: relative:
+ }
+
+.login-signup {
+  float: right;
+  position: relative;
+  margin-right: 50px;
+  margin-top: -61px;
+  white-space:nowrap
+}
+
+.login-form-box {
+  text-align: center;
+}
+
+.session-form-instead-button {
+  font-size: 12px;
+  min-width: auto;
+}
