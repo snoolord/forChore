@@ -37,3 +37,4 @@ session_token    | string    | not null, indexed, unique
       completed | boolean   |
     complete_by | date      | not null
   completed_on  | date      |
+  

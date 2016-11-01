@@ -35,7 +35,7 @@ Objective: Have a functioning styled rails project with front-end Authentication
 
 ### Phase 2 Groups, api, components (3 days) ###
 
-Objective: Create multiple groups  
+Objective: Create multiple groups. Have each group show page show all housemates
 
 ### Phase 3 Assign Chores/Complete Chores (2 days) ###
 
@@ -53,7 +53,7 @@ Objective: Allow users to see a news feed of chores as they are completed
 
 * Gmail login
 
-* Group Invites 7
+* Group Invites
 
 * Hover/click housemates to make chores and send Reminders
 
