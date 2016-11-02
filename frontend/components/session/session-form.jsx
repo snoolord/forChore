@@ -95,6 +95,7 @@ class SessionForm extends React.Component {
             <br/>
             <div className="session-password">
               <TextField
+                type="password"
                 floatingLabelText="Password"
                 floatingLabelStyle={styles.floatingLabelStyle}
                 floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
