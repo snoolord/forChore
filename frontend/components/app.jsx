@@ -12,26 +12,27 @@ class App extends React.Component {
     console.log(props);
   }
   logo() {
-    return (
-      <Link to="/"><FlatButton className="logo-button">forChore</FlatButton></Link>
-    );
+    if (this.props.loggedIn) {
+      return (
+        <Link to="/dashboard"><FlatButton className="logo-button">forChore</FlatButton></Link>
+      );
+    } else {
+      return (
+        <Link to="/"><FlatButton className="logo-button">forChore</FlatButton></Link>
+      );
+    }
   }
-  // componentDidUpdate() {
-  //   this.redirectIfLoggedOut()
-  // }
-  //
-  // redirectIfLoggedOut() {
-  //
-  // }
   handleLogout() {
     this.props.dispatch(logout());
+    this.props.router.push("/");
   }
   headerLinks() {
     let path = this.props.location.pathname.slice(1);
     if (path === "") {
       return (
         <nav>
-          <Link to="/login" className="current"><FlatButton className="login-signup">Login</FlatButton></Link>
+          <Link to="/login" className="current"><FlatButton className="login-signup"
+            textAlign: 'center'>Login</FlatButton></Link>
           <Link to="/signup" className="current"><FlatButton className="login-signup">Sign Up</FlatButton></Link>
         </nav>
       );
