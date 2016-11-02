@@ -3,8 +3,6 @@ import { Link } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 
-
-
 const personalGreeting = (currentUser, logout) => (
     <hgroup className="header-group">
       <h2 className="header-name">Hi, {currentUser.username}!</h2>

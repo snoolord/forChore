@@ -101,7 +101,6 @@ class SessionForm extends React.Component {
                 >
               </TextField>
             </div>
-            {this.navLink()}
             {this.renderErrors()}
             <RaisedButton className="session-submit-button" type="submit"
               backgroundColor={styles.floatingLabelFocusStyle.color}
