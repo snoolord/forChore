@@ -4,19 +4,26 @@ import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import { logout } from '../actions/session_actions';
-import { Link } from 'react-router';
+import { Link, withRouter } from 'react-router';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
   }
   logo() {
     return (
       <Link to="/"><FlatButton className="logo-button">forChore</FlatButton></Link>
     );
   }
-
+  // componentDidUpdate() {
+  //   this.redirectIfLoggedOut()
+  // }
+  //
+  // redirectIfLoggedOut() {
+  //
+  // }
   handleLogout() {
-    console.log("hi");
     this.props.dispatch(logout());
   }
   headerLinks() {
