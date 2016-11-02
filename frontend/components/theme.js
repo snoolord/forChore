@@ -6,7 +6,6 @@ import {
 } from 'material-ui/styles/colors';
 import {fade} from 'material-ui/utils/colorManipulator';
 import spacing from 'material-ui/styles/spacing';
-
 const theme = {
   spacing: spacing,
   fontFamily: 'Roboto, sans-serif',

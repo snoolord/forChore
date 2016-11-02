@@ -1,8 +1,27 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
+import Card from 'material-ui/Card';
+import {grey500, blue500} from 'material-ui/styles/colors';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
+
+const styles = {
+  errorStyle: {
+    color: grey500,
+  },
+  underlineStyle: {
+    borderColor: grey500,
+  },
+  floatingLabelStyle: {
+    color: grey500,
+  },
+  floatingLabelFocusStyle: {
+    color: blue500,
+  },
+};
 
 class SessionForm extends React.Component {
   constructor(props) {
@@ -35,7 +54,7 @@ class SessionForm extends React.Component {
 		this.props.processForm(user);
 	}
 
-	navLink() {
+	navLink( ) {
 		if (this.props.path === "login") {
 			return <Link to="/signup"><RaisedButton className="session-form-instead-button">Sign up</RaisedButton></Link>;
 		} else {
@@ -43,46 +62,52 @@ class SessionForm extends React.Component {
 		}
 	}
 
-	renderErrors() {
-		return(
-			<ul>
-				{this.props.errors.map((error, i) => (
-					<li key={`error-${i}`}>
-						{error}
-					</li>
-				))}
-			</ul>
-		);
-	}
+
+	// renderErrors() {
+	// 	return(
+	// 		<ul>
+	// 			{this.props.errors.map((error, i) => (
+	// 				<li key={`error-${i}`}>
+	// 					{error}
+	// 				</li>
+	// 			))}
+	// 		</ul>
+	// 	);
+	// }
 
 	render() {
 		return (
-			<div className="login-form-container">
-				<form onSubmit={this.handleSubmit.bind(this)} className="login-form-box">
-          Welcome to forChore!
-					<br/>
-					{this.navLink()}
-					{this.renderErrors()}
-					<div className="login-form">
-						<br/>
-						<label> Username: <br/>
-							<input type="text"
-								value={this.state.username}
-								onChange={this.update("username")}
-								className="login-input" />
-						</label>
-						<br/>
-						<label> Password: <br/>
-							<input type="password"
-								value={this.state.password}
-								onChange={this.update("password")}
-								className="login-input" />
-						</label>
-						<br/>
-						<RaisedButton type="submit">{this.props.path === 'login' ? 'Login' : 'Sign Up'}</RaisedButton>
-					</div>
-				</form>
-			</div>
+      <div className="login-box">
+        <Card className="login-form-container">
+          <form onSubmit={this.handleSubmit.bind(this)} className="login-form-box">
+            Welcome to forChore!
+
+            <div className="session-username">
+              <TextField
+                floatingLabelText="Username"
+                floatingLabelStyle={styles.floatingLabelStyle}
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                onChange={this.update("username")}
+                >
+              </TextField>
+            </div>
+            <br/>
+            <div className="session-password">
+              <TextField
+                floatingLabelText="Password"
+                floatingLabelStyle={styles.floatingLabelStyle}
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                onChange={this.update("password")}
+                >
+              </TextField>
+            </div>
+            {this.navLink()}
+            <RaisedButton className="session-submit-button" type="submit"
+              backgroundColor={styles.floatingLabelFocusStyle.color}
+              >{this.props.path === 'login' ? 'Login' : 'Sign Up'}</RaisedButton>
+          </form>
+        </Card>
+      </div>
 		);
 	}
 
