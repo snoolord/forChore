@@ -2,19 +2,13 @@ import { connect } from 'react-redux';
 import { login, logout, signup } from '../../actions/session_actions';
 import Header from './header';
 
-
-const mapStateToProps = ({ session }) => ({
-  loggedIn: Boolean(session.currentUser),
-  errors: session.errors
+const mapStateToProps = state => ({
+  loggedIn: Boolean(state.session.currentUser)
 });
 
-const mapDispatchToProps = (dispatch, { location } ) =>   {
-
-  const path = location.pathname.slice(1);
-
-
-
-};
+const mapDispatchToProps = (dispatch) => ({
+  logout: () => dispatch(logout())
+});
 
 export default connect(
   mapStateToProps,

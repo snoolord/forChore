@@ -13,16 +13,45 @@ class SideBar extends React.Component {
       return (
         <div
           className="sidebar"
-          open={true}
           >
-          <Link to="/dashboard/creategroup">
-            <FlatButton
-              className="sidebar-button"
+          <ul
+            className="sidebar-ul"
             >
-              Create Group
-            </FlatButton>
+            <li>
+              <Link to="/dashboard/myChores">
+                <FlatButton
+                  id="my-chores"
+                  className="sidebar-button"
+                  >
+                  myChores
+                </FlatButton>
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard/recent_activity">
+                <FlatButton
+                  className="sidebar-button"
+                  >
+                  recentActivity
+                </FlatButton>
+              </Link>
+            </li>
+            <li>
+              <a
+                className="groups"
+                >
+                <div>
+                  groups
+                </div>
 
-          </Link>
+                <Link to="/dashboard/create_groups"
+                 className="group-create-link"
+                  >
+                  +
+                </Link>
+              </a>
+            </li>
+          </ul>
         </div>
       );
     }
