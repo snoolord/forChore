@@ -11,30 +11,6 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
   }
-  sessionLinks() {
-    if (this.props.path === 'signup') {
-      return (
-        <nav className="login-signup">
-          <Link to="/login" activeClassName="current"><FlatButton>Login</FlatButton></Link>
-        </nav>
-      );
-    }
-    else if (this.props.path === 'login'){
-      return (
-        <nav className="login-signup">
-          <Link to="/signup" activeClassName="current"><FlatButton>Sign Up</FlatButton></Link>
-        </nav>
-      );
-    } else {
-      return (
-        <nav className="login-signup">
-          <Link to="/login" activeClassName="current"><FlatButton>Login</FlatButton></Link>
-          <Link to="/signup" activeClassName="current"><FlatButton>Sign Up</FlatButton></Link>
-        </nav>
-      );
-    }
-  }
-
   render() {
     return (<AppBar
       showMenuIconButton={false}

@@ -9,20 +9,10 @@ const mapStateToProps = ({ session }) => ({
 });
 
 const mapDispatchToProps = (dispatch, { location } ) =>   {
-  
+
   const path = location.pathname.slice(1);
 
-  let processForm = '';
-  if (path === 'login'){
-    processForm = login;
-  } else {
-    processForm = signup;
-  }
 
-  return {
-    processForm: user => dispatch(processForm(user)),
-    path
-  };
 
 };
 

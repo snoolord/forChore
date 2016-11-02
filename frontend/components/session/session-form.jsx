@@ -23,6 +23,7 @@ const styles = {
   },
 };
 
+
 class SessionForm extends React.Component {
   constructor(props) {
     super(props);

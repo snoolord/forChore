@@ -1,21 +1,23 @@
 import React from 'react';
-import GreetingContainer from './greeting/greeting_container';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import { Link } from 'react-router';
 import { logout } from '../actions/session_actions';
-
+import { Link } from 'react-router';
 class App extends React.Component {
   constructor(props) {
     super(props);
   }
-
   logo() {
     return (
       <Link to="/"><FlatButton className="logo-button">forChore</FlatButton></Link>
     );
+  }
+
+  handleLogout() {
+    console.log("hi");
+    this.props.dispatch(logout());
   }
   headerLinks() {
     let path = this.props.location.pathname.slice(1);
@@ -36,6 +38,15 @@ class App extends React.Component {
       return (
         <nav>
           <Link to="/login" className="current"><FlatButton className="login-signup">Login</FlatButton></Link>
+        </nav>
+      );
+    } else {
+      return (
+        <nav>
+          <FlatButton
+            className="logout-button"
+            onClick={this.handleLogout.bind(this)}
+            >Logout</FlatButton>
         </nav>
       );
     }

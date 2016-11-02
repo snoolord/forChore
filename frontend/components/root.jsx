@@ -1,10 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
-import App from './app';
+import AppContainer from './app_container';
 import SessionFormContainer from './session/session-form-container';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui';
+import SideBar from './side-bar/side-bar';
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { fade } from 'material-ui/utils/colorManipulator';
 import {
@@ -48,17 +50,24 @@ const Root = ({ store }) => {
   const _redirectIfLoggedIn = (nextState, replace) => {
     const currentUser = store.getState().session.currentUser;
     if (currentUser) {
+      replace('/dashboard');
+    }
+  };
+
+  const _redirectIfLoggedOut = (nextState, replace) => {
+    const currentUser = store.getState().session.currentUser;
+    if (currentUser === null) {
       replace('/');
     }
   };
-  console.log(muiTheme);
   return (
     <MuiThemeProvider muiTheme={muiTheme}>
       <Provider store={store}>
         <Router history={hashHistory}>
-          <Route path="/" component={App}>
+          <Route path="/" component={AppContainer}>
             <Route path="/login" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
             <Route path="/signup" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
+            <Route path="/dashboard" component={SideBar} onEnter={_redirectIfLoggedOut}/>
           </Route>
       </Router>
     </Provider>
