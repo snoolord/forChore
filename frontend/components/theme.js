@@ -30,6 +30,10 @@ const theme = {
   appBar : {
     height: 45
   },
+  drawer: {
+    color: cyan500,
+    top: 45
+  },
   raisedButton: {
     color: white,
     textColor: pinkA200

@@ -8,4 +8,6 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect()(SideBar);
+export default connect(
+  mapStateToProps
+)(SideBar);

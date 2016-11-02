@@ -5,9 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { logout } from '../actions/session_actions';
 import { Link, withRouter } from 'react-router';
 import theme from './theme';
-import muiThemeable from 'material-ui/styles/muiThemeable';
-
-
+import SideBarContainer from './side-bar/side-bar-container';
+import Paper from 'material-ui/paper';
 const style = {
 
 };
@@ -71,12 +70,24 @@ class App extends React.Component {
     return (
       <div className="main">
         <header>
-          <AppBar
-            iconElementLeft={this.logo()}
-            iconElementRight={this.headerLinks()}
+          <nav
+            className="main-full-header"
             >
-          </AppBar>
+            <nav
+              className="main-header"
+              >
+              <div className="icon-spacing">
+                {this.logo()}
+                {this.headerLinks()}
+              </div>
+            </nav>
+          </nav>
         </header>
+        <div
+          className="center-container"
+          >
+          <SideBarContainer />
+        </div>
         {this.props.children}
       </div>
     );
