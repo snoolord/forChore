@@ -63,17 +63,17 @@ class SessionForm extends React.Component {
 	}
 
 
-	// renderErrors() {
-	// 	return(
-	// 		<ul>
-	// 			{this.props.errors.map((error, i) => (
-	// 				<li key={`error-${i}`}>
-	// 					{error}
-	// 				</li>
-	// 			))}
-	// 		</ul>
-	// 	);
-	// }
+  renderErrors() {
+  return(
+    <ul>
+      {this.props.errors.map((error, i) => (
+        <li key={`error-${i}`}>
+          {error}
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 	render() {
 		return (
@@ -102,6 +102,7 @@ class SessionForm extends React.Component {
               </TextField>
             </div>
             {this.navLink()}
+            {this.renderErrors()}
             <RaisedButton className="session-submit-button" type="submit"
               backgroundColor={styles.floatingLabelFocusStyle.color}
               >{this.props.path === 'login' ? 'Login' : 'Sign Up'}</RaisedButton>
