@@ -36,7 +36,6 @@ group :development, :test do
 end
 
 group :production do
-  gem 'pg'
   gem 'newrelic_rpm'
   gem 'rails_12factor' # error feedback
 end
