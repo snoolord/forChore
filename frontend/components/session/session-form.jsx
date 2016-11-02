@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Card from 'material-ui/Card';
-import {grey500, blue500} from 'material-ui/styles/colors';
+import {grey500, blue500, white} from 'material-ui/styles/colors';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
@@ -103,7 +103,7 @@ class SessionForm extends React.Component {
               </TextField>
             </div>
             {this.renderErrors()}
-            <RaisedButton className="session-submit-button" type="submit"
+            <RaisedButton id="session-submit-button" type="submit"
               backgroundColor={styles.floatingLabelFocusStyle.color}
               >{this.props.path === 'login' ? 'Login' : 'Sign Up'}</RaisedButton>
           </form>

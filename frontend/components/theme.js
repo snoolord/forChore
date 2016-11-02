@@ -23,12 +23,15 @@ const theme = {
     canvasColor: white,
     borderColor: grey300,
     disabledColor: fade(darkBlack, 0.3),
-    pickerHeaderColor: cyan500,
+    pickerHeaderColor: white,
     clockCircleColor: fade(darkBlack, 0.07),
     shadowColor: fullBlack,
   },
+  appBar : {
+    height: 45
+  },
   raisedButton: {
-    color: cyan500,
+    color: white,
     textColor: pinkA200
   },
   button: {

@@ -6,6 +6,7 @@ import SessionFormContainer from './session/session-form-container';
 import AppBar from 'material-ui';
 import SideBar from './side-bar/side-bar';
 
+import theme from './theme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { fade } from 'material-ui/utils/colorManipulator';
@@ -18,7 +19,7 @@ import {
 
 const muiTheme = getMuiTheme({
   appBar: {
-    height: 50
+    height: 40
     },
   palette: {
     primary1Color: pink500,
@@ -37,6 +38,8 @@ const muiTheme = getMuiTheme({
     shadowColor: fullBlack,
   }
 });
+
+const myTheme = getMuiTheme(theme);
 
 const Root = ({ store }) => {
 
@@ -61,7 +64,7 @@ const Root = ({ store }) => {
     }
   };
   return (
-    <MuiThemeProvider muiTheme={muiTheme}>
+    <MuiThemeProvider muiTheme={myTheme}>
       <Provider store={store}>
         <Router history={hashHistory}>
           <Route path="/" component={AppContainer}>
