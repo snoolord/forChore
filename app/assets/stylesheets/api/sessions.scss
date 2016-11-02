@@ -10,8 +10,8 @@
 }
 
 .login-signup {
- float: right;
- position: relative;
+ float: right !important;
+ position: absolute !important;
  margin-right: 50px;
  margin-top: -61px;
  white-space:nowrap

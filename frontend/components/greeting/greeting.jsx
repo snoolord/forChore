@@ -3,22 +3,7 @@ import { Link } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 
-const sessionLinks = (currentUser) => {
-  if (currentUser) {
-    return (
-      <nav className="login-signup">
-        <Link to="/login" activeClassName="current"><FlatButton>Login</FlatButton></Link>
-        </nav>
-      );
-    }
-  else {
-    return (
-      <nav className="login-signup">
-        <Link to="/signup" activeClassName="current"><FlatButton>Sign Up</FlatButton></Link>
-      </nav>
-    );
-  }
-};
+
 
 const personalGreeting = (currentUser, logout) => (
     <hgroup className="header-group">
@@ -28,7 +13,11 @@ const personalGreeting = (currentUser, logout) => (
 );
 
 const Greeting = ({ currentUser, logout }) => {
-  return currentUser ? personalGreeting(currentUser, logout) : sessionLinks();
+  if (currentUser) {
+    return personalGreeting(currentUser, logout);
+  } else {
+    return <div></div>;
+  }
 };
 
 export default Greeting;
