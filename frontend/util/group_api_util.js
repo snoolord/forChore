@@ -8,7 +8,7 @@ export const createGroup = (group, success, error) => {
   });
 };
 
-export const receiveGroup = (id, success, error) => {
+export const fetchGroup = (id, success, error) => {
   $.ajax({
     method: 'GET',
     url: `api/groups/${id}`,

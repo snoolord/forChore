@@ -27,16 +27,16 @@
     1: {
         housemates: {
           user_id: {
-            chores: {
-              1: {
-                chore_body: "Clean dishes",
-                date_complete: "11/11/16",
-                complete: false,
-                reminded: 0,
-                comments: {
-                  body: "can you clean my pot too?",
-                  time-added: "14:05:23",
-                  date-added: "11/11/16"
+              chores: {
+                1: {
+                  chore_body: "Clean dishes",
+                  date_complete: "11/11/16",
+                  complete: false,
+                  reminded: 0,
+                  comments: {
+                    body: "can you clean my pot too?",
+                    time-added: "14:05:23",
+                    date-added: "11/11/16"
                 }
               }
             }

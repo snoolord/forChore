@@ -4,6 +4,10 @@ import Root from './components/root';
 import * as Api from './util/session_api_util';
 import configureStore from './store/store';
 import * as Actions from './actions/session_actions';
+import * as GroupApi from './util/group_api_util';
+
+window.createGroup = GroupApi.createGroup;
+window.fetchGroup = GroupApi.fetchGroup;   
 
 window.signup = Actions.signup;
 window.login = Actions.login;
