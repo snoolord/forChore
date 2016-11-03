@@ -11,6 +11,9 @@ class SideBar extends React.Component {
   render() {
     if (this.props.loggedIn) {
       return (
+      <div
+        className="center-container"
+        >
         <div
           className="sidebar"
           >
@@ -37,22 +40,24 @@ class SideBar extends React.Component {
               </Link>
             </li>
             <li>
-              <a
+              <div
                 className="groups"
                 >
                 <div>
                   groups
                 </div>
 
-                <Link to="/dashboard/create_groups"
+                <Link to="/create_group"
                  className="group-create-link"
                   >
                   +
                 </Link>
-              </a>
+              </div>
             </li>
           </ul>
         </div>
+        {this.props.children}
+      </div>
       );
     }
     else {

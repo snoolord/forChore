@@ -14,7 +14,6 @@ const style = {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
   }
   logo() {
     if (this.props.loggedIn) {
@@ -83,11 +82,7 @@ class App extends React.Component {
             </nav>
           </nav>
         </header>
-        <div
-          className="center-container"
-          >
-          <SideBarContainer />
-        </div>
+        <SideBarContainer />
         {this.props.children}
       </div>
     );

@@ -5,6 +5,7 @@ import AppContainer from './app_container';
 import SessionFormContainer from './session/session-form-container';
 import AppBar from 'material-ui';
 import SideBar from './side-bar/side-bar';
+import CreateGroupContainer from './group/create-group-container';
 
 import theme from './theme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -72,6 +73,7 @@ const Root = ({ store }) => {
             <Route path="/signup" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
             <Route path="/dashboard" component={SideBar} onEnter={_redirectIfLoggedOut}/>
           </Route>
+          <Route path="/create_group" component={CreateGroupContainer}/>
       </Router>
     </Provider>
   </MuiThemeProvider>
