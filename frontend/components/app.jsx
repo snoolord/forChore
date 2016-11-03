@@ -6,6 +6,7 @@ import { logout } from '../actions/session_actions';
 import { Link, withRouter } from 'react-router';
 import theme from './theme';
 import SideBarContainer from './side-bar/side-bar-container';
+import SplashContainer from './splash/splash-container';
 import Paper from 'material-ui/paper';
 const style = {
 
@@ -14,6 +15,7 @@ const style = {
 class App extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
   }
   logo() {
     if (this.props.loggedIn) {
@@ -82,6 +84,7 @@ class App extends React.Component {
             </nav>
           </nav>
         </header>
+        <SplashContainer location={this.props.location} />
         <SideBarContainer />
         {this.props.children}
       </div>

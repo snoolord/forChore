@@ -1,0 +1,29 @@
+.splash {
+  display: flex;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+  box-shadow: 0 0 12px rgba(0,0,0,0.2);
+  height: 400px;
+  margin-top: 15px;
+}
+
+.splash-demo-button{
+  text-decoration: none;
+  position: absolute;
+  float: left;
+  color: white !important;
+  display: block !important;
+  background-color: red !important;
+  height: 20px;
+  border-radius: 10px;
+}
+
+.splash-header {
+  font-size: 40px;
+  padding-top: 50x !important;
+}
+#link-to-login {
+  padding: 8px !important;
+  margin-top: 250px;
+  color: white !important;
+}

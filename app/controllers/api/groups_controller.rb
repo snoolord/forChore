@@ -1,5 +1,8 @@
 class Api::GroupsController < ApplicationController
-
+  def index
+    @grouping = Grouping.find_by(user_id: 1)
+    p @groupings
+  end
   def create
     @group = Group.new(group_params)
     @group.housemate_ids = params["group"]["housemate_ids"].map(&:to_i)
@@ -11,12 +14,12 @@ class Api::GroupsController < ApplicationController
   end
 
   def show
-    @group = Group.find_by(params[:id])
+    @group = Group.find(params[:id])
   end
 
   private
   def group_params
-    params.require(:group).permit(:title, :creator_id, :housemate_ids)
+    params.require(:group).permit(:title, :creator_id, :housemate_ids, :user_id)
   end
 
 end

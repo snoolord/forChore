@@ -1,0 +1,4 @@
+export const CREATE_GROUP = "CREATE_GROUP";
+export const RECEIVE_GROUP = "RECEIVE_GROUP";
+export const RECEIVE_GROUPS = "RECEIVE_GROUPS";
+export const RECEIVE_ERRORS = "RECEIVE_ERRORS";

@@ -104,9 +104,17 @@ class SessionForm extends React.Component {
               </TextField>
             </div>
             {this.renderErrors()}
-            <RaisedButton id="session-submit-button" type="submit"
-              backgroundColor={styles.floatingLabelFocusStyle.color}
-              >{this.props.path === 'login' ? 'Login' : 'Sign Up'}</RaisedButton>
+            <div
+              className="login-buttons">
+              <RaisedButton id="demo-login-button"
+                backgroundColor={styles.floatingLabelFocusStyle.color}
+                onTouchTap={ () => this.props.login( { username: "demo-user", password: "password"} )}>
+                Demo Login
+              </RaisedButton>
+              <RaisedButton id="session-submit-button" type="submit"
+                backgroundColor={styles.floatingLabelFocusStyle.color}
+                >{this.props.path === 'login' ? 'Login' : 'Sign Up'}</RaisedButton>
+            </div>
           </form>
         </Card>
       </div>
