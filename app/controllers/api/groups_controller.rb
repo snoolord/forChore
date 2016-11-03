@@ -1,8 +1,4 @@
 class Api::GroupsController < ApplicationController
-  def index
-    @grouping = Grouping.find_by(user_id: 1)
-    p @groupings
-  end
   def create
     @group = Group.new(group_params)
     @group.housemate_ids = params["group"]["housemate_ids"].map(&:to_i)

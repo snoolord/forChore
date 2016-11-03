@@ -34,26 +34,26 @@ class App extends React.Component {
   }
   headerLinks() {
     let path = this.props.location.pathname.slice(1);
-    if (path === "") {
+    if (path === "" && !this.props.loggedIn) {
       return (
         <nav>
           <Link to="/login" className="current"><FlatButton className="login-signup">Login</FlatButton></Link>
           <Link to="/signup" className="current"><FlatButton className="login-signup">Sign Up</FlatButton></Link>
         </nav>
       );
-    } else if (path === "login"){
+    } else if (path === "login" && !this.props.loggedIn){
       return (
         <nav>
           <Link to="/signup" className="current"><FlatButton className="login-signup">Sign Up</FlatButton></Link>
         </nav>
       );
-    } else if (path === "signup") {
+    } else if (path === "signup" && !this.props.loggedIn) {
       return (
         <nav>
           <Link to="/login" className="current"><FlatButton className="login-signup">Login</FlatButton></Link>
         </nav>
       );
-    } else {
+    } else if (this.props.loggedIn){
       return (
         <nav>
           <FlatButton
