@@ -6,6 +6,15 @@ class User < ActiveRecord::Base
 
   attr_reader :password
 
+  has_many :groupings,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: "Grouping"
+
+  has_many :groups,
+    through: :groupings,
+    source: :group
+
   def self.find_by_credentials(username, password)
     @user = User.find_by(username: username)
     return nil unless @user && @user.is_password?(password)
