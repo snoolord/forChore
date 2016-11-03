@@ -18,8 +18,3 @@ export const receiveGroup = (group) => ({
   type: RECEIVE_GROUP,
   group
 });
-
-export const receiveGroups = (groups) => ({
-  type: RECEIVE_GROUPS,
-  groups
-});

@@ -2,14 +2,12 @@
   current_user: {
     id: 1,
     username: 'winston'
-    invites: {
+    groups: {
       group1: {
-        groupname: "app-academy",
-        accepted: true
+        title: "app-academy",
       }
       group2 : {
-        groupname: "hack-reactor",
-        accepted: false
+        title: "hack-reactor",
       }
     }
   },
