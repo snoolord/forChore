@@ -21509,9 +21509,9 @@
 	
 	var _materialUi2 = _interopRequireDefault(_materialUi);
 	
-	var _sideBar = __webpack_require__(731);
+	var _sideBarContainer = __webpack_require__(730);
 	
-	var _sideBar2 = _interopRequireDefault(_sideBar);
+	var _sideBarContainer2 = _interopRequireDefault(_sideBarContainer);
 	
 	var _createGroupContainer = __webpack_require__(744);
 	
@@ -21597,7 +21597,7 @@
 	          { path: '/', component: _app_container2.default },
 	          _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _sessionFormContainer2.default, onEnter: _redirectIfLoggedIn }),
 	          _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _sessionFormContainer2.default, onEnter: _redirectIfLoggedIn }),
-	          _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: _sideBar2.default, onEnter: _redirectIfLoggedOut })
+	          _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: _sideBarContainer2.default, onEnter: _redirectIfLoggedOut })
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/create_group', component: _createGroupContainer2.default })
 	      )
@@ -28337,7 +28337,6 @@
 	          )
 	        ),
 	        _react2.default.createElement(_splashContainer2.default, { location: this.props.location }),
-	        _react2.default.createElement(_sideBarContainer2.default, null),
 	        this.props.children
 	      );
 	    }
@@ -71067,15 +71066,26 @@
 	
 	var _sideBar2 = _interopRequireDefault(_sideBar);
 	
+	var _group_actions = __webpack_require__(758);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    loggedIn: Boolean(state.session.currentUser)
+	    loggedIn: Boolean(state.session.currentUser),
+	    groups: state.user.groups
 	  };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_sideBar2.default);
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    fetchUserGroups: function fetchUserGroups() {
+	      return dispatch((0, _user_actions.fetchUserGroups)());
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_sideBar2.default);
 
 /***/ },
 /* 731 */
@@ -71117,12 +71127,52 @@
 	  function SideBar(props) {
 	    _classCallCheck(this, SideBar);
 	
-	    return _possibleConstructorReturn(this, (SideBar.__proto__ || Object.getPrototypeOf(SideBar)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (SideBar.__proto__ || Object.getPrototypeOf(SideBar)).call(this, props));
+	
+	    console.log(_this.props);
+	    return _this;
 	  }
 	
 	  _createClass(SideBar, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.props.fetchUserGroups();
+	    }
+	    //
+	
+	  }, {
+	    key: 'groupLinks',
+	    value: function groupLinks() {
+	      var _this2 = this;
+	
+	      // this.props.groups.forEach( (group) => {
+	      //   this.groupLink(group.title, group.id);
+	      // });
+	      this.props.groups.map(function (group) {
+	        _this2.groupLink(group.title, group.id);
+	      });
+	    }
+	  }, {
+	    key: 'groupLink',
+	    value: function groupLink(groupName, groupId) {
+	      return _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: '/dashboard/groups/' + groupId },
+	        _react2.default.createElement(
+	          _FlatButton2.default,
+	          {
+	            className: 'sidebar-button',
+	            id: 'group-link' },
+	          groupName
+	        )
+	      );
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+	
+	      console.log(this.props);
 	      if (this.props.loggedIn) {
 	        return _react2.default.createElement(
 	          'div',
@@ -71191,7 +71241,10 @@
 	                    '+'
 	                  )
 	                )
-	              )
+	              ),
+	              this.props.groups.map(function (group) {
+	                return _this3.groupLink(group.title, group.id);
+	              })
 	            )
 	          ),
 	          this.props.children
@@ -71369,7 +71422,6 @@
 	
 	    var _this = _possibleConstructorReturn(this, (CreateGroup.__proto__ || Object.getPrototypeOf(CreateGroup)).call(this, props));
 	
-	    console.log(props);
 	    _this.state = {
 	      title: "",
 	      housemates: [],
@@ -71387,6 +71439,7 @@
 	    value: function componentDidMount() {
 	      // create get all users actions\
 	      this.props.fetchUsers();
+	      console.log(this.props);
 	    }
 	  }, {
 	    key: 'update',
@@ -71435,14 +71488,13 @@
 	    value: function handleSubmit(e) {
 	      e.preventDefault();
 	      var allUsers = this.props.users;
-	      var filledOutUsers = [];
+	      var filledOutUsers = [this.props.currentUser.id];
 	      var housemates = this.state.housemates;
 	      housemates.forEach(function (housemate) {
 	        if (Object.keys(allUsers).includes(housemate) && !filledOutUsers.includes(allUsers[housemate])) {
 	          filledOutUsers.push(allUsers[housemate]);
 	        }
 	      });
-	
 	      var group = { creator_id: this.props.currentUser.id, title: this.state.title, housemate_ids: filledOutUsers };
 	      this.props.createAGroup(group);
 	      this.setState(_defineProperty({}, "created", true));
@@ -71613,10 +71665,7 @@
 	  function Splash(props) {
 	    _classCallCheck(this, Splash);
 	
-	    var _this = _possibleConstructorReturn(this, (Splash.__proto__ || Object.getPrototypeOf(Splash)).call(this, props));
-	
-	    console.log(props);
-	    return _this;
+	    return _possibleConstructorReturn(this, (Splash.__proto__ || Object.getPrototypeOf(Splash)).call(this, props));
 	  }
 	
 	  _createClass(Splash, [{
@@ -72526,14 +72575,13 @@
 	
 	var _defaultState = {
 	  users: {},
-	  groups: {}
+	  groups: []
 	};
 	
 	var UserReducer = function UserReducer() {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _defaultState;
 	  var action = arguments[1];
 	
-	  console.log("hello from the reducer");
 	  switch (action.type) {
 	    case _user_actions.RECEIVE_USER_GROUPS:
 	      return (0, _merge2.default)({}, state, action.groups);

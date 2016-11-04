@@ -9,7 +9,6 @@ const fadeDuration = 10;
 class CreateGroup extends React.Component {
   constructor(props){
     super(props);
-    console.log(props);
     this.state = {
       title: "",
       housemates: [],
@@ -23,6 +22,7 @@ class CreateGroup extends React.Component {
   componentDidMount() {
     // create get all users actions\
     this.props.fetchUsers();
+    console.log(this.props);
   }
   update(field) {
     return e => {
@@ -61,14 +61,13 @@ class CreateGroup extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     let allUsers = this.props.users;
-    let filledOutUsers = [];
+    let filledOutUsers = [this.props.currentUser.id];
     let housemates = this.state.housemates;
     housemates.forEach( (housemate) => {
       if (Object.keys(allUsers).includes(housemate) && !filledOutUsers.includes(allUsers[housemate])){
         filledOutUsers.push(allUsers[housemate]);
       }
     });
-
     let group = { creator_id: this.props.currentUser.id, title: this.state.title, housemate_ids: filledOutUsers};
     this.props.createAGroup(group);
     this.setState({["created"]: true});

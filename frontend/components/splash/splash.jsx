@@ -5,7 +5,6 @@ import { Link } from 'react-router';
 class Splash extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
   }
 
   render() {

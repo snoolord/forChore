@@ -7,11 +7,10 @@ import merge from 'lodash/merge';
 
 const _defaultState = {
   users: {},
-  groups: {}
+  groups: [] 
 };
 
 const UserReducer = function( state = _defaultState, action ) {
-  console.log("hello from the reducer");
   switch(action.type) {
     case RECEIVE_USER_GROUPS:
       return merge({}, state, action.groups);

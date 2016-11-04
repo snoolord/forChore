@@ -84,7 +84,6 @@ class App extends React.Component {
           </nav>
         </header>
         <SplashContainer location={this.props.location} />
-        <SideBarContainer />
         {this.props.children}
       </div>
     );

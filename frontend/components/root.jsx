@@ -4,7 +4,7 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import AppContainer from './app_container';
 import SessionFormContainer from './session/session-form-container';
 import AppBar from 'material-ui';
-import SideBar from './side-bar/side-bar';
+import SideBarContainer from './side-bar/side-bar-container';
 import CreateGroupContainer from './group/create-group-container';
 
 import theme from './theme';
@@ -71,8 +71,8 @@ const Root = ({ store }) => {
           <Route path="/" component={AppContainer}>
             <Route path="/login" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
             <Route path="/signup" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
-            <Route path="/dashboard" component={SideBar} onEnter={_redirectIfLoggedOut}/>
-            
+            <Route path="/dashboard" component={SideBarContainer} onEnter={_redirectIfLoggedOut}/>
+
           </Route>
           <Route path="/create_group" component={CreateGroupContainer}/>
       </Router>

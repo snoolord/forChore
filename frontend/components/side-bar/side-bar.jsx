@@ -5,12 +5,38 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 import { Link, withRouter } from 'react-router';
 
 class SideBar extends React.Component {
-  constructor(props) {
+  constructor(props){
     super(props);
+    console.log(this.props);
   }
 
+  componentDidMount() {
+    this.props.fetchUserGroups();
+  }
+  //
+  groupLinks() {
+    // this.props.groups.forEach( (group) => {
+    //   this.groupLink(group.title, group.id);
+    // });
+    this.props.groups.map( (group) => {
+      this.groupLink(group.title, group.id);
+    });
+  }
+
+  groupLink(groupName, groupId) {
+    return (
+        <Link to={`/dashboard/groups/${groupId}`}>
+          <FlatButton
+            className="sidebar-button"
+            id="group-link">
+            {groupName}
+          </FlatButton>
+        </Link>
+    );
+  }
 
   render() {
+    console.log(this.props);
     if (this.props.loggedIn) {
       return (
       <div
@@ -56,6 +82,9 @@ class SideBar extends React.Component {
                 </Link>
               </div>
             </li>
+            {this.props.groups.map( (group) => {
+              return this.groupLink(group.title, group.id);
+            })}
           </ul>
         </div>
         {this.props.children}
