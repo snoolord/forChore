@@ -1,6 +1,6 @@
 
 import React from 'react';
-import FlatButton from 'material-ui/flatbutton';
+import FlatButton from 'material-ui/FlatButton';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import { Link, withRouter } from 'react-router';
 
@@ -8,7 +8,7 @@ class SideBar extends React.Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
     if (this.props.loggedIn) {
       return (

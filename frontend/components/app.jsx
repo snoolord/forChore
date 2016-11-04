@@ -1,7 +1,7 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/flatbutton';
+import RaisedButton from 'material-ui/raisedbutton';
 import { logout } from '../actions/session_actions';
 import { Link, withRouter } from 'react-router';
 import theme from './theme';
