@@ -25,13 +25,15 @@ class SideBar extends React.Component {
 
   groupLink(groupName, groupId) {
     return (
-        <Link to={`/dashboard/groups/${groupId}`}>
-          <FlatButton
-            className="sidebar-button"
-            id="group-link">
-            {groupName}
-          </FlatButton>
-        </Link>
+      <li key={groupId}>
+          <Link to={`/dashboard/groups/${groupId}`}>
+            <FlatButton
+              className="sidebar-button"
+              >
+              {groupName}
+            </FlatButton>
+          </Link>
+      </li>
     );
   }
 
@@ -82,7 +84,7 @@ class SideBar extends React.Component {
                 </Link>
               </div>
             </li>
-            {this.props.groups.map( (group) => {
+            {this.props.groups.slice(0,5).map( (group) => {
               return this.groupLink(group.title, group.id);
             })}
           </ul>

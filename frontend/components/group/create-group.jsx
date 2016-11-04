@@ -1,6 +1,7 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import AutoComplete from 'material-ui/AutoComplete';
 import values from 'lodash/values';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { default as Fade } from 'react-fade';
@@ -83,6 +84,7 @@ class CreateGroup extends React.Component {
     }
   }
   memberField() {
+    console.log(this.props.users);
       return (
         <div className={this.state.fieldName}>
              <TextField
