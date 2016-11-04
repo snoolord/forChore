@@ -1,13 +1,12 @@
 import React from 'react';
-import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/flatbutton';
-import RaisedButton from 'material-ui/raisedbutton';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import { logout } from '../actions/session_actions';
 import { Link, withRouter } from 'react-router';
 import theme from './theme';
 import SideBarContainer from './side-bar/side-bar-container';
 import SplashContainer from './splash/splash-container';
-import Paper from 'material-ui/paper';
+
 const style = {
 
 };

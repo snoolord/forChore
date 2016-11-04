@@ -1,6 +1,6 @@
 import React from 'react';
-import TextField from 'material-ui/textfield';
-import RaisedButton from 'material-ui/raisedbutton';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { default as Fade } from 'react-fade';
 
