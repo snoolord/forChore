@@ -1,6 +1,6 @@
 
 import React from 'react';
-import FlatButton from 'material-ui/FlatButton';
+import FlatButton from 'material-ui/flatbutton';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import { Link, withRouter } from 'react-router';
 

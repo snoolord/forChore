@@ -35743,17 +35743,17 @@
 	
 	var _reactRouter = __webpack_require__(203);
 	
-	var _RaisedButton = __webpack_require__(405);
+	var _raisedbutton = __webpack_require__(752);
 	
-	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+	var _raisedbutton2 = _interopRequireDefault(_raisedbutton);
 	
-	var _FlatButton = __webpack_require__(576);
+	var _flatbutton = __webpack_require__(741);
 	
-	var _FlatButton2 = _interopRequireDefault(_FlatButton);
+	var _flatbutton2 = _interopRequireDefault(_flatbutton);
 	
-	var _TextField = __webpack_require__(553);
+	var _textfield = __webpack_require__(746);
 	
-	var _TextField2 = _interopRequireDefault(_TextField);
+	var _textfield2 = _interopRequireDefault(_textfield);
 	
 	var _Card = __webpack_require__(564);
 	
@@ -35844,7 +35844,7 @@
 	          _reactRouter.Link,
 	          { to: '/signup' },
 	          _react2.default.createElement(
-	            _RaisedButton2.default,
+	            _raisedbutton2.default,
 	            { className: 'session-form-instead-button' },
 	            'Sign up'
 	          )
@@ -35854,7 +35854,7 @@
 	          _reactRouter.Link,
 	          { to: '/login', className: 'session-form-instead-button' },
 	          _react2.default.createElement(
-	            _RaisedButton2.default,
+	            _raisedbutton2.default,
 	            null,
 	            'Login'
 	          )
@@ -35894,7 +35894,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'session-username' },
-	              _react2.default.createElement(_TextField2.default, {
+	              _react2.default.createElement(_textfield2.default, {
 	                floatingLabelText: 'Username',
 	                floatingLabelStyle: styles.floatingLabelStyle,
 	                floatingLabelFocusStyle: styles.floatingLabelFocusStyle,
@@ -35905,7 +35905,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'session-password' },
-	              _react2.default.createElement(_TextField2.default, {
+	              _react2.default.createElement(_textfield2.default, {
 	                type: 'password',
 	                floatingLabelText: 'Password',
 	                floatingLabelStyle: styles.floatingLabelStyle,
@@ -35919,7 +35919,7 @@
 	              {
 	                className: 'login-buttons' },
 	              _react2.default.createElement(
-	                _RaisedButton2.default,
+	                _raisedbutton2.default,
 	                { id: 'demo-login-button',
 	                  backgroundColor: styles.floatingLabelFocusStyle.color,
 	                  onTouchTap: function onTouchTap() {
@@ -35928,7 +35928,7 @@
 	                'Demo Login'
 	              ),
 	              _react2.default.createElement(
-	                _RaisedButton2.default,
+	                _raisedbutton2.default,
 	                { id: 'session-submit-button', type: 'submit',
 	                  backgroundColor: styles.floatingLabelFocusStyle.color
 	                },
@@ -71081,9 +71081,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _FlatButton = __webpack_require__(576);
+	var _flatbutton = __webpack_require__(741);
 	
-	var _FlatButton2 = _interopRequireDefault(_FlatButton);
+	var _flatbutton2 = _interopRequireDefault(_flatbutton);
 	
 	var _muiThemeable = __webpack_require__(732);
 	
@@ -71134,7 +71134,7 @@
 	                  _reactRouter.Link,
 	                  { to: '/dashboard/myChores' },
 	                  _react2.default.createElement(
-	                    _FlatButton2.default,
+	                    _flatbutton2.default,
 	                    {
 	                      id: 'my-chores',
 	                      className: 'sidebar-button'
@@ -71150,7 +71150,7 @@
 	                  _reactRouter.Link,
 	                  { to: '/dashboard/recent_activity' },
 	                  _react2.default.createElement(
-	                    _FlatButton2.default,
+	                    _flatbutton2.default,
 	                    {
 	                      className: 'sidebar-button'
 	                    },
@@ -73805,9 +73805,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _RaisedButton = __webpack_require__(405);
+	var _raisedbutton = __webpack_require__(752);
 	
-	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+	var _raisedbutton2 = _interopRequireDefault(_raisedbutton);
 	
 	var _reactRouter = __webpack_require__(203);
 	

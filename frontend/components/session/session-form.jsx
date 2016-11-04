@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/raisedbutton';
+import FlatButton from 'material-ui/flatbutton';
+import TextField from 'material-ui/textfield';
 import Card from 'material-ui/Card';
 import {grey500, blue500, white} from 'material-ui/styles/colors';
 import injectTapEventPlugin from 'react-tap-event-plugin';
