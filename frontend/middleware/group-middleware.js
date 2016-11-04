@@ -3,7 +3,9 @@ import {
         createAGroup,
         receiveGroup,
         CREATE_A_GROUP,
-        FETCH_A_GROUP
+        FETCH_A_GROUP,
+        receiveErrors,
+        RECEIVE_ERRORS
       } from '../actions/group_actions';
 
 import {

@@ -18,3 +18,8 @@ export const receiveGroup = (group) => ({
   type: RECEIVE_GROUP,
   group
 });
+
+export const receiveErrors = (errors) => ({
+  type: RECEIVE_ERRORS,
+  errors
+});

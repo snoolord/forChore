@@ -12,10 +12,8 @@ const _defaultState = {
 const GroupReducer = function(state = _defaultState, action) {
   switch(action.type){
     case RECEIVE_GROUP:
-      console.log("RECEIVING CURRENT USER");
       return merge({}, action.group);
     default:
-      console.log("we defaulted");
       return state;
   }
 };
