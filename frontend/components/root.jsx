@@ -72,6 +72,7 @@ const Root = ({ store }) => {
             <Route path="/login" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
             <Route path="/signup" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
             <Route path="/dashboard" component={SideBar} onEnter={_redirectIfLoggedOut}/>
+            
           </Route>
           <Route path="/create_group" component={CreateGroupContainer}/>
       </Router>

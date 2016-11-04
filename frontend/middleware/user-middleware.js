@@ -12,20 +12,22 @@ import {
 import {
         getUsers,
         getGroups
-      } from '../util/group_api_util';
+      } from '../util/user_api_util';
 
 export default ({ getState, dispatch }) => next => action => {
-  const successCallback = group => {
+  const successUserGroupsCallback = group => {
     dispatch(receiveUserGroups(group));
   };
+  const successUsersCallback = users => {
+    dispatch(receiveUsers(users));
+  };
   const errorCallback = error => console.log(error);
-
   switch(action.type) {
-    case CREATE_A_GROUP:
-      createGroup(action.group, successCallback, errorCallback);
+    case FETCH_USER_GROUPS:
+      getGroups(successUserGroupsCallback, errorCallback);
       return next(action);
-    case FETCH_A_GROUP:
-      fetchGroup(action.id, successCallback, errorCallback);
+    case FETCH_USERS:
+      getUsers(successUsersCallback, errorCallback);
       return next(action);
     default:
       return next(action);

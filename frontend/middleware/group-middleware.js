@@ -17,7 +17,7 @@ export default ({ getState, dispatch }) => next => action => {
   const successCallback = group => {
     dispatch(receiveGroup(group));
   };
-  const errorCallback = error => console.log(error);
+  const errorCallback = errors => dispatch(receiveErrors(errors.responseJSON));
 
   switch(action.type) {
     case CREATE_A_GROUP:

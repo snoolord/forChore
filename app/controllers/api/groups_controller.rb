@@ -1,7 +1,9 @@
 class Api::GroupsController < ApplicationController
   def create
     @group = Group.new(group_params)
-    @group.housemate_ids = params["group"]["housemate_ids"].map(&:to_i)
+    if params["group"]["housemate_ids"]
+      @group.housemate_ids = params["group"]["housemate_ids"].map(&:to_i)
+    end
     if @group.save
       render :show
     else

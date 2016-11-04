@@ -78,9 +78,16 @@
 	
 	var GroupAction = _interopRequireWildcard(_group_actions);
 	
+	var _user_actions = __webpack_require__(770);
+	
+	var UserAction = _interopRequireWildcard(_user_actions);
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	window.fetchUserGroups = UserAction.fetchUserGroups;
+	window.fetchUsers = UserAction.fetchUsers;
 	
 	window.createAGroup = GroupAction.createAGroup;
 	window.fetchAGroup = GroupAction.fetchAGroup;
@@ -41152,12 +41159,19 @@
 	
 	var _session_reducer2 = _interopRequireDefault(_session_reducer);
 	
+	var _userReducer = __webpack_require__(773);
+	
+	var _userReducer2 = _interopRequireDefault(_userReducer);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// frontend/reducers/root_reducer.jsx
 	
 	var RootReducer = (0, _redux.combineReducers)({
 	  session: _session_reducer2.default,
-	  group: _group_reducer2.default
-	}); // frontend/reducers/root_reducer.jsx
+	  group: _group_reducer2.default,
+	  user: _userReducer2.default
+	});
 	
 	exports.default = RootReducer;
 
@@ -43894,9 +43908,13 @@
 	
 	var _groupMiddleware2 = _interopRequireDefault(_groupMiddleware);
 	
+	var _userMiddleware = __webpack_require__(771);
+	
+	var _userMiddleware2 = _interopRequireDefault(_userMiddleware);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var RootMiddleware = (0, _redux.applyMiddleware)(_session_middleware2.default, _groupMiddleware2.default);
+	var RootMiddleware = (0, _redux.applyMiddleware)(_session_middleware2.default, _groupMiddleware2.default, _userMiddleware2.default);
 	
 	exports.default = RootMiddleware;
 
@@ -71043,6 +71061,8 @@
 	
 	var _session_actions = __webpack_require__(258);
 	
+	var _user_actions = __webpack_require__(770);
+	
 	var _sideBar = __webpack_require__(731);
 	
 	var _sideBar2 = _interopRequireDefault(_sideBar);
@@ -71269,11 +71289,14 @@
 	
 	var _group_actions = __webpack_require__(758);
 	
+	var _user_actions = __webpack_require__(770);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    currentUser: state.session.currentUser
+	    currentUser: state.session.currentUser,
+	    users: state.user.users
 	  };
 	};
 	
@@ -71281,6 +71304,9 @@
 	  return {
 	    createAGroup: function createAGroup(group) {
 	      return dispatch((0, _group_actions.createAGroup)(group));
+	    },
+	    fetchUsers: function fetchUsers() {
+	      return dispatch((0, _user_actions.fetchUsers)());
 	    }
 	  };
 	};
@@ -71310,6 +71336,10 @@
 	var _RaisedButton = __webpack_require__(405);
 	
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+	
+	var _values = __webpack_require__(774);
+	
+	var _values2 = _interopRequireDefault(_values);
 	
 	var _reactAddonsCssTransitionGroup = __webpack_require__(760);
 	
@@ -71343,10 +71373,12 @@
 	    _this.state = {
 	      title: "",
 	      housemates: [],
-	      fieldName: "housemate-fields"
+	      fieldName: "housemate-fields",
+	      created: false
 	    };
 	    _this.memberUpdate = _this.memberUpdate.bind(_this);
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    _this.checkForEmptyHousemates = _this.checkForEmptyHousemates.bind(_this);
 	    return _this;
 	  }
 	
@@ -71354,7 +71386,7 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      // create get all users actions\
-	
+	      this.props.fetchUsers();
 	    }
 	  }, {
 	    key: 'update',
@@ -71383,14 +71415,50 @@
 	      };
 	    }
 	  }, {
+	    key: 'checkForEmptyHousemates',
+	    value: function checkForEmptyHousemates() {
+	      var housemates = this.state.housemates;
+	      var emptyCount = 0;
+	      housemates.forEach(function (housemate) {
+	        if (housemate.length === 0) {
+	          emptyCount++;
+	        }
+	      });
+	      if (emptyCount === 5) {
+	        return true;
+	      } else {
+	        return false;
+	      }
+	    }
+	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
 	      e.preventDefault();
-	      console.log(this.state);
+	      var allUsers = this.props.users;
+	      var filledOutUsers = [];
+	      var housemates = this.state.housemates;
+	      housemates.forEach(function (housemate) {
+	        if (Object.keys(allUsers).includes(housemate) && !filledOutUsers.includes(allUsers[housemate])) {
+	          filledOutUsers.push(allUsers[housemate]);
+	        }
+	      });
+	
+	      var group = { creator_id: this.props.currentUser.id, title: this.state.title, housemate_ids: filledOutUsers };
+	      this.props.createAGroup(group);
+	      this.setState(_defineProperty({}, "created", true));
 	    }
 	  }, {
-	    key: 'fadeIn',
-	    value: function fadeIn() {}
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      this.redirectIfCreated();
+	    }
+	  }, {
+	    key: 'redirectIfCreated',
+	    value: function redirectIfCreated() {
+	      if (this.state.created) {
+	        this.props.router.push('/dashboard');
+	      }
+	    }
 	  }, {
 	    key: 'memberField',
 	    value: function memberField() {
@@ -71451,7 +71519,7 @@
 	            { className: 'group-save-button' },
 	            _react2.default.createElement(
 	              _RaisedButton2.default,
-	              { id: 'group-save-button', type: 'submit' },
+	              { id: 'group-save-button', type: 'submit', disabled: this.state.title.length === 0 ? true : false },
 	              'Create Group'
 	            )
 	          )
@@ -71646,8 +71714,8 @@
 	      var successCallback = function successCallback(group) {
 	        dispatch((0, _group_actions.receiveGroup)(group));
 	      };
-	      var errorCallback = function errorCallback(error) {
-	        return console.log(error);
+	      var errorCallback = function errorCallback(errors) {
+	        return dispatch((0, _group_actions.receiveErrors)(errors.responseJSON));
 	      };
 	
 	      switch (action.type) {
@@ -71727,7 +71795,8 @@
 	
 	var _defaultState = {
 	  title: '',
-	  housemates: {}
+	  housemates: {},
+	  errors: []
 	};
 	
 	var GroupReducer = function GroupReducer() {
@@ -71737,6 +71806,10 @@
 	  switch (action.type) {
 	    case _group_actions.RECEIVE_GROUP:
 	      return (0, _merge2.default)({}, action.group);
+	    case _group_actions.RECEIVE_ERRORS:
+	      var newState = state;
+	      newState.errors = action.errors;
+	      return newState;
 	    default:
 	      return state;
 	  }
@@ -72321,6 +72394,340 @@
 	exports.default = function (css) {
 	  return css.replace(/\n/g, '').replace(/\s\s+/g, ' ');
 	};
+
+/***/ },
+/* 768 */,
+/* 769 */,
+/* 770 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var FETCH_USER_GROUPS = exports.FETCH_USER_GROUPS = "FETCH_USER_GROUPS";
+	var RECEIVE_USER_GROUPS = exports.RECEIVE_USER_GROUPS = "RECEIVE_USER_GROUPS";
+	var FETCH_USERS = exports.FETCH_USERS = "FETCH_USERS";
+	var RECEIVE_USERS = exports.RECEIVE_USERS = "RECEIVE_USERS";
+	
+	var fetchUserGroups = exports.fetchUserGroups = function fetchUserGroups() {
+	  return {
+	    type: FETCH_USER_GROUPS
+	  };
+	};
+	
+	var receiveUserGroups = exports.receiveUserGroups = function receiveUserGroups(groups) {
+	  return {
+	    type: RECEIVE_USER_GROUPS,
+	    groups: groups
+	  };
+	};
+	
+	var fetchUsers = exports.fetchUsers = function fetchUsers() {
+	  return {
+	    type: FETCH_USERS
+	  };
+	};
+	
+	var receiveUsers = exports.receiveUsers = function receiveUsers(users) {
+	  return {
+	    type: RECEIVE_USERS,
+	    users: users
+	  };
+	};
+
+/***/ },
+/* 771 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _user_actions = __webpack_require__(770);
+	
+	var _user_api_util = __webpack_require__(772);
+	
+	exports.default = function (_ref) {
+	  var getState = _ref.getState,
+	      dispatch = _ref.dispatch;
+	  return function (next) {
+	    return function (action) {
+	      var successUserGroupsCallback = function successUserGroupsCallback(group) {
+	        dispatch((0, _user_actions.receiveUserGroups)(group));
+	      };
+	      var successUsersCallback = function successUsersCallback(users) {
+	        dispatch((0, _user_actions.receiveUsers)(users));
+	      };
+	      var errorCallback = function errorCallback(error) {
+	        return console.log(error);
+	      };
+	      switch (action.type) {
+	        case _user_actions.FETCH_USER_GROUPS:
+	          (0, _user_api_util.getGroups)(successUserGroupsCallback, errorCallback);
+	          return next(action);
+	        case _user_actions.FETCH_USERS:
+	          (0, _user_api_util.getUsers)(successUsersCallback, errorCallback);
+	          return next(action);
+	        default:
+	          return next(action);
+	      }
+	    };
+	  };
+	};
+
+/***/ },
+/* 772 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var getUsers = exports.getUsers = function getUsers(success, error) {
+	  $.ajax({
+	    method: 'GET',
+	    url: 'api/users',
+	    success: success,
+	    error: error
+	  });
+	};
+	
+	var getGroups = exports.getGroups = function getGroups(success, error) {
+	  $.ajax({
+	    method: 'GET',
+	    url: 'api/users/dashboard',
+	    success: success,
+	    error: error
+	  });
+	};
+
+/***/ },
+/* 773 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _user_actions = __webpack_require__(770);
+	
+	var _merge = __webpack_require__(466);
+	
+	var _merge2 = _interopRequireDefault(_merge);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var _defaultState = {
+	  users: {},
+	  groups: {}
+	};
+	
+	var UserReducer = function UserReducer() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _defaultState;
+	  var action = arguments[1];
+	
+	  console.log("hello from the reducer");
+	  switch (action.type) {
+	    case _user_actions.RECEIVE_USER_GROUPS:
+	      return (0, _merge2.default)({}, state, action.groups);
+	    case _user_actions.RECEIVE_USERS:
+	      return (0, _merge2.default)({}, state, action.users);
+	    default:
+	      return state;
+	  }
+	};
+	
+	exports.default = UserReducer;
+
+/***/ },
+/* 774 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseValues = __webpack_require__(775),
+	    keys = __webpack_require__(777);
+	
+	/**
+	 * Creates an array of the own enumerable string keyed property values of `object`.
+	 *
+	 * **Note:** Non-object values are coerced to objects.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property values.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.values(new Foo);
+	 * // => [1, 2] (iteration order is not guaranteed)
+	 *
+	 * _.values('hi');
+	 * // => ['h', 'i']
+	 */
+	function values(object) {
+	  return object == null ? [] : baseValues(object, keys(object));
+	}
+	
+	module.exports = values;
+
+
+/***/ },
+/* 775 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayMap = __webpack_require__(776);
+	
+	/**
+	 * The base implementation of `_.values` and `_.valuesIn` which creates an
+	 * array of `object` property values corresponding to the property names
+	 * of `props`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {Array} props The property names to get values for.
+	 * @returns {Object} Returns the array of property values.
+	 */
+	function baseValues(object, props) {
+	  return arrayMap(props, function(key) {
+	    return object[key];
+	  });
+	}
+	
+	module.exports = baseValues;
+
+
+/***/ },
+/* 776 */
+/***/ function(module, exports) {
+
+	/**
+	 * A specialized version of `_.map` for arrays without support for iteratee
+	 * shorthands.
+	 *
+	 * @private
+	 * @param {Array} [array] The array to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {Array} Returns the new mapped array.
+	 */
+	function arrayMap(array, iteratee) {
+	  var index = -1,
+	      length = array == null ? 0 : array.length,
+	      result = Array(length);
+	
+	  while (++index < length) {
+	    result[index] = iteratee(array[index], index, array);
+	  }
+	  return result;
+	}
+	
+	module.exports = arrayMap;
+
+
+/***/ },
+/* 777 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayLikeKeys = __webpack_require__(536),
+	    baseKeys = __webpack_require__(778),
+	    isArrayLike = __webpack_require__(524);
+	
+	/**
+	 * Creates an array of the own enumerable property names of `object`.
+	 *
+	 * **Note:** Non-object values are coerced to objects. See the
+	 * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+	 * for more details.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.keys(new Foo);
+	 * // => ['a', 'b'] (iteration order is not guaranteed)
+	 *
+	 * _.keys('hi');
+	 * // => ['0', '1']
+	 */
+	function keys(object) {
+	  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+	}
+	
+	module.exports = keys;
+
+
+/***/ },
+/* 778 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isPrototype = __webpack_require__(519),
+	    nativeKeys = __webpack_require__(779);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function baseKeys(object) {
+	  if (!isPrototype(object)) {
+	    return nativeKeys(object);
+	  }
+	  var result = [];
+	  for (var key in Object(object)) {
+	    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = baseKeys;
+
+
+/***/ },
+/* 779 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var overArg = __webpack_require__(190);
+	
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeKeys = overArg(Object.keys, Object);
+	
+	module.exports = nativeKeys;
+
 
 /***/ }
 /******/ ]);

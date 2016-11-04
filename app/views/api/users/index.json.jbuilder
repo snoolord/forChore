@@ -1,5 +1,5 @@
 json.users do
   @users.each do |user|
-    json.set! user.id, user.username
+    json.set! user.username, user.id
   end
 end

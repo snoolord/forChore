@@ -6,6 +6,10 @@ import configureStore from './store/store';
 import * as Actions from './actions/session_actions';
 import * as GroupApi from './util/group_api_util';
 import * as GroupAction from './actions/group_actions';
+import * as UserAction from './actions/user_actions';
+
+window.fetchUserGroups = UserAction.fetchUserGroups;
+window.fetchUsers = UserAction.fetchUsers;
 
 window.createAGroup = GroupAction.createAGroup;
 window.fetchAGroup = GroupAction.fetchAGroup;

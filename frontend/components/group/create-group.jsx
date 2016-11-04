@@ -1,6 +1,7 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import values from 'lodash/values';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { default as Fade } from 'react-fade';
 
@@ -12,14 +13,16 @@ class CreateGroup extends React.Component {
     this.state = {
       title: "",
       housemates: [],
-      fieldName: "housemate-fields"
+      fieldName: "housemate-fields",
+      created: false
     };
     this.memberUpdate = this.memberUpdate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.checkForEmptyHousemates = this.checkForEmptyHousemates.bind(this);
   }
   componentDidMount() {
     // create get all users actions\
-
+    this.props.fetchUsers();
   }
   update(field) {
     return e => {
@@ -41,14 +44,44 @@ class CreateGroup extends React.Component {
     };
   }
 
+  checkForEmptyHousemates() {
+    let housemates = this.state.housemates;
+    let emptyCount = 0;
+    housemates.forEach( (housemate) => {
+      if (housemate.length === 0) {
+        emptyCount ++;
+      }
+    });
+    if (emptyCount === 5) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   handleSubmit(e){
     e.preventDefault();
-    console.log(this.state);
+    let allUsers = this.props.users;
+    let filledOutUsers = [];
+    let housemates = this.state.housemates;
+    housemates.forEach( (housemate) => {
+      if (Object.keys(allUsers).includes(housemate) && !filledOutUsers.includes(allUsers[housemate])){
+        filledOutUsers.push(allUsers[housemate]);
+      }
+    });
 
-
+    let group = { creator_id: this.props.currentUser.id, title: this.state.title, housemate_ids: filledOutUsers};
+    this.props.createAGroup(group);
+    this.setState({["created"]: true});
   }
-  fadeIn() {
 
+  componentDidUpdate() {
+    this.redirectIfCreated();
+  }
+
+  redirectIfCreated() {
+    if (this.state.created) {
+      this.props.router.push(`/dashboard`);
+    }
   }
   memberField() {
       return (
@@ -101,7 +134,7 @@ class CreateGroup extends React.Component {
           </div>
           {this.memberField()}
           <div className="group-save-button">
-            <RaisedButton id="group-save-button" type="submit">Create Group</RaisedButton>
+            <RaisedButton id="group-save-button" type="submit" disabled={this.state.title.length === 0 ? true : false}>Create Group</RaisedButton>
           </div>
         </form>
       </div>
