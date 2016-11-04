@@ -3,6 +3,7 @@ export const FETCH_A_GROUP = "FETCH_A_GROUP";
 export const RECEIVE_GROUP = "RECEIVE_GROUP";
 export const RECEIVE_GROUPS = "RECEIVE_GROUPS";
 export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
+export const SEND_ERRORS = "SEND_ERRORS";
 
 export const createAGroup = (group) => ({
   type: CREATE_A_GROUP,
@@ -20,6 +21,6 @@ export const receiveGroup = (group) => ({
 });
 
 export const receiveErrors = (errors) => ({
-  type: RECEIVE_ERRORS,
-  errors
+    type: RECEIVE_ERRORS,
+    errors
 });

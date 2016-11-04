@@ -7,7 +7,6 @@ import { Link, withRouter } from 'react-router';
 class SideBar extends React.Component {
   constructor(props){
     super(props);
-    console.log(this.props);
   }
 
   componentDidMount() {
@@ -38,7 +37,6 @@ class SideBar extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     if (this.props.loggedIn) {
       return (
       <div

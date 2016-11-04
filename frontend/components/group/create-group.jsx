@@ -39,8 +39,10 @@ class CreateGroup extends React.Component {
 
   memberUpdate(housemateIndex) {
     return e => {
+      console.log(e);
+      console.log(this.state.housemates);
       let housemates = this.state.housemates;
-      housemates[housemateIndex] = e.currentTarget.value;
+      housemates[housemateIndex] = e;
       this.setState({'housemates': housemates});
     };
   }
@@ -62,18 +64,32 @@ class CreateGroup extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     let allUsers = this.props.users;
-    let filledOutUsers = [this.props.currentUser.id];
+    let filledOutUsers = { [this.props.currentUser.username]: this.props.currentUser.id };
     let housemates = this.state.housemates;
-    housemates.forEach( (housemate) => {
-      if (Object.keys(allUsers).includes(housemate) && !filledOutUsers.includes(allUsers[housemate])){
-        filledOutUsers.push(allUsers[housemate]);
+    let errors = ["", "", "", "", ""];
+    housemates.forEach( (housemate, index) => {
+      if (allUsers[housemate] && !filledOutUsers[housemate]){
+        filledOutUsers[housemate] = allUsers[housemate];
+      } else {
+        errors[index] = "Invalid user";
       }
     });
-    let group = { creator_id: this.props.currentUser.id, title: this.state.title, housemate_ids: filledOutUsers};
-    this.props.createAGroup(group);
-    this.setState({["created"]: true});
+    console.log(errors);
+    console.log(filledOutUsers);
+    if (errors.every((error) => {
+      return error === "";
+    })){
+      let group = { creator_id: this.props.currentUser.id, title: this.state.title, housemate_ids: values(filledOutUsers) };
+      this.props.createAGroup(group);
+      this.setState({["created"]: true});
+    } else {
+      this.props.receiveErrors(errors);
+    }
   }
 
+  renderErrors(fieldIndex) {
+    return this.props.errors[fieldIndex];
+  }
   componentDidUpdate() {
     this.redirectIfCreated();
   }
@@ -84,34 +100,49 @@ class CreateGroup extends React.Component {
     }
   }
   memberField() {
-    console.log(this.props.users);
+    let users = Object.keys(this.props.users);
       return (
         <div className={this.state.fieldName}>
-             <TextField
+             <AutoComplete
                className="housemate-field"
                hintText={`Housemate 1`}
-               onChange={this.memberUpdate(0)}>
-             </TextField>
-             <TextField
+               dataSource={users}
+               filter={AutoComplete.fuzzyFilter}
+               onUpdateInput={this.memberUpdate(0)}
+               onNewRequest={this.memberUpdate(0)}>
+             </AutoComplete>
+             <AutoComplete
                className="housemate-field"
                hintText={`Housemate 2`}
-               onChange={this.memberUpdate(1)}>
-             </TextField>
-             <TextField
+               dataSource={users}
+               filter={AutoComplete.fuzzyFilter}
+               onUpdateInput={this.memberUpdate(1)}
+               onNewRequest={this.memberUpdate(1)}>
+             </AutoComplete>
+             <AutoComplete
                className="housemate-field"
                hintText={`Housemate 3`}
-               onChange={this.memberUpdate(2)}>
-             </TextField>
-             <TextField
+               dataSource={users}
+               filter={AutoComplete.fuzzyFilter}
+               onUpdateInput={this.memberUpdate(2)}
+               onNewRequest={this.memberUpdate(2)}>
+             </AutoComplete>
+             <AutoComplete
                className="housemate-field"
                hintText={`Housemate 4`}
-               onChange={this.memberUpdate(3)}>
-             </TextField>
-             <TextField
+               dataSource={users}
+               filter={AutoComplete.fuzzyFilter}
+               onUpdateInput={this.memberUpdate(3)}
+               onNewRequest={this.memberUpdate(3)}>
+             </AutoComplete>
+             <AutoComplete
                className="housemate-field"
                hintText={`Housemate 5`}
-               onChange={this.memberUpdate(4)}>
-             </TextField>
+               dataSource={users}
+               filter={AutoComplete.fuzzyFilter}
+               onUpdateInput={this.memberUpdate(4)}
+               onNewRequest={this.memberUpdate(4)}>
+             </AutoComplete>
 
         </div>
       );

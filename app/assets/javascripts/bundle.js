@@ -34376,10 +34376,7 @@
 	  function SideBar(props) {
 	    _classCallCheck(this, SideBar);
 	
-	    var _this = _possibleConstructorReturn(this, (SideBar.__proto__ || Object.getPrototypeOf(SideBar)).call(this, props));
-	
-	    console.log(_this.props);
-	    return _this;
+	    return _possibleConstructorReturn(this, (SideBar.__proto__ || Object.getPrototypeOf(SideBar)).call(this, props));
 	  }
 	
 	  _createClass(SideBar, [{
@@ -34425,7 +34422,6 @@
 	    value: function render() {
 	      var _this3 = this;
 	
-	      console.log(this.props);
 	      if (this.props.loggedIn) {
 	        return _react2.default.createElement(
 	          'div',
@@ -39502,6 +39498,7 @@
 	var RECEIVE_GROUP = exports.RECEIVE_GROUP = "RECEIVE_GROUP";
 	var RECEIVE_GROUPS = exports.RECEIVE_GROUPS = "RECEIVE_GROUPS";
 	var RECEIVE_ERRORS = exports.RECEIVE_ERRORS = "RECEIVE_ERRORS";
+	var SEND_ERRORS = exports.SEND_ERRORS = "SEND_ERRORS";
 	
 	var createAGroup = exports.createAGroup = function createAGroup(group) {
 	  return {
@@ -68641,7 +68638,8 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
 	    currentUser: state.session.currentUser,
-	    users: state.user.users
+	    users: state.user.users,
+	    errors: state.group.errors
 	  };
 	};
 	
@@ -68652,6 +68650,9 @@
 	    },
 	    fetchUsers: function fetchUsers() {
 	      return dispatch((0, _user_actions.fetchUsers)());
+	    },
+	    receiveErrors: function receiveErrors(errors) {
+	      return dispatch((0, _group_actions.receiveErrors)(errors));
 	    }
 	  };
 	};
@@ -68758,8 +68759,10 @@
 	      var _this3 = this;
 	
 	      return function (e) {
+	        console.log(e);
+	        console.log(_this3.state.housemates);
 	        var housemates = _this3.state.housemates;
-	        housemates[housemateIndex] = e.currentTarget.value;
+	        housemates[housemateIndex] = e;
 	        _this3.setState({ 'housemates': housemates });
 	      };
 	    }
@@ -68784,16 +68787,32 @@
 	    value: function handleSubmit(e) {
 	      e.preventDefault();
 	      var allUsers = this.props.users;
-	      var filledOutUsers = [this.props.currentUser.id];
+	      var filledOutUsers = _defineProperty({}, this.props.currentUser.username, this.props.currentUser.id);
 	      var housemates = this.state.housemates;
-	      housemates.forEach(function (housemate) {
-	        if (Object.keys(allUsers).includes(housemate) && !filledOutUsers.includes(allUsers[housemate])) {
-	          filledOutUsers.push(allUsers[housemate]);
+	      var errors = ["", "", "", "", ""];
+	      housemates.forEach(function (housemate, index) {
+	        if (allUsers[housemate] && !filledOutUsers[housemate]) {
+	          filledOutUsers[housemate] = allUsers[housemate];
+	        } else {
+	          errors[index] = "Invalid user";
 	        }
 	      });
-	      var group = { creator_id: this.props.currentUser.id, title: this.state.title, housemate_ids: filledOutUsers };
-	      this.props.createAGroup(group);
-	      this.setState(_defineProperty({}, "created", true));
+	      console.log(errors);
+	      console.log(filledOutUsers);
+	      if (errors.every(function (error) {
+	        return error === "";
+	      })) {
+	        var group = { creator_id: this.props.currentUser.id, title: this.state.title, housemate_ids: (0, _values2.default)(filledOutUsers) };
+	        this.props.createAGroup(group);
+	        this.setState(_defineProperty({}, "created", true));
+	      } else {
+	        this.props.receiveErrors(errors);
+	      }
+	    }
+	  }, {
+	    key: 'renderErrors',
+	    value: function renderErrors(fieldIndex) {
+	      return this.props.errors[fieldIndex];
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
@@ -68810,30 +68829,45 @@
 	  }, {
 	    key: 'memberField',
 	    value: function memberField() {
-	      console.log(this.props.users);
+	      var users = Object.keys(this.props.users);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: this.state.fieldName },
-	        _react2.default.createElement(_TextField2.default, {
+	        _react2.default.createElement(_AutoComplete2.default, {
 	          className: 'housemate-field',
 	          hintText: 'Housemate 1',
-	          onChange: this.memberUpdate(0) }),
-	        _react2.default.createElement(_TextField2.default, {
+	          dataSource: users,
+	          filter: _AutoComplete2.default.fuzzyFilter,
+	          onUpdateInput: this.memberUpdate(0),
+	          onNewRequest: this.memberUpdate(0) }),
+	        _react2.default.createElement(_AutoComplete2.default, {
 	          className: 'housemate-field',
 	          hintText: 'Housemate 2',
-	          onChange: this.memberUpdate(1) }),
-	        _react2.default.createElement(_TextField2.default, {
+	          dataSource: users,
+	          filter: _AutoComplete2.default.fuzzyFilter,
+	          onUpdateInput: this.memberUpdate(1),
+	          onNewRequest: this.memberUpdate(1) }),
+	        _react2.default.createElement(_AutoComplete2.default, {
 	          className: 'housemate-field',
 	          hintText: 'Housemate 3',
-	          onChange: this.memberUpdate(2) }),
-	        _react2.default.createElement(_TextField2.default, {
+	          dataSource: users,
+	          filter: _AutoComplete2.default.fuzzyFilter,
+	          onUpdateInput: this.memberUpdate(2),
+	          onNewRequest: this.memberUpdate(2) }),
+	        _react2.default.createElement(_AutoComplete2.default, {
 	          className: 'housemate-field',
 	          hintText: 'Housemate 4',
-	          onChange: this.memberUpdate(3) }),
-	        _react2.default.createElement(_TextField2.default, {
+	          dataSource: users,
+	          filter: _AutoComplete2.default.fuzzyFilter,
+	          onUpdateInput: this.memberUpdate(3),
+	          onNewRequest: this.memberUpdate(3) }),
+	        _react2.default.createElement(_AutoComplete2.default, {
 	          className: 'housemate-field',
 	          hintText: 'Housemate 5',
-	          onChange: this.memberUpdate(4) })
+	          dataSource: users,
+	          filter: _AutoComplete2.default.fuzzyFilter,
+	          onUpdateInput: this.memberUpdate(4),
+	          onNewRequest: this.memberUpdate(4) })
 	      );
 	    }
 	  }, {
@@ -70386,7 +70420,7 @@
 	
 	  switch (action.type) {
 	    case _group_actions.RECEIVE_GROUP:
-	      return (0, _merge2.default)({}, action.group);
+	      return (0, _merge2.default)({}, state, action.group);
 	    case _group_actions.RECEIVE_ERRORS:
 	      var newState = state;
 	      newState.errors = action.errors;

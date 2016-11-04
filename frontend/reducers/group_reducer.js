@@ -14,7 +14,7 @@ const _defaultState = {
 const GroupReducer = function(state = _defaultState, action) {
   switch(action.type){
     case RECEIVE_GROUP:
-      return merge({}, action.group);
+      return merge({}, state, action.group);
     case RECEIVE_ERRORS:
       let newState = state;
       newState.errors = action.errors;
