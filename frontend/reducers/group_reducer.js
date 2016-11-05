@@ -1,6 +1,7 @@
 import {
   RECEIVE_GROUP,
-  RECEIVE_ERRORS
+  RECEIVE_ERRORS,
+  CLEAR_ERRORS
 } from '../actions/group_actions';
 
 import merge from 'lodash/merge';
@@ -19,6 +20,10 @@ const GroupReducer = function(state = _defaultState, action) {
       let newState = state;
       newState.errors = action.errors;
       return newState;
+    case CLEAR_ERRORS:
+      let errorState = state;
+      errorState.errors = [];
+      return errorState;
     default:
       return state;
   }

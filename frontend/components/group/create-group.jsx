@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
 import values from 'lodash/values';
+import FlatButton from 'material-ui/FlatButton';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { default as Fade } from 'react-fade';
 
@@ -14,11 +15,14 @@ class CreateGroup extends React.Component {
       title: "",
       housemates: [],
       fieldName: "housemate-fields",
-      created: false
+      created: false,
+      clearClick: false
     };
+    this.renderError = this.renderError.bind(this);
     this.memberUpdate = this.memberUpdate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkForEmptyHousemates = this.checkForEmptyHousemates.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
   }
   componentDidMount() {
     // create get all users actions\
@@ -39,7 +43,6 @@ class CreateGroup extends React.Component {
 
   memberUpdate(housemateIndex) {
     return e => {
-      console.log(e);
       console.log(this.state.housemates);
       let housemates = this.state.housemates;
       housemates[housemateIndex] = e;
@@ -66,16 +69,17 @@ class CreateGroup extends React.Component {
     let allUsers = this.props.users;
     let filledOutUsers = { [this.props.currentUser.username]: this.props.currentUser.id };
     let housemates = this.state.housemates;
-    let errors = ["", "", "", "", ""];
+    console.log(housemates);
+    let errors = ["","","","",""];
     housemates.forEach( (housemate, index) => {
       if (allUsers[housemate] && !filledOutUsers[housemate]){
         filledOutUsers[housemate] = allUsers[housemate];
+      } else if (housemate === ""){
+
       } else {
         errors[index] = "Invalid user";
       }
     });
-    console.log(errors);
-    console.log(filledOutUsers);
     if (errors.every((error) => {
       return error === "";
     })){
@@ -87,9 +91,6 @@ class CreateGroup extends React.Component {
     }
   }
 
-  renderErrors(fieldIndex) {
-    return this.props.errors[fieldIndex];
-  }
   componentDidUpdate() {
     this.redirectIfCreated();
   }
@@ -99,6 +100,28 @@ class CreateGroup extends React.Component {
       this.props.router.push(`/dashboard`);
     }
   }
+
+  renderError(fieldIndex) {
+    if (this.props.errors[fieldIndex]){
+      return this.props.errors[fieldIndex];
+    } else {
+      return '';
+    }
+  }
+
+  handleFocus(e) {
+    let fieldIndex = -1;
+    this.state.housemates.forEach( (housemate, index) => {
+      if (e.currentTarget.value === housemate) {
+        fieldIndex = index;
+      }
+    });
+    console.log(this.props);
+    console.log(fieldIndex);
+
+
+
+  }
   memberField() {
     let users = Object.keys(this.props.users);
       return (
@@ -107,14 +130,18 @@ class CreateGroup extends React.Component {
                className="housemate-field"
                hintText={`Housemate 1`}
                dataSource={users}
+               errorText={this.renderError(0)}
                filter={AutoComplete.fuzzyFilter}
                onUpdateInput={this.memberUpdate(0)}
-               onNewRequest={this.memberUpdate(0)}>
+               onNewRequest={this.memberUpdate(0)}
+               searchText={this.state.housemates[0]}
+               onFocus={this.handleFocus}>
              </AutoComplete>
              <AutoComplete
                className="housemate-field"
                hintText={`Housemate 2`}
                dataSource={users}
+               errorText={this.renderError(1)}
                filter={AutoComplete.fuzzyFilter}
                onUpdateInput={this.memberUpdate(1)}
                onNewRequest={this.memberUpdate(1)}>
@@ -123,6 +150,7 @@ class CreateGroup extends React.Component {
                className="housemate-field"
                hintText={`Housemate 3`}
                dataSource={users}
+               errorText={this.renderError(2)}
                filter={AutoComplete.fuzzyFilter}
                onUpdateInput={this.memberUpdate(2)}
                onNewRequest={this.memberUpdate(2)}>
@@ -131,6 +159,7 @@ class CreateGroup extends React.Component {
                className="housemate-field"
                hintText={`Housemate 4`}
                dataSource={users}
+               errorText={this.renderError(3)}
                filter={AutoComplete.fuzzyFilter}
                onUpdateInput={this.memberUpdate(3)}
                onNewRequest={this.memberUpdate(3)}>
@@ -139,6 +168,7 @@ class CreateGroup extends React.Component {
                className="housemate-field"
                hintText={`Housemate 5`}
                dataSource={users}
+               errorText={this.renderError(4)}
                filter={AutoComplete.fuzzyFilter}
                onUpdateInput={this.memberUpdate(4)}
                onNewRequest={this.memberUpdate(4)}>

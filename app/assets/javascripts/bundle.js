@@ -28291,6 +28291,13 @@
 	  }
 	
 	  _createClass(App, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      if (this.props.loggedIn) {
+	        this.props.router.push('/dashboard');
+	      }
+	    }
+	  }, {
 	    key: 'logo',
 	    value: function logo() {
 	      if (this.props.loggedIn) {
@@ -39499,6 +39506,7 @@
 	var RECEIVE_GROUPS = exports.RECEIVE_GROUPS = "RECEIVE_GROUPS";
 	var RECEIVE_ERRORS = exports.RECEIVE_ERRORS = "RECEIVE_ERRORS";
 	var SEND_ERRORS = exports.SEND_ERRORS = "SEND_ERRORS";
+	var CLEAR_ERRORS = exports.CLEAR_ERRORS = "CLEAR_ERRORS";
 	
 	var createAGroup = exports.createAGroup = function createAGroup(group) {
 	  return {
@@ -39525,6 +39533,12 @@
 	  return {
 	    type: RECEIVE_ERRORS,
 	    errors: errors
+	  };
+	};
+	
+	var clearErrors = exports.clearErrors = function clearErrors() {
+	  return {
+	    type: CLEAR_ERRORS
 	  };
 	};
 
@@ -68691,6 +68705,10 @@
 	
 	var _values2 = _interopRequireDefault(_values);
 	
+	var _FlatButton = __webpack_require__(259);
+	
+	var _FlatButton2 = _interopRequireDefault(_FlatButton);
+	
 	var _reactAddonsCssTransitionGroup = __webpack_require__(660);
 	
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
@@ -68723,11 +68741,14 @@
 	      title: "",
 	      housemates: [],
 	      fieldName: "housemate-fields",
-	      created: false
+	      created: false,
+	      clearClick: false
 	    };
+	    _this.renderError = _this.renderError.bind(_this);
 	    _this.memberUpdate = _this.memberUpdate.bind(_this);
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    _this.checkForEmptyHousemates = _this.checkForEmptyHousemates.bind(_this);
+	    _this.handleFocus = _this.handleFocus.bind(_this);
 	    return _this;
 	  }
 	
@@ -68759,7 +68780,6 @@
 	      var _this3 = this;
 	
 	      return function (e) {
-	        console.log(e);
 	        console.log(_this3.state.housemates);
 	        var housemates = _this3.state.housemates;
 	        housemates[housemateIndex] = e;
@@ -68789,16 +68809,15 @@
 	      var allUsers = this.props.users;
 	      var filledOutUsers = _defineProperty({}, this.props.currentUser.username, this.props.currentUser.id);
 	      var housemates = this.state.housemates;
+	      console.log(housemates);
 	      var errors = ["", "", "", "", ""];
 	      housemates.forEach(function (housemate, index) {
 	        if (allUsers[housemate] && !filledOutUsers[housemate]) {
 	          filledOutUsers[housemate] = allUsers[housemate];
-	        } else {
+	        } else if (housemate === "") {} else {
 	          errors[index] = "Invalid user";
 	        }
 	      });
-	      console.log(errors);
-	      console.log(filledOutUsers);
 	      if (errors.every(function (error) {
 	        return error === "";
 	      })) {
@@ -68808,11 +68827,6 @@
 	      } else {
 	        this.props.receiveErrors(errors);
 	      }
-	    }
-	  }, {
-	    key: 'renderErrors',
-	    value: function renderErrors(fieldIndex) {
-	      return this.props.errors[fieldIndex];
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
@@ -68827,6 +68841,27 @@
 	      }
 	    }
 	  }, {
+	    key: 'renderError',
+	    value: function renderError(fieldIndex) {
+	      if (this.props.errors[fieldIndex]) {
+	        return this.props.errors[fieldIndex];
+	      } else {
+	        return '';
+	      }
+	    }
+	  }, {
+	    key: 'handleFocus',
+	    value: function handleFocus(e) {
+	      var fieldIndex = -1;
+	      this.state.housemates.forEach(function (housemate, index) {
+	        if (e.currentTarget.value === housemate) {
+	          fieldIndex = index;
+	        }
+	      });
+	      console.log(this.props);
+	      console.log(fieldIndex);
+	    }
+	  }, {
 	    key: 'memberField',
 	    value: function memberField() {
 	      var users = Object.keys(this.props.users);
@@ -68837,13 +68872,17 @@
 	          className: 'housemate-field',
 	          hintText: 'Housemate 1',
 	          dataSource: users,
+	          errorText: this.renderError(0),
 	          filter: _AutoComplete2.default.fuzzyFilter,
 	          onUpdateInput: this.memberUpdate(0),
-	          onNewRequest: this.memberUpdate(0) }),
+	          onNewRequest: this.memberUpdate(0),
+	          searchText: this.state.housemates[0],
+	          onFocus: this.handleFocus }),
 	        _react2.default.createElement(_AutoComplete2.default, {
 	          className: 'housemate-field',
 	          hintText: 'Housemate 2',
 	          dataSource: users,
+	          errorText: this.renderError(1),
 	          filter: _AutoComplete2.default.fuzzyFilter,
 	          onUpdateInput: this.memberUpdate(1),
 	          onNewRequest: this.memberUpdate(1) }),
@@ -68851,6 +68890,7 @@
 	          className: 'housemate-field',
 	          hintText: 'Housemate 3',
 	          dataSource: users,
+	          errorText: this.renderError(2),
 	          filter: _AutoComplete2.default.fuzzyFilter,
 	          onUpdateInput: this.memberUpdate(2),
 	          onNewRequest: this.memberUpdate(2) }),
@@ -68858,6 +68898,7 @@
 	          className: 'housemate-field',
 	          hintText: 'Housemate 4',
 	          dataSource: users,
+	          errorText: this.renderError(3),
 	          filter: _AutoComplete2.default.fuzzyFilter,
 	          onUpdateInput: this.memberUpdate(3),
 	          onNewRequest: this.memberUpdate(3) }),
@@ -68865,6 +68906,7 @@
 	          className: 'housemate-field',
 	          hintText: 'Housemate 5',
 	          dataSource: users,
+	          errorText: this.renderError(4),
 	          filter: _AutoComplete2.default.fuzzyFilter,
 	          onUpdateInput: this.memberUpdate(4),
 	          onNewRequest: this.memberUpdate(4) })
@@ -70425,6 +70467,10 @@
 	      var newState = state;
 	      newState.errors = action.errors;
 	      return newState;
+	    case _group_actions.CLEAR_ERRORS:
+	      var errorState = state;
+	      errorState.errors = [];
+	      return errorState;
 	    default:
 	      return state;
 	  }
