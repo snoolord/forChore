@@ -130,57 +130,57 @@ class CreateGroup extends React.Component {
     let users = Object.keys(this.props.users);
       return (
         <div className={this.state.fieldName}>
-             <AutoComplete
-               className="housemate-field"
-               hintText={`Housemate 1`}
-               dataSource={users}
-               errorText={this.renderError(0)}
-               filter={AutoComplete.fuzzyFilter}
-               onUpdateInput={this.memberUpdate(0)}
-               onNewRequest={this.memberUpdate(0)}
-               searchText={this.state.housemates[0]}
-               onFocus={this.handleFocus}>
-             </AutoComplete>
-             <AutoComplete
-               className="housemate-field"
-               hintText={`Housemate 2`}
-               dataSource={users}
-               errorText={this.renderError(1)}
-               filter={AutoComplete.fuzzyFilter}
-               onUpdateInput={this.memberUpdate(1)}
-               onNewRequest={this.memberUpdate(1)}
-               onFocus={this.handleFocus}>
-             </AutoComplete>
-             <AutoComplete
-               className="housemate-field"
-               hintText={`Housemate 3`}
-               dataSource={users}
-               errorText={this.renderError(2)}
-               filter={AutoComplete.fuzzyFilter}
-               onUpdateInput={this.memberUpdate(2)}
-               onNewRequest={this.memberUpdate(2)}
-               onFocus={this.handleFocus}>
-             </AutoComplete>
-             <AutoComplete
-               className="housemate-field"
-               hintText={`Housemate 4`}
-               dataSource={users}
-               errorText={this.renderError(3)}
-               filter={AutoComplete.fuzzyFilter}
-               onUpdateInput={this.memberUpdate(3)}
-               onNewRequest={this.memberUpdate(3)}
-               onFocus={this.handleFocus}>
-             </AutoComplete>
-             <AutoComplete
-               className="housemate-field"
-               hintText={`Housemate 5`}
-               dataSource={users}
-               errorText={this.renderError(4)}
-               filter={AutoComplete.fuzzyFilter}
-               onUpdateInput={this.memberUpdate(4)}
-               onNewRequest={this.memberUpdate(4)}
-               onFocus={this.handleFocus}>
-             </AutoComplete>
+          <AutoComplete
+            className="housemate-field"
+            hintText={`Housemate 1`}
+            dataSource={users}
+            errorText={this.renderError(0)}
+            filter={AutoComplete.fuzzyFilter}
+            onUpdateInput={this.memberUpdate(0)}
+            onNewRequest={this.memberUpdate(0)}
+            searchText={this.state.housemates[0]}
+            onFocus={this.handleFocus}>
+          </AutoComplete>
+          <AutoComplete
+            className="housemate-field"
+            hintText={`Housemate 2`}
+            dataSource={users}
+            errorText={this.renderError(1)}
+            filter={AutoComplete.fuzzyFilter}
+            onUpdateInput={this.memberUpdate(1)}
+            onNewRequest={this.memberUpdate(1)}
+            onFocus={this.handleFocus}>
+          </AutoComplete>
+          <AutoComplete
+            className="housemate-field"
+            hintText={`Housemate 3`}
+            dataSource={users}
+            errorText={this.renderError(2)}
+            filter={AutoComplete.fuzzyFilter}
+            onUpdateInput={this.memberUpdate(2)}
+            onNewRequest={this.memberUpdate(2)}
+            onFocus={this.handleFocus}>
+          </AutoComplete>
+          <AutoComplete
+            className="housemate-field"
+            hintText={`Housemate 4`}
+            dataSource={users}
+            errorText={this.renderError(3)}
+            filter={AutoComplete.fuzzyFilter}
+            onUpdateInput={this.memberUpdate(3)}
+            onNewRequest={this.memberUpdate(3)}
+            onFocus={this.handleFocus}>
+          </AutoComplete>
+          <AutoComplete
+            className="housemate-field"
+            hintText={`Housemate 5`}
+            dataSource={users}
+            errorText={this.renderError(4)}
+            filter={AutoComplete.fuzzyFilter}
+            onUpdateInput={this.memberUpdate(4)}
+            onNewRequest={this.memberUpdate(4)}
+            onFocus={this.handleFocus}>
+          </AutoComplete>
 
         </div>
       );

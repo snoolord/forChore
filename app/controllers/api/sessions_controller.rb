@@ -4,11 +4,14 @@ class Api::SessionsController < ApplicationController
       params[:user][:username],
       params[:user][:password]
     )
+    puts @user
     if @user
       login(@user)
       render "api/users/show"
-    else
-      render(json: ["Incorrect username or password"], status: 404)
+    elsif @user == nil
+      render(json: ["Incorrect Username","Incorrect Password"], status: 404)
+    elsif @user == false
+      render(json: ["Incorrect Password"], status: 404)
     end
   end
 

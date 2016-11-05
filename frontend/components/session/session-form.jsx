@@ -31,6 +31,7 @@ class SessionForm extends React.Component {
       username: "",
       password: ""
     };
+    this.renderErrors = this.renderErrors.bind(this);
   }
 
   componentDidUpdate() {
@@ -38,6 +39,7 @@ class SessionForm extends React.Component {
 	}
 
 	redirectIfLoggedIn() {
+    debugger;
 		if (this.props.loggedIn) {
 			this.props.router.push("/dashboard");
 		}
@@ -64,18 +66,19 @@ class SessionForm extends React.Component {
 	}
 
 
-  renderErrors() {
-    console.log(this.props);
-  return(
-    <ul>
-      {this.props.errors.map((error, i) => (
-        <li key={`error-${i}`}>
-          {error}
-        </li>
-      ))}
-    </ul>
-  );
-}
+  renderErrors(fieldName) {
+    if (this.props.errors.length === 2) {
+      if (fieldName === 'username') {
+        return this.props.errors[0];
+      } else if (fieldName === 'password') {
+        return this.props.errors[1];
+      }
+    } else {
+      if (fieldName === 'password') {
+        return this.props.errors[0];
+      }
+    }
+  }
 
 	render() {
 		return (
@@ -89,6 +92,7 @@ class SessionForm extends React.Component {
                 floatingLabelText="Username"
                 floatingLabelStyle={styles.floatingLabelStyle}
                 floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                errorText={this.renderErrors('username')}
                 onChange={this.update("username")}
                 >
               </TextField>
@@ -101,10 +105,10 @@ class SessionForm extends React.Component {
                 floatingLabelStyle={styles.floatingLabelStyle}
                 floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                 onChange={this.update("password")}
+                errorText={this.renderErrors('password')}
                 >
               </TextField>
             </div>
-            {this.renderErrors()}
             <div
               className="login-buttons">
               <RaisedButton id="demo-login-button"

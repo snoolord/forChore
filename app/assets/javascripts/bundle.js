@@ -21517,6 +21517,12 @@
 	
 	var _createGroupContainer2 = _interopRequireDefault(_createGroupContainer);
 	
+	var _groupShowContainer = __webpack_require__(748);
+	
+	var _groupShowContainer2 = _interopRequireDefault(_groupShowContainer);
+	
+	var _group_actions = __webpack_require__(440);
+	
 	var _theme = __webpack_require__(390);
 	
 	var _theme2 = _interopRequireDefault(_theme);
@@ -21535,6 +21541,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	// actions
+	
+	// containers
 	var muiTheme = (0, _getMuiTheme2.default)({
 	  appBar: {
 	    height: 40
@@ -21556,6 +21565,8 @@
 	    shadowColor: _colors.fullBlack
 	  }
 	});
+	// themes
+	
 	
 	var myTheme = (0, _getMuiTheme2.default)(_theme2.default);
 	
@@ -21583,6 +21594,12 @@
 	      replace('/');
 	    }
 	  };
+	
+	  var _requestAGroup = function _requestAGroup(nextState) {
+	    console.log(nextState.params.id);
+	    store.dispatch((0, _group_actions.fetchAGroup)(nextState.params.id));
+	  };
+	
 	  return _react2.default.createElement(
 	    _MuiThemeProvider2.default,
 	    { muiTheme: myTheme },
@@ -21597,7 +21614,11 @@
 	          { path: '/', component: _app_container2.default },
 	          _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _sessionFormContainer2.default, onEnter: _redirectIfLoggedIn }),
 	          _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _sessionFormContainer2.default, onEnter: _redirectIfLoggedIn }),
-	          _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: _sideBarContainer2.default, onEnter: _redirectIfLoggedOut })
+	          _react2.default.createElement(
+	            _reactRouter.Route,
+	            { path: '/dashboard', component: _sideBarContainer2.default, onEnter: _redirectIfLoggedOut },
+	            _react2.default.createElement(_reactRouter.Route, { path: '/dashboard/groups/:id', component: _groupShowContainer2.default, onEnter: _requestAGroup })
+	          )
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/create_group', component: _createGroupContainer2.default })
 	      )
@@ -34289,7 +34310,8 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
 	    loggedIn: Boolean(state.session.currentUser),
-	    groups: state.user.groups
+	    groups: state.user.groups,
+	    housemates: state.group.housemates
 	  };
 	};
 	
@@ -34369,6 +34391,10 @@
 	
 	var _reactRouter = __webpack_require__(203);
 	
+	var _values = __webpack_require__(637);
+	
+	var _values2 = _interopRequireDefault(_values);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34383,7 +34409,10 @@
 	  function SideBar(props) {
 	    _classCallCheck(this, SideBar);
 	
-	    return _possibleConstructorReturn(this, (SideBar.__proto__ || Object.getPrototypeOf(SideBar)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (SideBar.__proto__ || Object.getPrototypeOf(SideBar)).call(this, props));
+	
+	    _this.renderCenter = _this.renderCenter.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(SideBar, [{
@@ -34425,10 +34454,37 @@
 	      );
 	    }
 	  }, {
+	    key: 'renderCenter',
+	    value: function renderCenter() {
+	      if (this.props.location.pathname === '/dashboard') {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'group-show' },
+	          _react2.default.createElement('div', { className: 'group-show-center' })
+	        );
+	      } else {
+	        return this.props.children;
+	      }
+	    }
+	  }, {
+	    key: 'housemate',
+	    value: function housemate(_housemate) {
+	      if (this.props.location.pathname === '/dashboard') {
+	        return _react2.default.createElement('li', null);
+	      } else if (this.props.location.pathname.includes('groups/')) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: _housemate.username },
+	          _housemate.username
+	        );
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this3 = this;
 	
+	      var housemates = (0, _values2.default)(this.props.housemates);
 	      if (this.props.loggedIn) {
 	        return _react2.default.createElement(
 	          'div',
@@ -34503,7 +34559,18 @@
 	              })
 	            )
 	          ),
-	          this.props.children
+	          this.renderCenter(),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'right-sidebar' },
+	            _react2.default.createElement(
+	              'ul',
+	              null,
+	              housemates.map(function (housemate) {
+	                return _this3.housemate(housemate);
+	              })
+	            )
+	          )
 	        );
 	      } else {
 	        return _react2.default.createElement('div', null);
@@ -39708,6 +39775,9 @@
 	    processForm: function processForm(user) {
 	      return dispatch(_processForm(user));
 	    },
+	    receiveErrors: function receiveErrors(errors) {
+	      return dispatch((0, _session_actions.receiveErrors)(errors));
+	    },
 	    path: path
 	  };
 	};
@@ -39793,6 +39863,7 @@
 	      username: "",
 	      password: ""
 	    };
+	    _this.renderErrors = _this.renderErrors.bind(_this);
 	    return _this;
 	  }
 	
@@ -39804,6 +39875,7 @@
 	  }, {
 	    key: 'redirectIfLoggedIn',
 	    value: function redirectIfLoggedIn() {
+	      debugger;
 	      if (this.props.loggedIn) {
 	        this.props.router.push("/dashboard");
 	      }
@@ -39852,19 +39924,18 @@
 	    }
 	  }, {
 	    key: 'renderErrors',
-	    value: function renderErrors() {
-	      console.log(this.props);
-	      return _react2.default.createElement(
-	        'ul',
-	        null,
-	        this.props.errors.map(function (error, i) {
-	          return _react2.default.createElement(
-	            'li',
-	            { key: 'error-' + i },
-	            error
-	          );
-	        })
-	      );
+	    value: function renderErrors(fieldName) {
+	      if (this.props.errors.length === 2) {
+	        if (fieldName === 'username') {
+	          return this.props.errors[0];
+	        } else if (fieldName === 'password') {
+	          return this.props.errors[1];
+	        }
+	      } else {
+	        if (fieldName === 'password') {
+	          return this.props.errors[0];
+	        }
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -39888,6 +39959,7 @@
 	                floatingLabelText: 'Username',
 	                floatingLabelStyle: styles.floatingLabelStyle,
 	                floatingLabelFocusStyle: styles.floatingLabelFocusStyle,
+	                errorText: this.renderErrors('username'),
 	                onChange: this.update("username")
 	              })
 	            ),
@@ -39900,10 +39972,10 @@
 	                floatingLabelText: 'Password',
 	                floatingLabelStyle: styles.floatingLabelStyle,
 	                floatingLabelFocusStyle: styles.floatingLabelFocusStyle,
-	                onChange: this.update("password")
+	                onChange: this.update("password"),
+	                errorText: this.renderErrors('password')
 	              })
 	            ),
-	            this.renderErrors(),
 	            _react2.default.createElement(
 	              'div',
 	              {
@@ -72847,6 +72919,104 @@
 	    error: error
 	  });
 	};
+
+/***/ },
+/* 748 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(173);
+	
+	var _groupShow = __webpack_require__(749);
+	
+	var _groupShow2 = _interopRequireDefault(_groupShow);
+	
+	var _group_actions = __webpack_require__(440);
+	
+	var _user_actions = __webpack_require__(394);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    currentUser: state.session.currentUser,
+	    users: state.user.users,
+	    title: state.group.title,
+	    housemates: state.group.housemates
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    fetchAGroup: function fetchAGroup(id) {
+	      return dispatch((0, _group_actions.fetchAGroup)(id));
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_groupShow2.default);
+
+/***/ },
+/* 749 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var GroupShow = function (_React$Component) {
+	  _inherits(GroupShow, _React$Component);
+	
+	  function GroupShow(props) {
+	    _classCallCheck(this, GroupShow);
+	
+	    return _possibleConstructorReturn(this, (GroupShow.__proto__ || Object.getPrototypeOf(GroupShow)).call(this, props));
+	  }
+	
+	  _createClass(GroupShow, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "group-show" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "group-show-center" },
+	          _react2.default.createElement(
+	            "h2",
+	            null,
+	            this.props.title
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return GroupShow;
+	}(_react2.default.Component);
+	
+	exports.default = GroupShow;
 
 /***/ }
 /******/ ]);

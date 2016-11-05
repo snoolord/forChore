@@ -3,10 +3,12 @@ import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import { Link, withRouter } from 'react-router';
+import values from 'lodash/values';
 
 class SideBar extends React.Component {
   constructor(props){
     super(props);
+    this.renderCenter = this.renderCenter.bind(this);
   }
 
   componentDidMount() {
@@ -36,7 +38,26 @@ class SideBar extends React.Component {
     );
   }
 
+  renderCenter() {
+    if (this.props.location.pathname === '/dashboard') {
+      return <div className="group-show">
+        <div className="group-show-center">
+        </div>
+        </div>;
+    } else {
+      return this.props.children;
+    }
+  }
+  housemate(housemate) {
+    if (this.props.location.pathname === '/dashboard'){
+      return <li></li>;
+    } else if (this.props.location.pathname.includes('groups/')){
+      return <li key={housemate.username}>{housemate.username}</li>;
+    }
+  }
+
   render() {
+    let housemates = values(this.props.housemates);
     if (this.props.loggedIn) {
       return (
       <div
@@ -87,7 +108,14 @@ class SideBar extends React.Component {
             })}
           </ul>
         </div>
-        {this.props.children}
+        {this.renderCenter()}
+        <div className="right-sidebar">
+          <ul>
+            {housemates.map((housemate) => {
+              return this.housemate(housemate);
+            })}
+          </ul>
+        </div>
       </div>
       );
     }

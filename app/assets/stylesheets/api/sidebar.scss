@@ -1,12 +1,11 @@
 
 .sidebar {
   float: left;
-  margin: auto;
+  margin: 0;
   display: block;
   max-width: 180px;
   height: 100%;
   background-color: white;
-  box-shadow: 0 0 12px rgba(0,0,0,0.2);
 }
 
 .sidebar a {
@@ -45,8 +44,36 @@
 }
 .sidebar-ul {
   list-style: none;
+  padding: 0;
 }
 
 #my-chores {
   padding-right: 72px !important;
+}
+.center-container {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+.group-show {
+  margin: 0;
+  display: flex;
+}
+
+.group-show-center {
+  box-shadow: 0 0 12px rgba(0,0,0,0.2);
+  width: 600px;
+  height: 100%;
+}
+.group-show-center h2 {
+  margin: 0;
+}
+
+.right-sidebar {
+  width: 100px;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
 }

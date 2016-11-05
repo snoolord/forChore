@@ -1,12 +1,16 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+// containers
 import AppContainer from './app_container';
 import SessionFormContainer from './session/session-form-container';
 import AppBar from 'material-ui';
 import SideBarContainer from './side-bar/side-bar-container';
 import CreateGroupContainer from './group/create-group-container';
-
+import GroupShowContainer from './group/group-show-container';
+// actions
+import { fetchAGroup } from '../actions/group_actions';
+// themes
 import theme from './theme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -64,6 +68,12 @@ const Root = ({ store }) => {
       replace('/');
     }
   };
+
+  const _requestAGroup = (nextState) => {
+    console.log(nextState.params.id);
+    store.dispatch(fetchAGroup(nextState.params.id));
+  };
+
   return (
     <MuiThemeProvider muiTheme={myTheme}>
       <Provider store={store}>
@@ -71,7 +81,9 @@ const Root = ({ store }) => {
           <Route path="/" component={AppContainer}>
             <Route path="/login" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
             <Route path="/signup" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
-            <Route path="/dashboard" component={SideBarContainer} onEnter={_redirectIfLoggedOut}/>
+            <Route path="/dashboard" component={SideBarContainer} onEnter={_redirectIfLoggedOut}>
+              <Route path="/dashboard/groups/:id" component={GroupShowContainer} onEnter={_requestAGroup} />
+            </Route>
 
           </Route>
           <Route path="/create_group" component={CreateGroupContainer}/>

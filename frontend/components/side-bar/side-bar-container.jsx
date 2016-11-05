@@ -7,7 +7,8 @@ import { fetchUsers } from '../../actions/user_actions';
 
 const mapStateToProps = state => ({
   loggedIn: Boolean(state.session.currentUser),
-  groups: state.user.groups
+  groups: state.user.groups,
+  housemates: state.group.housemates
 });
 
 const mapDispatchToProps = dispatch => ({
