@@ -4,6 +4,11 @@ class Group < ActiveRecord::Base
     primary_key: :id,
     foreign_key: :group_id,
     class_name: "Grouping"
+    
+  has_many :chores,
+    primary_key: :id,
+    foreign_key: :group_id,
+    class_name: "Chore"
 
   has_many :housemates,
     through: :groupings,

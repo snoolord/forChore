@@ -6,6 +6,10 @@ class User < ActiveRecord::Base
 
   attr_reader :password
 
+  has_many :chores,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: "Chore"
   has_many :groupings,
     primary_key: :id,
     foreign_key: :user_id,
