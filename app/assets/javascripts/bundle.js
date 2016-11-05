@@ -39853,6 +39853,7 @@
 	  }, {
 	    key: 'renderErrors',
 	    value: function renderErrors() {
+	      console.log(this.props);
 	      return _react2.default.createElement(
 	        'ul',
 	        null,
@@ -68753,6 +68754,12 @@
 	  }
 	
 	  _createClass(CreateGroup, [{
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      var errors = [];
+	      this.props.receiveErrors(errors);
+	    }
+	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      // create get all users actions\
@@ -68858,8 +68865,11 @@
 	          fieldIndex = index;
 	        }
 	      });
-	      console.log(this.props);
-	      console.log(fieldIndex);
+	      var errors = this.props.errors;
+	      if (errors.length === 5) {
+	        errors[fieldIndex] = '';
+	        this.props.receiveErrors(errors);
+	      }
 	    }
 	  }, {
 	    key: 'memberField',
@@ -68885,7 +68895,8 @@
 	          errorText: this.renderError(1),
 	          filter: _AutoComplete2.default.fuzzyFilter,
 	          onUpdateInput: this.memberUpdate(1),
-	          onNewRequest: this.memberUpdate(1) }),
+	          onNewRequest: this.memberUpdate(1),
+	          onFocus: this.handleFocus }),
 	        _react2.default.createElement(_AutoComplete2.default, {
 	          className: 'housemate-field',
 	          hintText: 'Housemate 3',
@@ -68893,7 +68904,8 @@
 	          errorText: this.renderError(2),
 	          filter: _AutoComplete2.default.fuzzyFilter,
 	          onUpdateInput: this.memberUpdate(2),
-	          onNewRequest: this.memberUpdate(2) }),
+	          onNewRequest: this.memberUpdate(2),
+	          onFocus: this.handleFocus }),
 	        _react2.default.createElement(_AutoComplete2.default, {
 	          className: 'housemate-field',
 	          hintText: 'Housemate 4',
@@ -68901,7 +68913,8 @@
 	          errorText: this.renderError(3),
 	          filter: _AutoComplete2.default.fuzzyFilter,
 	          onUpdateInput: this.memberUpdate(3),
-	          onNewRequest: this.memberUpdate(3) }),
+	          onNewRequest: this.memberUpdate(3),
+	          onFocus: this.handleFocus }),
 	        _react2.default.createElement(_AutoComplete2.default, {
 	          className: 'housemate-field',
 	          hintText: 'Housemate 5',
@@ -68909,7 +68922,8 @@
 	          errorText: this.renderError(4),
 	          filter: _AutoComplete2.default.fuzzyFilter,
 	          onUpdateInput: this.memberUpdate(4),
-	          onNewRequest: this.memberUpdate(4) })
+	          onNewRequest: this.memberUpdate(4),
+	          onFocus: this.handleFocus })
 	      );
 	    }
 	  }, {

@@ -24,6 +24,10 @@ class CreateGroup extends React.Component {
     this.checkForEmptyHousemates = this.checkForEmptyHousemates.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
   }
+  componentWillUnmount() {
+    let errors = [];
+    this.props.receiveErrors(errors);
+  }
   componentDidMount() {
     // create get all users actions\
     this.props.fetchUsers();
@@ -116,11 +120,11 @@ class CreateGroup extends React.Component {
         fieldIndex = index;
       }
     });
-    console.log(this.props);
-    console.log(fieldIndex);
-
-
-
+    let errors = this.props.errors;
+    if (errors.length === 5) {
+      errors[fieldIndex] = '';
+      this.props.receiveErrors(errors);
+    }
   }
   memberField() {
     let users = Object.keys(this.props.users);
@@ -144,7 +148,8 @@ class CreateGroup extends React.Component {
                errorText={this.renderError(1)}
                filter={AutoComplete.fuzzyFilter}
                onUpdateInput={this.memberUpdate(1)}
-               onNewRequest={this.memberUpdate(1)}>
+               onNewRequest={this.memberUpdate(1)}
+               onFocus={this.handleFocus}>
              </AutoComplete>
              <AutoComplete
                className="housemate-field"
@@ -153,7 +158,8 @@ class CreateGroup extends React.Component {
                errorText={this.renderError(2)}
                filter={AutoComplete.fuzzyFilter}
                onUpdateInput={this.memberUpdate(2)}
-               onNewRequest={this.memberUpdate(2)}>
+               onNewRequest={this.memberUpdate(2)}
+               onFocus={this.handleFocus}>
              </AutoComplete>
              <AutoComplete
                className="housemate-field"
@@ -162,7 +168,8 @@ class CreateGroup extends React.Component {
                errorText={this.renderError(3)}
                filter={AutoComplete.fuzzyFilter}
                onUpdateInput={this.memberUpdate(3)}
-               onNewRequest={this.memberUpdate(3)}>
+               onNewRequest={this.memberUpdate(3)}
+               onFocus={this.handleFocus}>
              </AutoComplete>
              <AutoComplete
                className="housemate-field"
@@ -171,7 +178,8 @@ class CreateGroup extends React.Component {
                errorText={this.renderError(4)}
                filter={AutoComplete.fuzzyFilter}
                onUpdateInput={this.memberUpdate(4)}
-               onNewRequest={this.memberUpdate(4)}>
+               onNewRequest={this.memberUpdate(4)}
+               onFocus={this.handleFocus}>
              </AutoComplete>
 
         </div>
