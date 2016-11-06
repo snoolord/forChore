@@ -14,7 +14,7 @@ class EditGroup extends React.Component {
     this.state = {
       title: '',
       housemates: [],
-      fieldName: "housemate-fields",
+      fieldName: "housemate-fields-active",
       created: false,
       clearClick: false
     };
@@ -25,6 +25,7 @@ class EditGroup extends React.Component {
     this.handleFocus = this.handleFocus.bind(this);
     this.memberField = this.memberField.bind(this);
     this.handleAddField = this.handleAddField.bind(this);
+    this.addFieldButton = this.addFieldButton.bind(this);
   }
   componentWillUnmount() {
     let errors = [];
@@ -148,10 +149,21 @@ class EditGroup extends React.Component {
 
   handleAddField() {
     return e => {
-      this.state.housemates.push("");
+      let housemates = this.state.housemates;
+      housemates.push("");
+      this.setState({'housemates': housemates});
     };
   }
 
+  addFieldButton() {
+    if (this.state.title.length !== 0 ) {
+      return <div className="field-button">
+        <button onClick={this.handleAddField()}>+</button>
+      </div>;
+    } else {
+      return <div className="field-button"></div>;
+    }
+  }
   memberField(housemate, memberIndex) {
     let users = Object.keys(this.props.users);
       return (
@@ -167,13 +179,11 @@ class EditGroup extends React.Component {
             onNewRequest={this.memberUpdate(memberIndex)}
             onFocus={this.handleFocus}>
           </AutoComplete>
-          <FlatButton onClick={this.handleAddField}></FlatButton>
         </div>
       );
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="create-group">
         <div className="create-group-name">
@@ -186,13 +196,15 @@ class EditGroup extends React.Component {
           <div className="create-group-name">
             <TextField
               onChange={this.update("title")}
-              hintText="123 Sesame Street">
+              hintText="123 Sesame Street"
+              value={this.state.title}>
             </TextField>
 
           </div>
           {this.state.housemates.map((housemate, index) => {
             return this.memberField(housemate, index);
           })}
+          {this.addFieldButton()}
           <div className="group-save-button">
             <RaisedButton id="group-save-button" type="submit" disabled={this.state.title.length === 0 ? true : false}>Create Group</RaisedButton>
           </div>

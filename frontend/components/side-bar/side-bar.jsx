@@ -83,7 +83,6 @@ class SideBar extends React.Component {
   }
   render() {
     let housemates = values(this.props.housemates);
-    console.log("RERENDER", housemates);
     if (this.props.loggedIn) {
       return (
       <div

@@ -21605,7 +21605,6 @@
 	  };
 	
 	  var _requestAGroup = function _requestAGroup(nextState) {
-	    console.log("requesting group");
 	    store.dispatch((0, _group_actions.fetchAGroup)(nextState.params.id));
 	  };
 	
@@ -34535,7 +34534,6 @@
 	      var _this4 = this;
 	
 	      var housemates = (0, _values2.default)(this.props.housemates);
-	      console.log("RERENDER", housemates);
 	      if (this.props.loggedIn) {
 	        return _react2.default.createElement(
 	          'div',
@@ -70713,7 +70711,7 @@
 	    _this.state = {
 	      title: '',
 	      housemates: [],
-	      fieldName: "housemate-fields",
+	      fieldName: "housemate-fields-active",
 	      created: false,
 	      clearClick: false
 	    };
@@ -70724,6 +70722,7 @@
 	    _this.handleFocus = _this.handleFocus.bind(_this);
 	    _this.memberField = _this.memberField.bind(_this);
 	    _this.handleAddField = _this.handleAddField.bind(_this);
+	    _this.addFieldButton = _this.addFieldButton.bind(_this);
 	    return _this;
 	  }
 	
@@ -70868,8 +70867,27 @@
 	      var _this4 = this;
 	
 	      return function (e) {
-	        _this4.state.housemates.push("");
+	        var housemates = _this4.state.housemates;
+	        housemates.push("");
+	        _this4.setState({ 'housemates': housemates });
 	      };
+	    }
+	  }, {
+	    key: 'addFieldButton',
+	    value: function addFieldButton() {
+	      if (this.state.title.length !== 0) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'field-button' },
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleAddField() },
+	            '+'
+	          )
+	        );
+	      } else {
+	        return _react2.default.createElement('div', { className: 'field-button' });
+	      }
 	    }
 	  }, {
 	    key: 'memberField',
@@ -70887,8 +70905,7 @@
 	          searchText: housemate,
 	          onUpdateInput: this.memberUpdate(memberIndex),
 	          onNewRequest: this.memberUpdate(memberIndex),
-	          onFocus: this.handleFocus }),
-	        _react2.default.createElement(_FlatButton2.default, { onClick: this.handleAddField })
+	          onFocus: this.handleFocus })
 	      );
 	    }
 	  }, {
@@ -70896,7 +70913,6 @@
 	    value: function render() {
 	      var _this5 = this;
 	
-	      console.log(this.state);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'create-group' },
@@ -70918,11 +70934,13 @@
 	            { className: 'create-group-name' },
 	            _react2.default.createElement(_TextField2.default, {
 	              onChange: this.update("title"),
-	              hintText: '123 Sesame Street' })
+	              hintText: '123 Sesame Street',
+	              value: this.state.title })
 	          ),
 	          this.state.housemates.map(function (housemate, index) {
 	            return _this5.memberField(housemate, index);
 	          }),
+	          this.addFieldButton(),
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'group-save-button' },
@@ -71078,9 +71096,7 @@
 	  var newState = state;
 	  switch (action.type) {
 	    case _group_actions.RECEIVE_GROUP:
-	      console.log("RECEIVING GROUP");
 	      newState.housemates = action.group.housemates;
-	      console.log((0, _merge2.default)({}, _defaultState, action.group));
 	      return (0, _merge2.default)({}, _defaultState, action.group);
 	    case _group_actions.RECEIVE_ERRORS:
 	      newState.errors = action.errors;
@@ -73350,7 +73366,6 @@
 	          (0, _group_api_util.createGroup)(action.group, successCallback, errorCallback);
 	          return next(action);
 	        case _group_actions.FETCH_A_GROUP:
-	          console.log("FETCHING GROUP");
 	          (0, _group_api_util.fetchGroup)(action.id, successCallback, errorCallback);
 	          return next(action);
 	        case _group_actions.EDIT_GROUP:
