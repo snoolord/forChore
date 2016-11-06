@@ -91,9 +91,12 @@
 	
 	window.createAGroup = GroupAction.createAGroup;
 	window.fetchAGroup = GroupAction.fetchAGroup;
+	window.leaveGroup = GroupAction.leaveGroup;
 	
 	window.createGroup = GroupApi.createGroup;
 	window.fetchGroup = GroupApi.fetchGroup;
+	window.fetchGrouping = GroupApi.fetchGrouping;
+	window.leaveGroup = GroupApi.leaveGroup;
 	
 	window.signup = Actions.signup;
 	window.login = Actions.login;
@@ -21596,7 +21599,6 @@
 	  };
 	
 	  var _requestAGroup = function _requestAGroup(nextState) {
-	    console.log(nextState.params.id);
 	    store.dispatch((0, _group_actions.fetchAGroup)(nextState.params.id));
 	  };
 	
@@ -34310,6 +34312,7 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
 	    loggedIn: Boolean(state.session.currentUser),
+	    currentUserId: state.session.currentUser.id,
 	    groups: state.user.groups,
 	    housemates: state.group.housemates
 	  };
@@ -34319,6 +34322,9 @@
 	  return {
 	    fetchUserGroups: function fetchUserGroups() {
 	      return dispatch((0, _user_actions.fetchUserGroups)());
+	    },
+	    leaveGroup: function leaveGroup(userId, groupId) {
+	      return dispatch((0, _group_actions.leaveGroup)(userId, groupId));
 	    }
 	  };
 	};
@@ -34411,17 +34417,20 @@
 	
 	    var _this = _possibleConstructorReturn(this, (SideBar.__proto__ || Object.getPrototypeOf(SideBar)).call(this, props));
 	
+	    _this.state = {
+	      grouping: -1
+	    };
 	    _this.renderCenter = _this.renderCenter.bind(_this);
+	    _this.handleDestroy = _this.handleDestroy.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(SideBar, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      console.log("here is this working?");
 	      this.props.fetchUserGroups();
 	    }
-	    //
-	
 	  }, {
 	    key: 'groupLinks',
 	    value: function groupLinks() {
@@ -34435,11 +34444,20 @@
 	      });
 	    }
 	  }, {
+	    key: 'handleDestroy',
+	    value: function handleDestroy(groupId) {
+	      var _this3 = this;
+	
+	      return function (e) {
+	        _this3.props.leaveGroup(_this3.props.currentUserId, groupId);
+	      };
+	    }
+	  }, {
 	    key: 'groupLink',
 	    value: function groupLink(groupName, groupId) {
 	      return _react2.default.createElement(
 	        'li',
-	        { key: groupId },
+	        { key: groupId + groupName },
 	        _react2.default.createElement(
 	          _reactRouter.Link,
 	          { to: '/dashboard/groups/' + groupId },
@@ -34450,6 +34468,11 @@
 	            },
 	            groupName
 	          )
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.handleDestroy(groupId) },
+	          '----'
 	        )
 	      );
 	    }
@@ -34482,8 +34505,9 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this3 = this;
+	      var _this4 = this;
 	
+	      console.log(this.props);
 	      var housemates = (0, _values2.default)(this.props.housemates);
 	      if (this.props.loggedIn) {
 	        return _react2.default.createElement(
@@ -34555,7 +34579,7 @@
 	                )
 	              ),
 	              this.props.groups.slice(0, 5).map(function (group) {
-	                return _this3.groupLink(group.title, group.id);
+	                return _this4.groupLink(group.title, group.id);
 	              })
 	            )
 	          ),
@@ -34567,7 +34591,7 @@
 	              'ul',
 	              null,
 	              housemates.map(function (housemate) {
-	                return _this3.housemate(housemate);
+	                return _this4.housemate(housemate);
 	              })
 	            )
 	          )
@@ -39574,6 +39598,9 @@
 	var RECEIVE_ERRORS = exports.RECEIVE_ERRORS = "RECEIVE_ERRORS";
 	var SEND_ERRORS = exports.SEND_ERRORS = "SEND_ERRORS";
 	var CLEAR_ERRORS = exports.CLEAR_ERRORS = "CLEAR_ERRORS";
+	var DELETE_GROUP = exports.DELETE_GROUP = "DELETE_GROUP";
+	var FETCH_GROUPING = exports.FETCH_GROUPING = "FETCH_GROUPING";
+	var LEAVE_GROUP = exports.LEAVE_GROUP = "LEAVE_GROUP";
 	
 	var createAGroup = exports.createAGroup = function createAGroup(group) {
 	  return {
@@ -39606,6 +39633,23 @@
 	var clearErrors = exports.clearErrors = function clearErrors() {
 	  return {
 	    type: CLEAR_ERRORS
+	  };
+	};
+	//
+	// export const deleteGroup = (id) => ({
+	//   type: DELETE_GROUP
+	// });
+	//
+	// export const deleteGrouping = (id) => ({
+	//   type: DELETE_GROUPING,
+	//   id
+	// });
+	
+	var leaveGroup = exports.leaveGroup = function leaveGroup(userId, groupId) {
+	  return {
+	    type: LEAVE_GROUP,
+	    userId: userId,
+	    groupId: groupId
 	  };
 	};
 
@@ -72698,6 +72742,7 @@
 	
 	  switch (action.type) {
 	    case _user_actions.RECEIVE_USER_GROUPS:
+	      console.log("receiving user groups");
 	      return (0, _merge2.default)({}, state, action.groups);
 	    case _user_actions.RECEIVE_USERS:
 	      return (0, _merge2.default)({}, state, action.users);
@@ -72797,6 +72842,8 @@
 	
 	var _group_api_util = __webpack_require__(745);
 	
+	var _user_actions = __webpack_require__(394);
+	
 	exports.default = function (_ref) {
 	  var getState = _ref.getState,
 	      dispatch = _ref.dispatch;
@@ -72815,6 +72862,15 @@
 	          return next(action);
 	        case _group_actions.FETCH_A_GROUP:
 	          (0, _group_api_util.fetchGroup)(action.id, successCallback, errorCallback);
+	          return next(action);
+	        case _group_actions.LEAVE_GROUP:
+	          var success = function success() {
+	            return dispatch((0, _user_actions.fetchUserGroups)());
+	          };
+	          var err = function err(e) {
+	            return console.log(e);
+	          };
+	          (0, _group_api_util.fetchAndDeleteGrouping)(action.userId, action.groupId, success, err);
 	          return next(action);
 	        default:
 	          return next(action);
@@ -72850,6 +72906,24 @@
 	    error: error
 	  });
 	};
+	
+	var fetchAndDeleteGrouping = exports.fetchAndDeleteGrouping = function fetchAndDeleteGrouping(userId, groupId, _success, error) {
+	  var grouping = { user_id: userId, group_id: groupId };
+	  $.ajax({
+	    method: 'GET',
+	    url: 'api/groupings',
+	    data: { grouping: grouping },
+	    success: function success(data) {
+	      $.ajax({
+	        method: "DELETE",
+	        url: 'api/groupings/' + data.id,
+	        success: _success,
+	        error: error
+	      });
+	    },
+	    error: error
+	  });
+	};
 
 /***/ },
 /* 746 */
@@ -72881,6 +72955,7 @@
 	      };
 	      switch (action.type) {
 	        case _user_actions.FETCH_USER_GROUPS:
+	          console.log("fetching user groups");
 	          (0, _user_api_util.getGroups)(successUserGroupsCallback, errorCallback);
 	          return next(action);
 	        case _user_actions.FETCH_USERS:

@@ -12,7 +12,6 @@ class GroupShow extends React.Component {
         <div className="group-show-center">
           <h2>{this.props.title}</h2>
 
-
         </div>
       </div>
     );

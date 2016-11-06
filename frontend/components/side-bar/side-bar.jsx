@@ -8,13 +8,18 @@ import values from 'lodash/values';
 class SideBar extends React.Component {
   constructor(props){
     super(props);
+    this.state = {
+      grouping: -1
+    };
     this.renderCenter = this.renderCenter.bind(this);
+    this.handleDestroy = this.handleDestroy.bind(this);
   }
 
   componentDidMount() {
+    console.log("here is this working?");
     this.props.fetchUserGroups();
   }
-  //
+
   groupLinks() {
     // this.props.groups.forEach( (group) => {
     //   this.groupLink(group.title, group.id);
@@ -24,9 +29,15 @@ class SideBar extends React.Component {
     });
   }
 
+  handleDestroy(groupId) {
+    return e => {
+      this.props.leaveGroup(this.props.currentUserId, groupId);
+    };
+  }
+
   groupLink(groupName, groupId) {
     return (
-      <li key={groupId}>
+      <li key={groupId + groupName}>
           <Link to={`/dashboard/groups/${groupId}`}>
             <FlatButton
               className="sidebar-button"
@@ -34,6 +45,7 @@ class SideBar extends React.Component {
               {groupName}
             </FlatButton>
           </Link>
+          <button onClick={this.handleDestroy(groupId)}>----</button>
       </li>
     );
   }
@@ -57,6 +69,7 @@ class SideBar extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     let housemates = values(this.props.housemates);
     if (this.props.loggedIn) {
       return (

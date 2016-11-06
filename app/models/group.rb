@@ -4,7 +4,7 @@ class Group < ActiveRecord::Base
     primary_key: :id,
     foreign_key: :group_id,
     class_name: "Grouping"
-    
+
   has_many :chores,
     primary_key: :id,
     foreign_key: :group_id,
@@ -13,4 +13,10 @@ class Group < ActiveRecord::Base
   has_many :housemates,
     through: :groupings,
     source: :user
+
+  def destroy_if_empty_housemates
+    if housemates.count == 0
+      self.destroy
+    end
+  end
 end

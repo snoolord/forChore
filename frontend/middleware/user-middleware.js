@@ -24,6 +24,7 @@ export default ({ getState, dispatch }) => next => action => {
   const errorCallback = error => console.log(error);
   switch(action.type) {
     case FETCH_USER_GROUPS:
+      console.log("fetching user groups");
       getGroups(successUserGroupsCallback, errorCallback);
       return next(action);
     case FETCH_USERS:

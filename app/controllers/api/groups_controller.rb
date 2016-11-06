@@ -11,6 +11,11 @@ class Api::GroupsController < ApplicationController
     end
   end
 
+  def destroy
+    @group = Group.find(params[:id])
+    @group.destroy
+    render json: ["deleted"]
+  end
   def show
     @group = Group.find(params[:id])
   end

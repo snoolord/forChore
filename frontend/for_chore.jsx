@@ -8,14 +8,18 @@ import * as GroupApi from './util/group_api_util';
 import * as GroupAction from './actions/group_actions';
 import * as UserAction from './actions/user_actions';
 
+
 window.fetchUserGroups = UserAction.fetchUserGroups;
 window.fetchUsers = UserAction.fetchUsers;
 
 window.createAGroup = GroupAction.createAGroup;
 window.fetchAGroup = GroupAction.fetchAGroup;
+window.leaveGroup = GroupAction.leaveGroup;
 
 window.createGroup = GroupApi.createGroup;
 window.fetchGroup = GroupApi.fetchGroup;
+window.fetchGrouping = GroupApi.fetchGrouping;
+window.leaveGroup = GroupApi.leaveGroup;
 
 window.signup = Actions.signup;
 window.login = Actions.login;

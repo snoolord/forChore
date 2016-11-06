@@ -70,7 +70,6 @@ const Root = ({ store }) => {
   };
 
   const _requestAGroup = (nextState) => {
-    console.log(nextState.params.id);
     store.dispatch(fetchAGroup(nextState.params.id));
   };
 
