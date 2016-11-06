@@ -127,6 +127,11 @@ class SideBar extends React.Component {
             {housemates.map((housemate) => {
               return this.housemate(housemate);
             })}
+            <Link to="/edit_group"
+              className="group-edit-link"
+              >
+              edit
+            </Link>
           </ul>
         </div>
       </div>

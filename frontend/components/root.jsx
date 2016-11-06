@@ -8,6 +8,7 @@ import AppBar from 'material-ui';
 import SideBarContainer from './side-bar/side-bar-container';
 import CreateGroupContainer from './group/create-group-container';
 import GroupShowContainer from './group/group-show-container';
+import EditGroupContainer from './group/edit-group-container';
 // actions
 import { fetchAGroup } from '../actions/group_actions';
 // themes
@@ -86,6 +87,7 @@ const Root = ({ store }) => {
 
           </Route>
           <Route path="/create_group" component={CreateGroupContainer}/>
+          <Route path="/edit_group" component={EditGroupContainer}/>
       </Router>
     </Provider>
   </MuiThemeProvider>
