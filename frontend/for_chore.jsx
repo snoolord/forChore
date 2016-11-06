@@ -12,6 +12,8 @@ import * as UserAction from './actions/user_actions';
 window.fetchUserGroups = UserAction.fetchUserGroups;
 window.fetchUsers = UserAction.fetchUsers;
 
+window.patchGroup = GroupApi.patchGroup;
+window.editGroup = GroupAction.editGroup;
 window.createAGroup = GroupAction.createAGroup;
 window.fetchAGroup = GroupAction.fetchAGroup;
 window.leaveGroup = GroupAction.leaveGroup;

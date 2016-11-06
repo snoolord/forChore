@@ -89,6 +89,8 @@
 	window.fetchUserGroups = UserAction.fetchUserGroups;
 	window.fetchUsers = UserAction.fetchUsers;
 	
+	window.patchGroup = GroupApi.patchGroup;
+	window.editGroup = GroupAction.editGroup;
 	window.createAGroup = GroupAction.createAGroup;
 	window.fetchAGroup = GroupAction.fetchAGroup;
 	window.leaveGroup = GroupAction.leaveGroup;
@@ -40406,6 +40408,7 @@
 	var DELETE_GROUP = exports.DELETE_GROUP = "DELETE_GROUP";
 	var FETCH_GROUPING = exports.FETCH_GROUPING = "FETCH_GROUPING";
 	var LEAVE_GROUP = exports.LEAVE_GROUP = "LEAVE_GROUP";
+	var EDIT_GROUP = exports.EDIT_GROUP = "EDIT_GROUP";
 	
 	var createAGroup = exports.createAGroup = function createAGroup(group) {
 	  return {
@@ -40417,6 +40420,14 @@
 	var fetchAGroup = exports.fetchAGroup = function fetchAGroup(id) {
 	  return {
 	    type: FETCH_A_GROUP,
+	    id: id
+	  };
+	};
+	
+	var editGroup = exports.editGroup = function editGroup(id, group) {
+	  return {
+	    type: EDIT_GROUP,
+	    group: group,
 	    id: id
 	  };
 	};
@@ -73324,6 +73335,9 @@
 	        case _group_actions.FETCH_A_GROUP:
 	          (0, _group_api_util.fetchGroup)(action.id, successCallback, errorCallback);
 	          return next(action);
+	        case _group_actions.EDIT_GROUP:
+	          (0, _group_api_util.patchGroup)(action.id, action.group, successCallback, errorCallback);
+	          return next(action);
 	        case _group_actions.LEAVE_GROUP:
 	          var success = function success() {
 	            return dispatch((0, _user_actions.fetchUserGroups)());
@@ -73363,6 +73377,16 @@
 	  $.ajax({
 	    method: 'GET',
 	    url: 'api/groups/' + id,
+	    success: success,
+	    error: error
+	  });
+	};
+	
+	var patchGroup = exports.patchGroup = function patchGroup(id, group, success, error) {
+	  $.ajax({
+	    method: "PATCH",
+	    url: 'api/groups/' + id,
+	    data: { group: group },
 	    success: success,
 	    error: error
 	  });

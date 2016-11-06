@@ -8,13 +8,14 @@ import {
         RECEIVE_ERRORS,
         LEAVE_GROUP,
         FETCH_GROUPING,
-        fetch
+        EDIT_GROUP
       } from '../actions/group_actions';
 import {
         createGroup,
         fetchGroup,
         leaveGroup,
-        fetchAndDeleteGrouping
+        fetchAndDeleteGrouping,
+        patchGroup
       } from '../util/group_api_util';
 import {
         fetchUserGroups
@@ -32,6 +33,9 @@ export default ({ getState, dispatch }) => next => action => {
       return next(action);
     case FETCH_A_GROUP:
       fetchGroup(action.id, successCallback, errorCallback);
+      return next(action);
+    case EDIT_GROUP:
+      patchGroup(action.id, action.group, successCallback, errorCallback);
       return next(action);
     case LEAVE_GROUP:
       let success = () => dispatch(fetchUserGroups());
