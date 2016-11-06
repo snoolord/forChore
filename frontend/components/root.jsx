@@ -87,7 +87,7 @@ const Root = ({ store }) => {
 
           </Route>
           <Route path="/create_group" component={CreateGroupContainer}/>
-          <Route path="/edit_group" component={EditGroupContainer}/>
+          <Route path="/edit_group/:groupId" component={EditGroupContainer}/>
       </Router>
     </Provider>
   </MuiThemeProvider>

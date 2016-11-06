@@ -12,7 +12,7 @@ class EditGroup extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      title: "",
+      title: '',
       housemates: [],
       fieldName: "housemate-fields",
       created: false,
@@ -23,15 +23,36 @@ class EditGroup extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkForEmptyHousemates = this.checkForEmptyHousemates.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
+    this.memberField = this.memberField.bind(this);
+    this.handleAddField = this.handleAddField.bind(this);
   }
   componentWillUnmount() {
     let errors = [];
     this.props.receiveErrors(errors);
+    this.state = {
+      title: '',
+      housemates: [],
+      fieldName: "housemate-fields",
+      created: false,
+      clearClick: false
+    };
+  }
+
+
+  componentWillReceiveProps() {
+    this.state.title = this.props.title;
+
+    let vals = values(this.props.housemates);
+    let housematesUsernames = [];
+    vals.forEach((object) => {
+      housematesUsernames.push(object.username);
+    });
+    this.state.housemates = housematesUsernames;
   }
   componentDidMount() {
     // create get all users actions\
+    this.props.fetchAGroup(this.props.routeParams.groupId);
     this.props.fetchUsers();
-    console.log(this.props);
   }
   update(field) {
     return e => {
@@ -47,7 +68,6 @@ class EditGroup extends React.Component {
 
   memberUpdate(housemateIndex) {
     return e => {
-      console.log(this.state.housemates);
       let housemates = this.state.housemates;
       housemates[housemateIndex] = e;
       this.setState({'housemates': housemates});
@@ -73,7 +93,6 @@ class EditGroup extends React.Component {
     let allUsers = this.props.users;
     let filledOutUsers = { [this.props.currentUser.username]: this.props.currentUser.id };
     let housemates = this.state.housemates;
-    console.log(housemates);
     let errors = ["","","","",""];
     housemates.forEach( (housemate, index) => {
       if (allUsers[housemate] && !filledOutUsers[housemate]){
@@ -126,66 +145,35 @@ class EditGroup extends React.Component {
       this.props.receiveErrors(errors);
     }
   }
-  memberField() {
+
+  handleAddField() {
+    return e => {
+      this.state.housemates.push("");
+    };
+  }
+
+  memberField(housemate, memberIndex) {
     let users = Object.keys(this.props.users);
       return (
-        <div className={this.state.fieldName}>
+        <div className={this.state.fieldName} key={memberIndex}>
           <AutoComplete
             className="housemate-field"
-            hintText={`Housemate 1`}
+            hintText={`Housemate ${memberIndex+1}`}
             dataSource={users}
-            errorText={this.renderError(0)}
+            errorText={this.renderError(memberIndex)}
             filter={AutoComplete.fuzzyFilter}
-            onUpdateInput={this.memberUpdate(0)}
-            onNewRequest={this.memberUpdate(0)}
-            searchText={this.state.housemates[0]}
+            searchText={housemate}
+            onUpdateInput={this.memberUpdate(memberIndex)}
+            onNewRequest={this.memberUpdate(memberIndex)}
             onFocus={this.handleFocus}>
           </AutoComplete>
-          <AutoComplete
-            className="housemate-field"
-            hintText={`Housemate 2`}
-            dataSource={users}
-            errorText={this.renderError(1)}
-            filter={AutoComplete.fuzzyFilter}
-            onUpdateInput={this.memberUpdate(1)}
-            onNewRequest={this.memberUpdate(1)}
-            onFocus={this.handleFocus}>
-          </AutoComplete>
-          <AutoComplete
-            className="housemate-field"
-            hintText={`Housemate 3`}
-            dataSource={users}
-            errorText={this.renderError(2)}
-            filter={AutoComplete.fuzzyFilter}
-            onUpdateInput={this.memberUpdate(2)}
-            onNewRequest={this.memberUpdate(2)}
-            onFocus={this.handleFocus}>
-          </AutoComplete>
-          <AutoComplete
-            className="housemate-field"
-            hintText={`Housemate 4`}
-            dataSource={users}
-            errorText={this.renderError(3)}
-            filter={AutoComplete.fuzzyFilter}
-            onUpdateInput={this.memberUpdate(3)}
-            onNewRequest={this.memberUpdate(3)}
-            onFocus={this.handleFocus}>
-          </AutoComplete>
-          <AutoComplete
-            className="housemate-field"
-            hintText={`Housemate 5`}
-            dataSource={users}
-            errorText={this.renderError(4)}
-            filter={AutoComplete.fuzzyFilter}
-            onUpdateInput={this.memberUpdate(4)}
-            onNewRequest={this.memberUpdate(4)}
-            onFocus={this.handleFocus}>
-          </AutoComplete>
-
+          <FlatButton onClick={this.handleAddField}></FlatButton>
         </div>
       );
   }
+
   render() {
+    console.log(this.state);
     return (
       <div className="create-group">
         <div className="create-group-name">
@@ -202,7 +190,9 @@ class EditGroup extends React.Component {
             </TextField>
 
           </div>
-          {this.memberField()}
+          {this.state.housemates.map((housemate, index) => {
+            return this.memberField(housemate, index);
+          })}
           <div className="group-save-button">
             <RaisedButton id="group-save-button" type="submit" disabled={this.state.title.length === 0 ? true : false}>Create Group</RaisedButton>
           </div>

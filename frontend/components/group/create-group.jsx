@@ -31,7 +31,6 @@ class CreateGroup extends React.Component {
   componentDidMount() {
     // create get all users actions\
     this.props.fetchUsers();
-    console.log(this.props);
   }
   update(field) {
     return e => {
@@ -47,7 +46,6 @@ class CreateGroup extends React.Component {
 
   memberUpdate(housemateIndex) {
     return e => {
-      console.log(this.state.housemates);
       let housemates = this.state.housemates;
       housemates[housemateIndex] = e;
       this.setState({'housemates': housemates});
@@ -73,7 +71,6 @@ class CreateGroup extends React.Component {
     let allUsers = this.props.users;
     let filledOutUsers = { [this.props.currentUser.username]: this.props.currentUser.id };
     let housemates = this.state.housemates;
-    console.log(housemates);
     let errors = ["","","","",""];
     housemates.forEach( (housemate, index) => {
       if (allUsers[housemate] && !filledOutUsers[housemate]){

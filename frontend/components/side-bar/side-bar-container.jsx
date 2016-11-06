@@ -6,8 +6,6 @@ import { createAGroup, fetchAndDeleteGrouping, leaveGroup } from '../../actions/
 import { fetchUsers } from '../../actions/user_actions';
 
 const mapStateToProps = state => {
-  console.log(state);
-  console.log(state.user.groups);
   return {
     loggedIn: Boolean(state.session.currentUser),
     currentUserId: state.session.currentUser.id,

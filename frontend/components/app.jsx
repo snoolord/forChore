@@ -14,7 +14,6 @@ const style = {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
   }
   componentDidMount() {
     if (this.props.loggedIn) {

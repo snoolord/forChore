@@ -13,10 +13,10 @@ class SideBar extends React.Component {
     };
     this.renderCenter = this.renderCenter.bind(this);
     this.handleDestroy = this.handleDestroy.bind(this);
+    this.editButton = this.editButton.bind(this);
   }
 
   componentDidMount() {
-    console.log("here is this working?");
     this.props.fetchUserGroups();
   }
 
@@ -68,9 +68,22 @@ class SideBar extends React.Component {
     }
   }
 
+  editButton() {
+    let path = this.props.location.pathname;
+    if ( path === '/dashboard') {
+      return <div
+        className="edit-div"></div>;
+    } else {
+      let groupId = parseInt(path.slice(18));
+      return <div
+        className="edit-div">
+        <Link to={`/edit_group/${groupId}`}>Edit</Link>
+      </div>;
+    }
+  }
   render() {
-    console.log(this.props);
     let housemates = values(this.props.housemates);
+    console.log(housemates);
     if (this.props.loggedIn) {
       return (
       <div
@@ -127,11 +140,7 @@ class SideBar extends React.Component {
             {housemates.map((housemate) => {
               return this.housemate(housemate);
             })}
-            <Link to="/edit_group"
-              className="group-edit-link"
-              >
-              edit
-            </Link>
+            {this.editButton()}
           </ul>
         </div>
       </div>
