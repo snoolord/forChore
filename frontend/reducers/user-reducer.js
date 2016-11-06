@@ -13,7 +13,8 @@ const _defaultState = {
 const UserReducer = function( state = _defaultState, action ) {
   switch(action.type) {
     case RECEIVE_USER_GROUPS:
-      console.log("receiving user groups");
+      let newState = state;
+      newState.groups = action.groups;
       return merge({}, state, action.groups);
     case RECEIVE_USERS:
       return merge({}, state, action.users);

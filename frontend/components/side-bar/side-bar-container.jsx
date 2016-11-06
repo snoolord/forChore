@@ -5,12 +5,16 @@ import SideBar from './side-bar';
 import { createAGroup, fetchAndDeleteGrouping, leaveGroup } from '../../actions/group_actions';
 import { fetchUsers } from '../../actions/user_actions';
 
-const mapStateToProps = state => ({
-  loggedIn: Boolean(state.session.currentUser),
-  currentUserId: state.session.currentUser.id,
-  groups: state.user.groups,
-  housemates: state.group.housemates
-});
+const mapStateToProps = state => {
+  console.log(state);
+  console.log(state.user.groups);
+  return {
+    loggedIn: Boolean(state.session.currentUser),
+    currentUserId: state.session.currentUser.id,
+    groups: state.user.groups,
+    housemates: state.group.housemates
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {

@@ -34310,6 +34310,8 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
+	  console.log(state);
+	  console.log(state.user.groups);
 	  return {
 	    loggedIn: Boolean(state.session.currentUser),
 	    currentUserId: state.session.currentUser.id,
@@ -72742,7 +72744,8 @@
 	
 	  switch (action.type) {
 	    case _user_actions.RECEIVE_USER_GROUPS:
-	      console.log("receiving user groups");
+	      var newState = state;
+	      newState.groups = action.groups;
 	      return (0, _merge2.default)({}, state, action.groups);
 	    case _user_actions.RECEIVE_USERS:
 	      return (0, _merge2.default)({}, state, action.users);
