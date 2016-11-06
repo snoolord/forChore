@@ -4,8 +4,9 @@ import FlatButton from 'material-ui/';
 class GroupShow extends React.Component {
   constructor(props) {
     super(props);
-  }  
+  }
   render() {
+    console.log(this.props);
     return(
       <div className="group-show">
         <div className="group-show-center">

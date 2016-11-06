@@ -13,11 +13,12 @@ const _defaultState = {
 };
 
 const GroupReducer = function(state = _defaultState, action) {
+  let newState = state;
   switch(action.type){
     case RECEIVE_GROUP:
-      return merge({}, state, action.group);
+      newState.housemates = action.group.housemates;
+      return merge({}, _defaultState, action.group);
     case RECEIVE_ERRORS:
-      let newState = state;
       newState.errors = action.errors;
       return newState;
     case CLEAR_ERRORS:

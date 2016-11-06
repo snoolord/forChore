@@ -10,7 +10,8 @@ const mapStateToProps = state => {
     loggedIn: Boolean(state.session.currentUser),
     currentUserId: state.session.currentUser.id,
     groups: state.user.groups,
-    housemates: state.group.housemates
+    housemates: state.group.housemates,
+    state
   };
 };
 

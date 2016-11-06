@@ -21605,6 +21605,7 @@
 	  };
 	
 	  var _requestAGroup = function _requestAGroup(nextState) {
+	    console.log("requesting group");
 	    store.dispatch((0, _group_actions.fetchAGroup)(nextState.params.id));
 	  };
 	
@@ -34318,7 +34319,8 @@
 	    loggedIn: Boolean(state.session.currentUser),
 	    currentUserId: state.session.currentUser.id,
 	    groups: state.user.groups,
-	    housemates: state.group.housemates
+	    housemates: state.group.housemates,
+	    state: state
 	  };
 	};
 	
@@ -34533,7 +34535,7 @@
 	      var _this4 = this;
 	
 	      var housemates = (0, _values2.default)(this.props.housemates);
-	      console.log(housemates);
+	      console.log("RERENDER", housemates);
 	      if (this.props.loggedIn) {
 	        return _react2.default.createElement(
 	          'div',
@@ -70570,6 +70572,7 @@
 	  _createClass(GroupShow, [{
 	    key: 'render',
 	    value: function render() {
+	      console.log(this.props);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'group-show' },
@@ -71072,11 +71075,14 @@
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _defaultState;
 	  var action = arguments[1];
 	
+	  var newState = state;
 	  switch (action.type) {
 	    case _group_actions.RECEIVE_GROUP:
-	      return (0, _merge2.default)({}, state, action.group);
+	      console.log("RECEIVING GROUP");
+	      newState.housemates = action.group.housemates;
+	      console.log((0, _merge2.default)({}, _defaultState, action.group));
+	      return (0, _merge2.default)({}, _defaultState, action.group);
 	    case _group_actions.RECEIVE_ERRORS:
-	      var newState = state;
 	      newState.errors = action.errors;
 	      return newState;
 	    case _group_actions.CLEAR_ERRORS:
@@ -73344,6 +73350,7 @@
 	          (0, _group_api_util.createGroup)(action.group, successCallback, errorCallback);
 	          return next(action);
 	        case _group_actions.FETCH_A_GROUP:
+	          console.log("FETCHING GROUP");
 	          (0, _group_api_util.fetchGroup)(action.id, successCallback, errorCallback);
 	          return next(action);
 	        case _group_actions.EDIT_GROUP:
