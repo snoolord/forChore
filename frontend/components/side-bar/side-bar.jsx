@@ -47,7 +47,7 @@ class SideBar extends React.Component {
 
   groupLink(groupName, groupId) {
     return (
-      <ListItem primaryText={groupName} rightIcon={<button onClick={this.handleDestroy(groupId)}>-</button>} onTouchTap={this.handleTouch('/dashboard/groups/' + groupId)}></ListItem>
+      <ListItem key={groupId} primaryText={groupName} rightIcon={<button onClick={this.handleDestroy(groupId)}>-</button>} onTouchTap={this.handleTouch('/dashboard/groups/' + groupId)}></ListItem>
     );
     // <li key={groupId + groupName}>
     //   <Link to={`/dashboard/groups/${groupId}`}>
@@ -73,9 +73,9 @@ class SideBar extends React.Component {
   }
   housemate(housemate) {
     if (this.props.location.pathname === '/dashboard'){
-      return <div></div>;
+      return <div key={housemate.id}></div>;
     } else if (this.props.location.pathname.includes('groups/')){
-      return <ListItem primaryText={housemate.username} />;
+      return <ListItem key={housemate.id} primaryText={housemate.username} />;
     }
   }
 

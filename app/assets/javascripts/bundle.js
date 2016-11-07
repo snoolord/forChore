@@ -34491,7 +34491,7 @@
 	  }, {
 	    key: 'groupLink',
 	    value: function groupLink(groupName, groupId) {
-	      return _react2.default.createElement(_List.ListItem, { primaryText: groupName, rightIcon: _react2.default.createElement(
+	      return _react2.default.createElement(_List.ListItem, { key: groupId, primaryText: groupName, rightIcon: _react2.default.createElement(
 	          'button',
 	          { onClick: this.handleDestroy(groupId) },
 	          '-'
@@ -34524,9 +34524,9 @@
 	    key: 'housemate',
 	    value: function housemate(_housemate) {
 	      if (this.props.location.pathname === '/dashboard') {
-	        return _react2.default.createElement('div', null);
+	        return _react2.default.createElement('div', { key: _housemate.id });
 	      } else if (this.props.location.pathname.includes('groups/')) {
-	        return _react2.default.createElement(_List.ListItem, { primaryText: _housemate.username });
+	        return _react2.default.createElement(_List.ListItem, { key: _housemate.id, primaryText: _housemate.username });
 	      }
 	    }
 	  }, {
