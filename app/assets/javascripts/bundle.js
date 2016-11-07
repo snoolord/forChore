@@ -70736,9 +70736,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _materialUi = __webpack_require__(529);
+	var _FlatButton = __webpack_require__(259);
 	
-	var _materialUi2 = _interopRequireDefault(_materialUi);
+	var _FlatButton2 = _interopRequireDefault(_FlatButton);
 	
 	var _RaisedButton = __webpack_require__(385);
 	
@@ -70748,6 +70748,14 @@
 	
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 	
+	var _DatePicker = __webpack_require__(561);
+	
+	var _DatePicker2 = _interopRequireDefault(_DatePicker);
+	
+	var _createChoreContainer = __webpack_require__(760);
+	
+	var _createChoreContainer2 = _interopRequireDefault(_createChoreContainer);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -70755,6 +70763,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// todo: NEED TO CHANGE TO CREATE CHORE CONTAINER
 	
 	var GroupShow = function (_React$Component) {
 	  _inherits(GroupShow, _React$Component);
@@ -70764,11 +70774,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (GroupShow.__proto__ || Object.getPrototypeOf(GroupShow)).call(this, props));
 	
-	    _this.state = {
-	      open: false
-	    };
-	    _this.handleOpen = _this.handleOpen.bind(_this);
-	    _this.handleClose = _this.handleClose.bind(_this);
+	    console.log(_this.props);
 	    return _this;
 	  }
 	
@@ -70796,7 +70802,7 @@
 	            null,
 	            this.props.title
 	          ),
-	          _react2.default.createElement(_RaisedButton2.default, { label: 'Add Chore', onTouchTap: this.handleOpen })
+	          _react2.default.createElement(_createChoreContainer2.default, { props: this.props })
 	        )
 	      );
 	    }
@@ -73816,6 +73822,141 @@
 	    error: error
 	  });
 	};
+
+/***/ },
+/* 760 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(173);
+	
+	var _createChore = __webpack_require__(761);
+	
+	var _createChore2 = _interopRequireDefault(_createChore);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(props) {
+	  return {
+	    props: props
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(_createChore2.default);
+
+/***/ },
+/* 761 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Dialog = __webpack_require__(577);
+	
+	var _Dialog2 = _interopRequireDefault(_Dialog);
+	
+	var _FlatButton = __webpack_require__(259);
+	
+	var _FlatButton2 = _interopRequireDefault(_FlatButton);
+	
+	var _RaisedButton = __webpack_require__(385);
+	
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+	
+	var _DatePicker = __webpack_require__(561);
+	
+	var _DatePicker2 = _interopRequireDefault(_DatePicker);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	/**
+	 * Dialogs can be nested. This example opens a Date Picker from within a Dialog.
+	 */
+	var CreateChore = function (_React$Component) {
+	  _inherits(CreateChore, _React$Component);
+	
+	  function CreateChore() {
+	    _classCallCheck(this, CreateChore);
+	
+	    return _possibleConstructorReturn(this, (CreateChore.__proto__ || Object.getPrototypeOf(CreateChore)).apply(this, arguments));
+	  }
+	
+	  _createClass(CreateChore, [{
+	    key: 'contructor',
+	    value: function contructor(props) {
+	      this.state = {
+	        open: false
+	      };
+	      console.log("does this hit");
+	      this.handleOpen = this.handleOpen.bind(this);
+	      this.handleClose = this.handleClose.bind(this);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.state = {
+	        open: false
+	      };
+	    }
+	  }, {
+	    key: 'handleOpen',
+	    value: function handleOpen() {
+	      return function (e) {
+	        console.log("opening");
+	      };
+	    }
+	  }, {
+	    key: 'handleClose',
+	    value: function handleClose() {
+	      return function (e) {
+	        console.log("closing");
+	      };
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var actions = [_react2.default.createElement(_FlatButton2.default, {
+	        label: 'Ok',
+	        primary: true,
+	        keyboardFocused: true,
+	        onTouchTap: this.handleClose
+	      })];
+	      if (this.state) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(_RaisedButton2.default, { label: 'Dialog With Date Picker', onClick: this.handleOpen.bind(this) })
+	        );
+	      } else {
+	        return _react2.default.createElement('div', null);
+	      }
+	    }
+	  }]);
+	
+	  return CreateChore;
+	}(_react2.default.Component);
+	
+	exports.default = CreateChore;
 
 /***/ }
 /******/ ]);
