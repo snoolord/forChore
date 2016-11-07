@@ -23,6 +23,7 @@ import {
 
 export default ({ getState, dispatch }) => next => action => {
   const successCallback = group => {
+    console.log(group, "In thiS SUCCESS");
     dispatch(receiveGroup(group));
   };
   const errorCallback = errors => dispatch(receiveErrors(errors.responseJSON));
@@ -35,6 +36,7 @@ export default ({ getState, dispatch }) => next => action => {
       fetchGroup(action.id, successCallback, errorCallback);
       return next(action);
     case EDIT_GROUP:
+      // console.log("let's edit");
       patchGroup(action.id, action.group, successCallback, errorCallback);
       return next(action);
     case LEAVE_GROUP:

@@ -128,22 +128,24 @@ class CreateGroup extends React.Component {
   }
   memberField(housemate, memberIndex) {
     let users = Object.keys(this.props.users);
-      return (
-        <div className={this.state.fieldName} key={memberIndex}>
-          <AutoComplete
-            className="housemate-field"
-            hintText={`Housemate ${memberIndex+1}`}
-            dataSource={users}
-            errorText={this.renderError(memberIndex)}
-            filter={AutoComplete.fuzzyFilter}
-            searchText={housemate}
-            onUpdateInput={this.memberUpdate(memberIndex)}
-            onNewRequest={this.memberUpdate(memberIndex)}
-            onFocus={this.handleFocus}
-            >
-          </AutoComplete>
-        </div>
-      );
+    let currentUserIndex = users.indexOf(this.props.currentUser.username);
+    users.splice(currentUserIndex, 1);
+    return (
+      <div className={this.state.fieldName} key={memberIndex}>
+        <AutoComplete
+          className="housemate-field"
+          hintText={`Housemate ${memberIndex+1}`}
+          dataSource={users}
+          errorText={this.renderError(memberIndex)}
+          filter={AutoComplete.fuzzyFilter}
+          searchText={housemate}
+          onUpdateInput={this.memberUpdate(memberIndex)}
+          onNewRequest={this.memberUpdate(memberIndex)}
+          onFocus={this.handleFocus}
+          >
+        </AutoComplete>
+      </div>
+    );
   }
   handleAddField() {
     return e => {

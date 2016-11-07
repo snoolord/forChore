@@ -16,7 +16,8 @@ const GroupReducer = function(state = _defaultState, action) {
   let newState = state;
   switch(action.type){
     case RECEIVE_GROUP:
-      newState.housemates = action.group.housemates;
+      console.log("receiving group!!! from success");
+      console.log(action);
       return merge({}, _defaultState, action.group);
     case RECEIVE_ERRORS:
       newState.errors = action.errors;

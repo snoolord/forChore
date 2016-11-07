@@ -64,16 +64,17 @@ const Root = ({ store }) => {
     }
   };
 
-  const _redirectIfLoggedOut = (nextState, replace) => {
-    const currentUser = store.getState().session.currentUser;
-    console.log(currentUser);
-    console.log("are we going here? redirect if logged out");
-    if (currentUser === null) {
-      replace('/');
-    }
-  };
+  // const _redirectIfLoggedOut = (nextState, replace) => {
+  //   const currentUser = store.getState().session.currentUser;
+  //   console.log(currentUser);
+  //   console.log("are we going here? redirect if logged out");
+  //   if (currentUser === null) {
+  //     replace('/');
+  //   }
+  // };
 
   const _requestAGroup = (nextState) => {
+    console.log("the show page");
     store.dispatch(fetchAGroup(nextState.params.id));
   };
 
@@ -84,7 +85,7 @@ const Root = ({ store }) => {
           <Route path="/" component={AppContainer}>
             <Route path="/login" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
             <Route path="/signup" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
-            <Route path="/dashboard" component={SideBarContainer} onEnter={_redirectIfLoggedOut}>
+            <Route path="/dashboard" component={SideBarContainer}>
               <Route path="/dashboard/groups/:id" component={GroupShowContainer} onEnter={_requestAGroup} />
             </Route>
 

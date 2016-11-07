@@ -121,7 +121,7 @@ class EditGroup extends React.Component {
 
   redirectIfUpdated() {
     if (this.state.updated) {
-      this.props.router.push(`/dashboard/${this.props.routeParams.groupId}`);
+      this.props.router.push(`/dashboard/groups/${this.props.routeParams.groupId}`);
     }
   }
 

@@ -5,12 +5,7 @@ class GroupShow extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-    console.log(this.props);
-    this.props.fetchAGroup(this.props.routeParams.id);
-  }
   render() {
-    console.log(this.props);
     return(
       <div className="group-show">
         <div className="group-show-center">

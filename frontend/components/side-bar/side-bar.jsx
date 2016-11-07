@@ -88,7 +88,7 @@ class SideBar extends React.Component {
       let groupId = parseInt(path.slice(18));
       return <div
         className="edit-div">
-        <ListItem primaryText="Edit" onTouchTap={this.handleTouch('/edit_group/' + groupId)}/> 
+        <ListItem primaryText="Edit" onTouchTap={this.handleTouch('/edit_group/' + groupId)}/>
       </div>;
     }
   }

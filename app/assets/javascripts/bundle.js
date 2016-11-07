@@ -21598,16 +21598,17 @@
 	    }
 	  };
 	
-	  var _redirectIfLoggedOut = function _redirectIfLoggedOut(nextState, replace) {
-	    var currentUser = store.getState().session.currentUser;
-	    console.log(currentUser);
-	    console.log("are we going here? redirect if logged out");
-	    if (currentUser === null) {
-	      replace('/');
-	    }
-	  };
+	  // const _redirectIfLoggedOut = (nextState, replace) => {
+	  //   const currentUser = store.getState().session.currentUser;
+	  //   console.log(currentUser);
+	  //   console.log("are we going here? redirect if logged out");
+	  //   if (currentUser === null) {
+	  //     replace('/');
+	  //   }
+	  // };
 	
 	  var _requestAGroup = function _requestAGroup(nextState) {
+	    console.log("the show page");
 	    store.dispatch((0, _group_actions.fetchAGroup)(nextState.params.id));
 	  };
 	
@@ -21627,7 +21628,7 @@
 	          _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _sessionFormContainer2.default, onEnter: _redirectIfLoggedIn }),
 	          _react2.default.createElement(
 	            _reactRouter.Route,
-	            { path: '/dashboard', component: _sideBarContainer2.default, onEnter: _redirectIfLoggedOut },
+	            { path: '/dashboard', component: _sideBarContainer2.default },
 	            _react2.default.createElement(_reactRouter.Route, { path: '/dashboard/groups/:id', component: _groupShowContainer2.default, onEnter: _requestAGroup })
 	          )
 	        ),
@@ -69992,6 +69993,8 @@
 	    key: 'memberField',
 	    value: function memberField(housemate, memberIndex) {
 	      var users = Object.keys(this.props.users);
+	      var currentUserIndex = users.indexOf(this.props.currentUser.username);
+	      users.splice(currentUserIndex, 1);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: this.state.fieldName, key: memberIndex },
@@ -70750,15 +70753,8 @@
 	  }
 	
 	  _createClass(GroupShow, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      console.log(this.props);
-	      this.props.fetchAGroup(this.props.routeParams.id);
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'group-show' },
@@ -71024,7 +71020,7 @@
 	    key: 'redirectIfUpdated',
 	    value: function redirectIfUpdated() {
 	      if (this.state.updated) {
-	        this.props.router.push('/dashboard/' + this.props.routeParams.groupId);
+	        this.props.router.push('/dashboard/groups/' + this.props.routeParams.groupId);
 	      }
 	    }
 	  }, {
@@ -71289,7 +71285,8 @@
 	  var newState = state;
 	  switch (action.type) {
 	    case _group_actions.RECEIVE_GROUP:
-	      newState.housemates = action.group.housemates;
+	      console.log("receiving group!!! from success");
+	      console.log(action);
 	      return (0, _merge2.default)({}, _defaultState, action.group);
 	    case _group_actions.RECEIVE_ERRORS:
 	      newState.errors = action.errors;
@@ -73548,6 +73545,7 @@
 	  return function (next) {
 	    return function (action) {
 	      var successCallback = function successCallback(group) {
+	        console.log(group, "In thiS SUCCESS");
 	        dispatch((0, _group_actions.receiveGroup)(group));
 	      };
 	      var errorCallback = function errorCallback(errors) {
@@ -73562,6 +73560,7 @@
 	          (0, _group_api_util.fetchGroup)(action.id, successCallback, errorCallback);
 	          return next(action);
 	        case _group_actions.EDIT_GROUP:
+	          // console.log("let's edit");
 	          (0, _group_api_util.patchGroup)(action.id, action.group, successCallback, errorCallback);
 	          return next(action);
 	        case _group_actions.LEAVE_GROUP:
