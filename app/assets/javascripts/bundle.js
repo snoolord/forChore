@@ -21592,6 +21592,7 @@
 	
 	  var _redirectIfLoggedIn = function _redirectIfLoggedIn(nextState, replace) {
 	    var currentUser = store.getState().session.currentUser;
+	    console.log("are we going here?");
 	    if (currentUser) {
 	      replace('/dashboard');
 	    }
@@ -21599,6 +21600,8 @@
 	
 	  var _redirectIfLoggedOut = function _redirectIfLoggedOut(nextState, replace) {
 	    var currentUser = store.getState().session.currentUser;
+	    console.log(currentUser);
+	    console.log("are we going here? redirect if logged out");
 	    if (currentUser === null) {
 	      replace('/');
 	    }
@@ -69989,25 +69992,21 @@
 	    key: 'memberField',
 	    value: function memberField(housemate, memberIndex) {
 	      var users = Object.keys(this.props.users);
-	      if (housemate === this.props.currentUser.username) {
-	        return _react2.default.createElement('div', { key: memberIndex });
-	      } else {
-	        return _react2.default.createElement(
-	          'div',
-	          { className: this.state.fieldName, key: memberIndex },
-	          _react2.default.createElement(_AutoComplete2.default, {
-	            className: 'housemate-field',
-	            hintText: 'Housemate ' + (memberIndex + 1),
-	            dataSource: users,
-	            errorText: this.renderError(memberIndex),
-	            filter: _AutoComplete2.default.fuzzyFilter,
-	            searchText: housemate,
-	            onUpdateInput: this.memberUpdate(memberIndex),
-	            onNewRequest: this.memberUpdate(memberIndex),
-	            onFocus: this.handleFocus
-	          })
-	        );
-	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { className: this.state.fieldName, key: memberIndex },
+	        _react2.default.createElement(_AutoComplete2.default, {
+	          className: 'housemate-field',
+	          hintText: 'Housemate ' + (memberIndex + 1),
+	          dataSource: users,
+	          errorText: this.renderError(memberIndex),
+	          filter: _AutoComplete2.default.fuzzyFilter,
+	          searchText: housemate,
+	          onUpdateInput: this.memberUpdate(memberIndex),
+	          onNewRequest: this.memberUpdate(memberIndex),
+	          onFocus: this.handleFocus
+	        })
+	      );
 	    }
 	  }, {
 	    key: 'handleAddField',
@@ -70926,12 +70925,16 @@
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps() {
+	      var _this2 = this;
+	
 	      this.state.title = this.props.title;
 	
 	      var vals = (0, _values2.default)(this.props.housemates);
 	      var housematesUsernames = [];
 	      vals.forEach(function (object) {
-	        housematesUsernames.push(object.username);
+	        if (object.username === _this2.props.currentUser.username) {} else {
+	          housematesUsernames.push(object.username);
+	        }
 	      });
 	      this.state.housemates = housematesUsernames;
 	    }
@@ -70945,14 +70948,14 @@
 	  }, {
 	    key: 'update',
 	    value: function update(field) {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      return function (e) {
-	        _this2.setState(_defineProperty({}, field, e.currentTarget.value), function () {
-	          if (_this2.state.title.length > 0) {
-	            _this2.setState({ fieldName: "housemate-fields-active" });
+	        _this3.setState(_defineProperty({}, field, e.currentTarget.value), function () {
+	          if (_this3.state.title.length > 0) {
+	            _this3.setState({ fieldName: "housemate-fields-active" });
 	          } else {
-	            _this2.setState({ fieldName: "housemate-fields" });
+	            _this3.setState({ fieldName: "housemate-fields" });
 	          }
 	        });
 	      };
@@ -70960,12 +70963,12 @@
 	  }, {
 	    key: 'memberUpdate',
 	    value: function memberUpdate(housemateIndex) {
-	      var _this3 = this;
+	      var _this4 = this;
 	
 	      return function (e) {
-	        var housemates = _this3.state.housemates;
+	        var housemates = _this4.state.housemates;
 	        housemates[housemateIndex] = e;
-	        _this3.setState({ 'housemates': housemates });
+	        _this4.setState({ 'housemates': housemates });
 	      };
 	    }
 	  }, {
@@ -70987,7 +70990,7 @@
 	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
-	      var _this4 = this;
+	      var _this5 = this;
 	
 	      e.preventDefault();
 	      var allUsers = this.props.users;
@@ -70997,7 +71000,7 @@
 	      housemates.forEach(function (housemate, index) {
 	        if (allUsers[housemate] && !filledOutUsers[housemate]) {
 	          filledOutUsers[housemate] = allUsers[housemate];
-	        } else if (housemate === "") {} else if (housemate === _this4.props.currentUser.username) {} else {
+	        } else if (housemate === "") {} else if (housemate === _this5.props.currentUser.username) {} else {
 	          errors[index] = "Invalid User";
 	        }
 	      });
@@ -71020,9 +71023,8 @@
 	  }, {
 	    key: 'redirectIfUpdated',
 	    value: function redirectIfUpdated() {
-	      console.log(this.props.routeParams.groupId);
 	      if (this.state.updated) {
-	        this.props.router.push('/dashboard/groups/' + this.props.routeParams.groupId);
+	        this.props.router.push('/dashboard/' + this.props.routeParams.groupId);
 	      }
 	    }
 	  }, {
@@ -71052,13 +71054,13 @@
 	  }, {
 	    key: 'handleAddField',
 	    value: function handleAddField() {
-	      var _this5 = this;
+	      var _this6 = this;
 	
 	      return function (e) {
 	        e.preventDefault();
-	        var housemates = _this5.state.housemates;
+	        var housemates = _this6.state.housemates;
 	        housemates.push("");
-	        _this5.setState({ 'housemates': housemates });
+	        _this6.setState({ 'housemates': housemates });
 	      };
 	    }
 	  }, {
@@ -71082,29 +71084,27 @@
 	    key: 'memberField',
 	    value: function memberField(housemate, memberIndex) {
 	      var users = Object.keys(this.props.users);
-	      if (housemate === this.props.currentUser.username) {
-	        return _react2.default.createElement('div', { key: memberIndex });
-	      } else {
-	        return _react2.default.createElement(
-	          'div',
-	          { className: this.state.fieldName, key: memberIndex },
-	          _react2.default.createElement(_AutoComplete2.default, {
-	            className: 'housemate-field',
-	            hintText: 'Housemate ' + (memberIndex + 1),
-	            dataSource: users,
-	            errorText: this.renderError(memberIndex),
-	            filter: _AutoComplete2.default.fuzzyFilter,
-	            searchText: housemate,
-	            onUpdateInput: this.memberUpdate(memberIndex),
-	            onNewRequest: this.memberUpdate(memberIndex),
-	            onFocus: this.handleFocus })
-	        );
-	      }
+	      var currentUserIndex = users.indexOf(this.props.currentUser.username);
+	      users.splice(currentUserIndex, 1);
+	      return _react2.default.createElement(
+	        'div',
+	        { className: this.state.fieldName, key: memberIndex },
+	        _react2.default.createElement(_AutoComplete2.default, {
+	          className: 'housemate-field',
+	          hintText: 'Housemate ' + (memberIndex + 1),
+	          dataSource: users,
+	          errorText: this.renderError(memberIndex),
+	          filter: _AutoComplete2.default.fuzzyFilter,
+	          searchText: housemate,
+	          onUpdateInput: this.memberUpdate(memberIndex),
+	          onNewRequest: this.memberUpdate(memberIndex),
+	          onFocus: this.handleFocus })
+	      );
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this6 = this;
+	      var _this7 = this;
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -71131,7 +71131,7 @@
 	              value: this.state.title })
 	          ),
 	          this.state.housemates.map(function (housemate, index) {
-	            return _this6.memberField(housemate, index);
+	            return _this7.memberField(housemate, index);
 	          }),
 	          this.addFieldButton(),
 	          _react2.default.createElement(

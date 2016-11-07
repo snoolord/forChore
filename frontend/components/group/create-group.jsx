@@ -128,9 +128,6 @@ class CreateGroup extends React.Component {
   }
   memberField(housemate, memberIndex) {
     let users = Object.keys(this.props.users);
-    if (housemate === this.props.currentUser.username){
-      return <div key={memberIndex}></div>;
-    } else {
       return (
         <div className={this.state.fieldName} key={memberIndex}>
           <AutoComplete
@@ -147,7 +144,6 @@ class CreateGroup extends React.Component {
           </AutoComplete>
         </div>
       );
-    }
   }
   handleAddField() {
     return e => {

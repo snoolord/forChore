@@ -58,6 +58,7 @@ const Root = ({ store }) => {
 
   const _redirectIfLoggedIn = (nextState, replace) => {
     const currentUser = store.getState().session.currentUser;
+    console.log("are we going here?");
     if (currentUser) {
       replace('/dashboard');
     }
@@ -65,6 +66,8 @@ const Root = ({ store }) => {
 
   const _redirectIfLoggedOut = (nextState, replace) => {
     const currentUser = store.getState().session.currentUser;
+    console.log(currentUser);
+    console.log("are we going here? redirect if logged out");
     if (currentUser === null) {
       replace('/');
     }

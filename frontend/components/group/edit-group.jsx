@@ -39,7 +39,11 @@ class EditGroup extends React.Component {
     let vals = values(this.props.housemates);
     let housematesUsernames = [];
     vals.forEach((object) => {
-      housematesUsernames.push(object.username);
+      if (object.username === this.props.currentUser.username) {
+
+      } else {
+        housematesUsernames.push(object.username);
+      }
     });
     this.state.housemates = housematesUsernames;
   }
@@ -116,9 +120,8 @@ class EditGroup extends React.Component {
   }
 
   redirectIfUpdated() {
-    console.log(this.props.routeParams.groupId);
     if (this.state.updated) {
-      this.props.router.push('/dashboard/groups/'+this.props.routeParams.groupId);
+      this.props.router.push(`/dashboard/${this.props.routeParams.groupId}`);
     }
   }
 
@@ -164,28 +167,27 @@ class EditGroup extends React.Component {
   }
   memberField(housemate, memberIndex) {
     let users = Object.keys(this.props.users);
-    if (housemate === this.props.currentUser.username){
-      return <div key={memberIndex}></div>;
-    } else {
-      return (
-        <div className={this.state.fieldName} key={memberIndex}>
-          <AutoComplete
-            className="housemate-field"
-            hintText={`Housemate ${memberIndex+1}`}
-            dataSource={users}
-            errorText={this.renderError(memberIndex)}
-            filter={AutoComplete.fuzzyFilter}
-            searchText={housemate}
-            onUpdateInput={this.memberUpdate(memberIndex)}
-            onNewRequest={this.memberUpdate(memberIndex)}
-            onFocus={this.handleFocus}>
-          </AutoComplete>
-        </div>
-      );
-    }
+    let currentUserIndex = users.indexOf(this.props.currentUser.username);
+    users.splice(currentUserIndex, 1);
+    return (
+      <div className={this.state.fieldName} key={memberIndex}>
+        <AutoComplete
+          className="housemate-field"
+          hintText={`Housemate ${memberIndex+1}`}
+          dataSource={users}
+          errorText={this.renderError(memberIndex)}
+          filter={AutoComplete.fuzzyFilter}
+          searchText={housemate}
+          onUpdateInput={this.memberUpdate(memberIndex)}
+          onNewRequest={this.memberUpdate(memberIndex)}
+          onFocus={this.handleFocus}>
+        </AutoComplete>
+      </div>
+    );
   }
 
   render() {
+
     return (
       <div className="edit-group">
         <div className="edit-group-name">
@@ -203,6 +205,7 @@ class EditGroup extends React.Component {
             </TextField>
 
           </div>
+
           {this.state.housemates.map((housemate, index) => {
             return this.memberField(housemate, index);
           })}
