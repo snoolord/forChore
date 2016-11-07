@@ -1,5 +1,5 @@
 class Chore < ActiveRecord::Base
-  validates :user, :group, :complete_by, :complete
+  validates :user, :group, :complete_by, :complete, presence: true
   belongs_to :user,
     primary_key: :id,
     foreign_key: :user_id,
