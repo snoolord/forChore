@@ -1,6 +1,7 @@
 .splash {
   display: flex;
   justify-content: center;
+  color: rgb(140, 140, 161);
   font-family: 'Roboto', sans-serif;
   box-shadow: 0 0 12px rgba(0,0,0,0.2);
   height: 400px;
@@ -13,7 +14,6 @@
   float: left;
   color: white !important;
   display: block !important;
-  background-color: red !important;
   height: 20px;
   border-radius: 10px;
 }

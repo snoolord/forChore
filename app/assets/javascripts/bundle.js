@@ -71020,8 +71020,9 @@
 	  }, {
 	    key: 'redirectIfUpdated',
 	    value: function redirectIfUpdated() {
+	      console.log(this.props.routeParams.groupId);
 	      if (this.state.updated) {
-	        this.props.router.push('/dashboard');
+	        this.props.router.push('/dashboard/groups/' + this.props.routeParams.groupId);
 	      }
 	    }
 	  }, {
