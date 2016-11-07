@@ -91,7 +91,9 @@ class EditGroup extends React.Component {
     housemates.forEach( (housemate, index) => {
       if (allUsers[housemate] && !filledOutUsers[housemate]){
         filledOutUsers[housemate] = allUsers[housemate];
-      } else if (housemate === ""){
+      } else if (housemate === "") {
+
+      } else if (housemate === this.props.currentUser.username){
 
       } else {
         errors[index] = "Invalid User";
@@ -101,8 +103,7 @@ class EditGroup extends React.Component {
       return error === "";
     })){
       let group = { title: this.state.title, housemate_ids: values(filledOutUsers)};
-      let groupId = parseInt(this.props.routeParams);
-      console.log(groupId, group);
+      let groupId = parseInt(this.props.routeParams.groupId);
       this.props.editGroup(groupId, group);
       this.setState({["updated"]: true});
     } else {
@@ -163,7 +164,7 @@ class EditGroup extends React.Component {
   memberField(housemate, memberIndex) {
     let users = Object.keys(this.props.users);
     if (housemate === this.props.currentUser.username){
-      return <div></div>;
+      return <div key={memberIndex}></div>;
     } else {
       return (
         <div className={this.state.fieldName} key={memberIndex}>

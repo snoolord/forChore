@@ -70798,6 +70798,8 @@
 	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
+	      var _this4 = this;
+	
 	      e.preventDefault();
 	      var allUsers = this.props.users;
 	      var filledOutUsers = _defineProperty({}, this.props.currentUser.username, this.props.currentUser.id);
@@ -70806,7 +70808,7 @@
 	      housemates.forEach(function (housemate, index) {
 	        if (allUsers[housemate] && !filledOutUsers[housemate]) {
 	          filledOutUsers[housemate] = allUsers[housemate];
-	        } else if (housemate === "") {} else {
+	        } else if (housemate === "") {} else if (housemate === _this4.props.currentUser.username) {} else {
 	          errors[index] = "Invalid User";
 	        }
 	      });
@@ -70814,8 +70816,7 @@
 	        return error === "";
 	      })) {
 	        var group = { title: this.state.title, housemate_ids: (0, _values2.default)(filledOutUsers) };
-	        var groupId = parseInt(this.props.routeParams);
-	        console.log(groupId, group);
+	        var groupId = parseInt(this.props.routeParams.groupId);
 	        this.props.editGroup(groupId, group);
 	        this.setState(_defineProperty({}, "updated", true));
 	      } else {
@@ -70861,13 +70862,13 @@
 	  }, {
 	    key: 'handleAddField',
 	    value: function handleAddField() {
-	      var _this4 = this;
+	      var _this5 = this;
 	
 	      return function (e) {
 	        e.preventDefault();
-	        var housemates = _this4.state.housemates;
+	        var housemates = _this5.state.housemates;
 	        housemates.push("");
-	        _this4.setState({ 'housemates': housemates });
+	        _this5.setState({ 'housemates': housemates });
 	      };
 	    }
 	  }, {
@@ -70892,7 +70893,7 @@
 	    value: function memberField(housemate, memberIndex) {
 	      var users = Object.keys(this.props.users);
 	      if (housemate === this.props.currentUser.username) {
-	        return _react2.default.createElement('div', null);
+	        return _react2.default.createElement('div', { key: memberIndex });
 	      } else {
 	        return _react2.default.createElement(
 	          'div',
@@ -70913,7 +70914,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this5 = this;
+	      var _this6 = this;
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -70940,7 +70941,7 @@
 	              value: this.state.title })
 	          ),
 	          this.state.housemates.map(function (housemate, index) {
-	            return _this5.memberField(housemate, index);
+	            return _this6.memberField(housemate, index);
 	          }),
 	          this.addFieldButton(),
 	          _react2.default.createElement(
