@@ -13,7 +13,7 @@ class CreateGroup extends React.Component {
     super(props);
     this.state = {
       title: "",
-      housemates: [],
+      housemates: ["","","","",""],
       fieldName: "housemate-fields",
       created: false,
       clearClick: false
@@ -23,6 +23,9 @@ class CreateGroup extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkForEmptyHousemates = this.checkForEmptyHousemates.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
+    this.handleAddField = this.handleAddField.bind(this);
+    this.addFieldButton = this.addFieldButton.bind(this);
+    this.memberField = this.memberField.bind(this);
   }
   componentWillUnmount() {
     let errors = [];
@@ -123,64 +126,44 @@ class CreateGroup extends React.Component {
       this.props.receiveErrors(errors);
     }
   }
-  memberField() {
+  memberField(housemate, memberIndex) {
     let users = Object.keys(this.props.users);
+    if (housemate === this.props.currentUser.username){
+      return <div key={memberIndex}></div>;
+    } else {
       return (
-        <div className={this.state.fieldName}>
+        <div className={this.state.fieldName} key={memberIndex}>
           <AutoComplete
             className="housemate-field"
-            hintText={`Housemate 1`}
+            hintText={`Housemate ${memberIndex+1}`}
             dataSource={users}
-            errorText={this.renderError(0)}
+            errorText={this.renderError(memberIndex)}
             filter={AutoComplete.fuzzyFilter}
-            onUpdateInput={this.memberUpdate(0)}
-            onNewRequest={this.memberUpdate(0)}
-            searchText={this.state.housemates[0]}
+            searchText={housemate}
+            onUpdateInput={this.memberUpdate(memberIndex)}
+            onNewRequest={this.memberUpdate(memberIndex)}
             onFocus={this.handleFocus}>
           </AutoComplete>
-          <AutoComplete
-            className="housemate-field"
-            hintText={`Housemate 2`}
-            dataSource={users}
-            errorText={this.renderError(1)}
-            filter={AutoComplete.fuzzyFilter}
-            onUpdateInput={this.memberUpdate(1)}
-            onNewRequest={this.memberUpdate(1)}
-            onFocus={this.handleFocus}>
-          </AutoComplete>
-          <AutoComplete
-            className="housemate-field"
-            hintText={`Housemate 3`}
-            dataSource={users}
-            errorText={this.renderError(2)}
-            filter={AutoComplete.fuzzyFilter}
-            onUpdateInput={this.memberUpdate(2)}
-            onNewRequest={this.memberUpdate(2)}
-            onFocus={this.handleFocus}>
-          </AutoComplete>
-          <AutoComplete
-            className="housemate-field"
-            hintText={`Housemate 4`}
-            dataSource={users}
-            errorText={this.renderError(3)}
-            filter={AutoComplete.fuzzyFilter}
-            onUpdateInput={this.memberUpdate(3)}
-            onNewRequest={this.memberUpdate(3)}
-            onFocus={this.handleFocus}>
-          </AutoComplete>
-          <AutoComplete
-            className="housemate-field"
-            hintText={`Housemate 5`}
-            dataSource={users}
-            errorText={this.renderError(4)}
-            filter={AutoComplete.fuzzyFilter}
-            onUpdateInput={this.memberUpdate(4)}
-            onNewRequest={this.memberUpdate(4)}
-            onFocus={this.handleFocus}>
-          </AutoComplete>
-
         </div>
       );
+    }
+  }
+  handleAddField() {
+    return e => {
+      e.preventDefault();
+      let housemates = this.state.housemates;
+      housemates.push("");
+      this.setState({'housemates': housemates});
+    };
+  }
+  addFieldButton() {
+    if (this.state.title.length !== 0 ) {
+      return <div className="field-button">
+        <button onClick={this.handleAddField()}>+</button>
+      </div>;
+    } else {
+      return <div className="field-button"></div>;
+    }
   }
   render() {
     return (
@@ -199,7 +182,10 @@ class CreateGroup extends React.Component {
             </TextField>
 
           </div>
-          {this.memberField()}
+          {this.state.housemates.map((housemate, index) => {
+            return this.memberField(housemate, index);
+          })}
+          {this.addFieldButton()}
           <div className="group-save-button">
             <RaisedButton id="group-save-button" type="submit" disabled={this.state.title.length === 0 ? true : false}>Create Group</RaisedButton>
           </div>

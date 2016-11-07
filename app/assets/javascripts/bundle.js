@@ -69682,7 +69682,7 @@
 	
 	    _this.state = {
 	      title: "",
-	      housemates: [],
+	      housemates: ["", "", "", "", ""],
 	      fieldName: "housemate-fields",
 	      created: false,
 	      clearClick: false
@@ -69692,6 +69692,9 @@
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    _this.checkForEmptyHousemates = _this.checkForEmptyHousemates.bind(_this);
 	    _this.handleFocus = _this.handleFocus.bind(_this);
+	    _this.handleAddField = _this.handleAddField.bind(_this);
+	    _this.addFieldButton = _this.addFieldButton.bind(_this);
+	    _this.memberField = _this.memberField.bind(_this);
 	    return _this;
 	  }
 	
@@ -69812,62 +69815,61 @@
 	    }
 	  }, {
 	    key: 'memberField',
-	    value: function memberField() {
+	    value: function memberField(housemate, memberIndex) {
 	      var users = Object.keys(this.props.users);
-	      return _react2.default.createElement(
-	        'div',
-	        { className: this.state.fieldName },
-	        _react2.default.createElement(_AutoComplete2.default, {
-	          className: 'housemate-field',
-	          hintText: 'Housemate 1',
-	          dataSource: users,
-	          errorText: this.renderError(0),
-	          filter: _AutoComplete2.default.fuzzyFilter,
-	          onUpdateInput: this.memberUpdate(0),
-	          onNewRequest: this.memberUpdate(0),
-	          searchText: this.state.housemates[0],
-	          onFocus: this.handleFocus }),
-	        _react2.default.createElement(_AutoComplete2.default, {
-	          className: 'housemate-field',
-	          hintText: 'Housemate 2',
-	          dataSource: users,
-	          errorText: this.renderError(1),
-	          filter: _AutoComplete2.default.fuzzyFilter,
-	          onUpdateInput: this.memberUpdate(1),
-	          onNewRequest: this.memberUpdate(1),
-	          onFocus: this.handleFocus }),
-	        _react2.default.createElement(_AutoComplete2.default, {
-	          className: 'housemate-field',
-	          hintText: 'Housemate 3',
-	          dataSource: users,
-	          errorText: this.renderError(2),
-	          filter: _AutoComplete2.default.fuzzyFilter,
-	          onUpdateInput: this.memberUpdate(2),
-	          onNewRequest: this.memberUpdate(2),
-	          onFocus: this.handleFocus }),
-	        _react2.default.createElement(_AutoComplete2.default, {
-	          className: 'housemate-field',
-	          hintText: 'Housemate 4',
-	          dataSource: users,
-	          errorText: this.renderError(3),
-	          filter: _AutoComplete2.default.fuzzyFilter,
-	          onUpdateInput: this.memberUpdate(3),
-	          onNewRequest: this.memberUpdate(3),
-	          onFocus: this.handleFocus }),
-	        _react2.default.createElement(_AutoComplete2.default, {
-	          className: 'housemate-field',
-	          hintText: 'Housemate 5',
-	          dataSource: users,
-	          errorText: this.renderError(4),
-	          filter: _AutoComplete2.default.fuzzyFilter,
-	          onUpdateInput: this.memberUpdate(4),
-	          onNewRequest: this.memberUpdate(4),
-	          onFocus: this.handleFocus })
-	      );
+	      if (housemate === this.props.currentUser.username) {
+	        return _react2.default.createElement('div', { key: memberIndex });
+	      } else {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: this.state.fieldName, key: memberIndex },
+	          _react2.default.createElement(_AutoComplete2.default, {
+	            className: 'housemate-field',
+	            hintText: 'Housemate ' + (memberIndex + 1),
+	            dataSource: users,
+	            errorText: this.renderError(memberIndex),
+	            filter: _AutoComplete2.default.fuzzyFilter,
+	            searchText: housemate,
+	            onUpdateInput: this.memberUpdate(memberIndex),
+	            onNewRequest: this.memberUpdate(memberIndex),
+	            onFocus: this.handleFocus })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'handleAddField',
+	    value: function handleAddField() {
+	      var _this4 = this;
+	
+	      return function (e) {
+	        e.preventDefault();
+	        var housemates = _this4.state.housemates;
+	        housemates.push("");
+	        _this4.setState({ 'housemates': housemates });
+	      };
+	    }
+	  }, {
+	    key: 'addFieldButton',
+	    value: function addFieldButton() {
+	      if (this.state.title.length !== 0) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'field-button' },
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleAddField() },
+	            '+'
+	          )
+	        );
+	      } else {
+	        return _react2.default.createElement('div', { className: 'field-button' });
+	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this5 = this;
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'create-group' },
@@ -69891,7 +69893,10 @@
 	              onChange: this.update("title"),
 	              hintText: '123 Sesame Street' })
 	          ),
-	          this.memberField(),
+	          this.state.housemates.map(function (housemate, index) {
+	            return _this5.memberField(housemate, index);
+	          }),
+	          this.addFieldButton(),
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'group-save-button' },
