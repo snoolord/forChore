@@ -7,8 +7,9 @@ import * as Actions from './actions/session_actions';
 import * as GroupApi from './util/group_api_util';
 import * as GroupAction from './actions/group_actions';
 import * as UserAction from './actions/user_actions';
+import * as ChoreAction from './actions/chore_actions';
 
-
+window.createChore = ChoreAction.createChore;
 window.fetchUserGroups = UserAction.fetchUserGroups;
 window.fetchUsers = UserAction.fetchUsers;
 

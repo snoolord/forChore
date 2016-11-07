@@ -3,15 +3,12 @@ class Api::ChoresController < ApplicationController
     chore_param = chore_params
     chore_param["user_id"] = chore_params["user_id"].to_i
     chore_param["group_id"] = chore_params["group_id"].to_i
-    p chore_param
     @chore = Chore.new(chore_param)
     @chore.reminders = 0
     p @chore
     if @chore.save
-      p "it saved"
-      render :show
+      render "api/groups/show"
     else
-      p "it failed"
       p @chore.errors.full_messages
       render json: @chore.errors.full_messages
     end

@@ -82,10 +82,15 @@
 	
 	var UserAction = _interopRequireWildcard(_user_actions);
 	
+	var _chore_actions = __webpack_require__(757);
+	
+	var ChoreAction = _interopRequireWildcard(_chore_actions);
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	window.createChore = ChoreAction.createChore;
 	window.fetchUserGroups = UserAction.fetchUserGroups;
 	window.fetchUsers = UserAction.fetchUsers;
 	
@@ -70735,6 +70740,14 @@
 	
 	var _materialUi2 = _interopRequireDefault(_materialUi);
 	
+	var _RaisedButton = __webpack_require__(385);
+	
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+	
+	var _Dialog = __webpack_require__(577);
+	
+	var _Dialog2 = _interopRequireDefault(_Dialog);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -70749,10 +70762,27 @@
 	  function GroupShow(props) {
 	    _classCallCheck(this, GroupShow);
 	
-	    return _possibleConstructorReturn(this, (GroupShow.__proto__ || Object.getPrototypeOf(GroupShow)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (GroupShow.__proto__ || Object.getPrototypeOf(GroupShow)).call(this, props));
+	
+	    _this.state = {
+	      open: false
+	    };
+	    _this.handleOpen = _this.handleOpen.bind(_this);
+	    _this.handleClose = _this.handleClose.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(GroupShow, [{
+	    key: 'handleOpen',
+	    value: function handleOpen() {
+	      this.setState({ open: true });
+	    }
+	  }, {
+	    key: 'handleClose',
+	    value: function handleClose() {
+	      this.setState({ open: false });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -70765,7 +70795,8 @@
 	            'h2',
 	            null,
 	            this.props.title
-	          )
+	          ),
+	          _react2.default.createElement(_RaisedButton2.default, { label: 'Add Chore', onTouchTap: this.handleOpen })
 	        )
 	      );
 	    }
@@ -73472,9 +73503,13 @@
 	
 	var _userMiddleware2 = _interopRequireDefault(_userMiddleware);
 	
+	var _choreMiddleware = __webpack_require__(758);
+	
+	var _choreMiddleware2 = _interopRequireDefault(_choreMiddleware);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var RootMiddleware = (0, _redux.applyMiddleware)(_session_middleware2.default, _groupMiddleware2.default, _userMiddleware2.default);
+	var RootMiddleware = (0, _redux.applyMiddleware)(_choreMiddleware2.default, _session_middleware2.default, _groupMiddleware2.default, _userMiddleware2.default);
 	
 	exports.default = RootMiddleware;
 
@@ -73700,6 +73735,83 @@
 	  $.ajax({
 	    method: 'GET',
 	    url: 'api/users/dashboard',
+	    success: success,
+	    error: error
+	  });
+	};
+
+/***/ },
+/* 757 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var CREATE_CHORE = exports.CREATE_CHORE = "CREATE_CHORE";
+	
+	var createChore = exports.createChore = function createChore(chore) {
+	  return {
+	    type: CREATE_CHORE,
+	    chore: chore
+	  };
+	};
+
+/***/ },
+/* 758 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _chore_actions = __webpack_require__(757);
+	
+	var _chore_api_util = __webpack_require__(759);
+	
+	exports.default = function (_ref) {
+	  var getState = _ref.getState,
+	      dispatch = _ref.dispatch;
+	  return function (next) {
+	    return function (action) {
+	      var successCallback = function successCallback(chore) {
+	        // console.log(group, "In thiS SUCCESS");
+	        console.log("success");
+	      };
+	      var errorCallback = function errorCallback(errors) {
+	        return console.log(errors);
+	      };
+	
+	      switch (action.type) {
+	        case _chore_actions.CREATE_CHORE:
+	          console.log("create chore");
+	          (0, _chore_api_util.postChore)(action.chore, successCallback, errorCallback);
+	          return next(action);
+	        default:
+	          console.log("default");
+	          return next(action);
+	      }
+	    };
+	  };
+	};
+
+/***/ },
+/* 759 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var postChore = exports.postChore = function postChore(chore, success, error) {
+	  $.ajax({
+	    method: "POST",
+	    url: "api/chores",
+	    data: { chore: chore },
 	    success: success,
 	    error: error
 	  });
