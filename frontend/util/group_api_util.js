@@ -16,3 +16,32 @@ export const fetchGroup = (id, success, error) => {
     error
   });
 };
+
+export const patchGroup = (id, group, success, error) => {
+  $.ajax({
+    method: "PATCH",
+    url: `api/groups/${id}`,
+    data: { group },
+    success,
+    error
+  });
+};
+
+
+export const fetchAndDeleteGrouping = (userId, groupId, success, error) => {
+  let grouping = { user_id: userId, group_id: groupId };
+  $.ajax({
+    method: 'GET',
+    url: 'api/groupings',
+    data: {grouping},
+    success: (data) => {
+      $.ajax({
+        method: "DELETE",
+        url: `api/groupings/${data.id}`,
+        success,
+        error
+      });
+    },
+    error
+  });
+};

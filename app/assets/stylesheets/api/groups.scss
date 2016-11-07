@@ -33,6 +33,25 @@ animation: bounce 800ms ease-out;
   padding: 0 10px !important;
 }
 
+.edit-group {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  flex-direction: column;
+  width: 200px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+}
+
+.update-group-button {
+  display: flex;
+  justify-content: center;
+}
+
+.update-group-button div div {
+  padding: 0 10px !important;
+}
+
 .example-enter {
   opacity: 0.01;
 }
@@ -45,7 +64,9 @@ animation: bounce 800ms ease-out;
 .example-leave {
   opacity: 1;
 }
-
+.field-button {
+  float: right;
+}
 .example-leave.example-leave-active {
   opacity: 0.01;
   transition: opacity 300ms ease-in;

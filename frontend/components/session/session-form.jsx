@@ -39,7 +39,6 @@ class SessionForm extends React.Component {
 	}
 
 	redirectIfLoggedIn() {
-    debugger;
 		if (this.props.loggedIn) {
 			this.props.router.push("/dashboard");
 		}

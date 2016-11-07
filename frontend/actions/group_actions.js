@@ -5,6 +5,10 @@ export const RECEIVE_GROUPS = "RECEIVE_GROUPS";
 export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
 export const SEND_ERRORS = "SEND_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const DELETE_GROUP = "DELETE_GROUP";
+export const FETCH_GROUPING = "FETCH_GROUPING";
+export const LEAVE_GROUP = "LEAVE_GROUP";
+export const EDIT_GROUP = "EDIT_GROUP";
 
 export const createAGroup = (group) => ({
   type: CREATE_A_GROUP,
@@ -13,6 +17,12 @@ export const createAGroup = (group) => ({
 
 export const fetchAGroup = (id) => ({
   type: FETCH_A_GROUP,
+  id
+});
+
+export const editGroup = (id, group) => ({
+  type: EDIT_GROUP,
+  group,
   id
 });
 
@@ -28,4 +38,21 @@ export const receiveErrors = (errors) => ({
 
 export const clearErrors = () => ({
   type: CLEAR_ERRORS
+});
+
+
+//
+// export const deleteGroup = (id) => ({
+//   type: DELETE_GROUP
+// });
+//
+// export const deleteGrouping = (id) => ({
+//   type: DELETE_GROUPING,
+//   id
+// });
+
+export const leaveGroup = (userId, groupId) => ({
+  type: LEAVE_GROUP,
+  userId: userId,
+  groupId: groupId
 });

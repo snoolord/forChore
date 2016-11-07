@@ -8,14 +8,14 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { default as Fade } from 'react-fade';
 
 const fadeDuration = 10;
-class CreateGroup extends React.Component {
+class EditGroup extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      title: "",
-      housemates: ["","","","",""],
-      fieldName: "housemate-fields",
-      created: false,
+      title: '',
+      housemates: [],
+      fieldName: "housemate-fields-active",
+      updated: false,
       clearClick: false
     };
     this.renderError = this.renderError.bind(this);
@@ -23,16 +23,29 @@ class CreateGroup extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkForEmptyHousemates = this.checkForEmptyHousemates.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
+    this.memberField = this.memberField.bind(this);
     this.handleAddField = this.handleAddField.bind(this);
     this.addFieldButton = this.addFieldButton.bind(this);
-    this.memberField = this.memberField.bind(this);
   }
   componentWillUnmount() {
     let errors = [];
     this.props.receiveErrors(errors);
   }
+
+
+  componentWillReceiveProps() {
+    this.state.title = this.props.title;
+
+    let vals = values(this.props.housemates);
+    let housematesUsernames = [];
+    vals.forEach((object) => {
+      housematesUsernames.push(object.username);
+    });
+    this.state.housemates = housematesUsernames;
+  }
   componentDidMount() {
     // create get all users actions\
+    this.props.fetchAGroup(this.props.routeParams.groupId);
     this.props.fetchUsers();
   }
   update(field) {
@@ -74,33 +87,36 @@ class CreateGroup extends React.Component {
     let allUsers = this.props.users;
     let filledOutUsers = { [this.props.currentUser.username]: this.props.currentUser.id };
     let housemates = this.state.housemates;
-    let errors = ["","","","",""];
+    let errors = [];
     housemates.forEach( (housemate, index) => {
       if (allUsers[housemate] && !filledOutUsers[housemate]){
         filledOutUsers[housemate] = allUsers[housemate];
-      } else if (housemate === ""){
+      } else if (housemate === "") {
+
+      } else if (housemate === this.props.currentUser.username){
 
       } else {
-        errors[index] = "Invalid user";
+        errors[index] = "Invalid User";
       }
     });
     if (errors.every((error) => {
       return error === "";
     })){
-      let group = { creator_id: this.props.currentUser.id, title: this.state.title, housemate_ids: values(filledOutUsers) };
-      this.props.createAGroup(group);
-      this.setState({["created"]: true});
+      let group = { title: this.state.title, housemate_ids: values(filledOutUsers)};
+      let groupId = parseInt(this.props.routeParams.groupId);
+      this.props.editGroup(groupId, group);
+      this.setState({["updated"]: true});
     } else {
       this.props.receiveErrors(errors);
     }
   }
 
   componentDidUpdate() {
-    this.redirectIfCreated();
+    this.redirectIfUpdated();
   }
 
-  redirectIfCreated() {
-    if (this.state.created) {
+  redirectIfUpdated() {
+    if (this.state.updated) {
       this.props.router.push(`/dashboard`);
     }
   }
@@ -126,6 +142,25 @@ class CreateGroup extends React.Component {
       this.props.receiveErrors(errors);
     }
   }
+
+  handleAddField() {
+    return e => {
+      e.preventDefault();
+      let housemates = this.state.housemates;
+      housemates.push("");
+      this.setState({'housemates': housemates});
+    };
+  }
+
+  addFieldButton() {
+    if (this.state.title.length !== 0 ) {
+      return <div className="field-button">
+        <button onClick={this.handleAddField()}>+</button>
+      </div>;
+    } else {
+      return <div className="field-button"></div>;
+    }
+  }
   memberField(housemate, memberIndex) {
     let users = Object.keys(this.props.users);
     if (housemate === this.props.currentUser.username){
@@ -148,37 +183,22 @@ class CreateGroup extends React.Component {
       );
     }
   }
-  handleAddField() {
-    return e => {
-      e.preventDefault();
-      let housemates = this.state.housemates;
-      housemates.push("");
-      this.setState({'housemates': housemates});
-    };
-  }
-  addFieldButton() {
-    if (this.state.title.length !== 0 ) {
-      return <div className="field-button">
-        <button onClick={this.handleAddField()}>+</button>
-      </div>;
-    } else {
-      return <div className="field-button"></div>;
-    }
-  }
+
   render() {
     return (
-      <div className="create-group">
-        <div className="create-group-name">
+      <div className="edit-group">
+        <div className="edit-group-name">
           forChore
         </div>
-        <div className="create-group-prompt">
-          Start a new group!
+        <div className="edit-group-prompt">
+          Update your group!
         </div>
-        <form className="create-group-form" onSubmit={this.handleSubmit}>
-          <div className="create-group-name">
+        <form className="edit-group-form" onSubmit={this.handleSubmit}>
+          <div className="edit-group-name">
             <TextField
               onChange={this.update("title")}
-              hintText="123 Sesame Street">
+              hintText="123 Sesame Street"
+              value={this.state.title}>
             </TextField>
 
           </div>
@@ -186,8 +206,8 @@ class CreateGroup extends React.Component {
             return this.memberField(housemate, index);
           })}
           {this.addFieldButton()}
-          <div className="group-save-button">
-            <RaisedButton id="group-save-button" type="submit" disabled={this.state.title.length === 0 ? true : false}>Create Group</RaisedButton>
+          <div className="update-group-button">
+            <RaisedButton id="update-group-button" type="submit" disabled={this.state.title.length === 0 ? true : false}>Update Group</RaisedButton>
           </div>
         </form>
       </div>
@@ -196,4 +216,4 @@ class CreateGroup extends React.Component {
   }
 }
 
-export default CreateGroup;
+export default EditGroup;

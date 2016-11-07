@@ -5,14 +5,12 @@ class GroupShow extends React.Component {
   constructor(props) {
     super(props);
   }
-
   render() {
+    console.log(this.props);
     return(
       <div className="group-show">
         <div className="group-show-center">
           <h2>{this.props.title}</h2>
-
-
         </div>
       </div>
     );

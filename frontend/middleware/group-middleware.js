@@ -5,13 +5,21 @@ import {
         CREATE_A_GROUP,
         FETCH_A_GROUP,
         receiveErrors,
-        RECEIVE_ERRORS
+        RECEIVE_ERRORS,
+        LEAVE_GROUP,
+        FETCH_GROUPING,
+        EDIT_GROUP
       } from '../actions/group_actions';
-
 import {
         createGroup,
-        fetchGroup
+        fetchGroup,
+        leaveGroup,
+        fetchAndDeleteGrouping,
+        patchGroup
       } from '../util/group_api_util';
+import {
+        fetchUserGroups
+      } from '../actions/user_actions';
 
 export default ({ getState, dispatch }) => next => action => {
   const successCallback = group => {
@@ -25,6 +33,14 @@ export default ({ getState, dispatch }) => next => action => {
       return next(action);
     case FETCH_A_GROUP:
       fetchGroup(action.id, successCallback, errorCallback);
+      return next(action);
+    case EDIT_GROUP:
+      patchGroup(action.id, action.group, successCallback, errorCallback);
+      return next(action);
+    case LEAVE_GROUP:
+      let success = () => dispatch(fetchUserGroups());
+      let err = (e) => console.log(e);
+      fetchAndDeleteGrouping(action.userId, action.groupId, success, err);
       return next(action);
     default:
       return next(action);

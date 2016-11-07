@@ -11,6 +11,24 @@ class Api::GroupsController < ApplicationController
     end
   end
 
+  def update
+    @group = Group.find(params[:id])
+    if params["group"]["housemate_ids"]
+      @group.housemate_ids = params["group"]["housemate_ids"].map(&:to_i)
+    end
+    if @group.update_attributes(group_params)
+      @group
+      render :show
+    else
+      render json: @group.errors.full_messages, status: 422
+    end
+
+  end
+  def destroy
+    @group = Group.find(params[:id])
+    @group.destroy
+    render json: ["deleted"]
+  end
   def show
     @group = Group.find(params[:id])
   end
