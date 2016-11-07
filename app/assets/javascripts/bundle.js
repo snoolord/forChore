@@ -34524,13 +34524,9 @@
 	    key: 'housemate',
 	    value: function housemate(_housemate) {
 	      if (this.props.location.pathname === '/dashboard') {
-	        return _react2.default.createElement('li', null);
+	        return _react2.default.createElement('div', null);
 	      } else if (this.props.location.pathname.includes('groups/')) {
-	        return _react2.default.createElement(
-	          'li',
-	          { key: _housemate.username },
-	          _housemate.username
-	        );
+	        return _react2.default.createElement(_List.ListItem, { primaryText: _housemate.username });
 	      }
 	    }
 	  }, {
@@ -34546,11 +34542,7 @@
 	          'div',
 	          {
 	            className: 'edit-div' },
-	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/edit_group/' + groupId },
-	            'Edit'
-	          )
+	          _react2.default.createElement(_List.ListItem, { primaryText: 'Edit', onTouchTap: this.handleTouch('/edit_group/' + groupId) })
 	        );
 	      }
 	    }
@@ -34612,7 +34604,7 @@
 	            'div',
 	            { className: 'right-sidebar' },
 	            _react2.default.createElement(
-	              'ul',
+	              _List.List,
 	              null,
 	              housemates.map(function (housemate) {
 	                return _this5.housemate(housemate);
@@ -40460,6 +40452,7 @@
 	    type: CLEAR_ERRORS
 	  };
 	};
+	
 	//
 	// export const deleteGroup = (id) => ({
 	//   type: DELETE_GROUP
@@ -40744,7 +40737,6 @@
 	  }, {
 	    key: 'redirectIfLoggedIn',
 	    value: function redirectIfLoggedIn() {
-	      debugger;
 	      if (this.props.loggedIn) {
 	        this.props.router.push("/dashboard");
 	      }

@@ -8,7 +8,7 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const DELETE_GROUP = "DELETE_GROUP";
 export const FETCH_GROUPING = "FETCH_GROUPING";
 export const LEAVE_GROUP = "LEAVE_GROUP";
-export const EDIT_GROUP = "EDIT_GROUP"
+export const EDIT_GROUP = "EDIT_GROUP";
 
 export const createAGroup = (group) => ({
   type: CREATE_A_GROUP,
@@ -39,6 +39,8 @@ export const receiveErrors = (errors) => ({
 export const clearErrors = () => ({
   type: CLEAR_ERRORS
 });
+
+
 //
 // export const deleteGroup = (id) => ({
 //   type: DELETE_GROUP

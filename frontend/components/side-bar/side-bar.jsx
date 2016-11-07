@@ -73,9 +73,9 @@ class SideBar extends React.Component {
   }
   housemate(housemate) {
     if (this.props.location.pathname === '/dashboard'){
-      return <li></li>;
+      return <div></div>;
     } else if (this.props.location.pathname.includes('groups/')){
-      return <li key={housemate.username}>{housemate.username}</li>;
+      return <ListItem primaryText={housemate.username} />;
     }
   }
 
@@ -88,7 +88,7 @@ class SideBar extends React.Component {
       let groupId = parseInt(path.slice(18));
       return <div
         className="edit-div">
-        <Link to={`/edit_group/${groupId}`}>Edit</Link>
+        <ListItem primaryText="Edit" onTouchTap={this.handleTouch('/edit_group/' + groupId)}/> 
       </div>;
     }
   }
@@ -127,12 +127,12 @@ class SideBar extends React.Component {
         </div>
         {this.renderCenter()}
         <div className="right-sidebar">
-          <ul>
+          <List>
             {housemates.map((housemate) => {
               return this.housemate(housemate);
             })}
             {this.editButton()}
-          </ul>
+          </List>
         </div>
       </div>
       );

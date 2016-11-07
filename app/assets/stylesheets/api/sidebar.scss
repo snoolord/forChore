@@ -25,14 +25,15 @@
   justify-content: space-between;
   font-size: 14px;
   font-family: 'Roboto', sans-serif;
-  width: 155px;
+  width: 100%;
   opacity: 0.5;
 }
 
 .group-create-link {
   text-decoration: none;
-  padding: 0 15px;
   color: grey;
+  padding: 0 15px;
+  float: right !important;
 }
 
 .groups div {
