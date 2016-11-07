@@ -70802,7 +70802,7 @@
 	            null,
 	            this.props.title
 	          ),
-	          _react2.default.createElement(_createChoreContainer2.default, { props: this.props })
+	          _react2.default.createElement(_createChoreContainer2.default, { state: this.props })
 	        )
 	      );
 	    }
@@ -73841,9 +73841,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var mapStateToProps = function mapStateToProps(props) {
+	var mapStateToProps = function mapStateToProps(state) {
+	  console.log(state);
+	  console.log("mapping state");
 	  return {
-	    props: props
+	    housemates: state.group.housemates
 	  };
 	};
 	
@@ -73881,7 +73883,19 @@
 	
 	var _DatePicker2 = _interopRequireDefault(_DatePicker);
 	
+	var _TextField = __webpack_require__(500);
+	
+	var _TextField2 = _interopRequireDefault(_TextField);
+	
+	var _SelectField = __webpack_require__(615);
+	
+	var _SelectField2 = _interopRequireDefault(_SelectField);
+	
+	var _reactRouter = __webpack_require__(203);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -73895,23 +73909,22 @@
 	var CreateChore = function (_React$Component) {
 	  _inherits(CreateChore, _React$Component);
 	
-	  function CreateChore() {
+	  function CreateChore(props) {
 	    _classCallCheck(this, CreateChore);
 	
-	    return _possibleConstructorReturn(this, (CreateChore.__proto__ || Object.getPrototypeOf(CreateChore)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (CreateChore.__proto__ || Object.getPrototypeOf(CreateChore)).call(this, props));
+	
+	    _this.state = {
+	      open: false,
+	      housemate: ''
+	
+	    };
+	    _this.handleOpen = _this.handleOpen.bind(_this);
+	    _this.handleClose = _this.handleClose.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(CreateChore, [{
-	    key: 'contructor',
-	    value: function contructor(props) {
-	      this.state = {
-	        open: false
-	      };
-	      console.log("does this hit");
-	      this.handleOpen = this.handleOpen.bind(this);
-	      this.handleClose = this.handleClose.bind(this);
-	    }
-	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this.state = {
@@ -73919,44 +73932,72 @@
 	      };
 	    }
 	  }, {
-	    key: 'handleOpen',
-	    value: function handleOpen() {
+	    key: 'update',
+	    value: function update(field) {
+	      var _this2 = this;
+	
 	      return function (e) {
-	        console.log("opening");
+	        _this2.setState(_defineProperty({}, field, e.currentTarget.value));
 	      };
 	    }
 	  }, {
+	    key: 'handleOpen',
+	    value: function handleOpen(e) {
+	      e.preventDefault();
+	      console.log(new Date());
+	      this.setState({ open: true });
+	    }
+	  }, {
 	    key: 'handleClose',
-	    value: function handleClose() {
-	      return function (e) {
-	        console.log("closing");
-	      };
+	    value: function handleClose(e) {
+	      e.preventDefault();
+	      this.setState({ open: false });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      console.log(this.props);
+	      var housemates = this.props.housemates;
 	      var actions = [_react2.default.createElement(_FlatButton2.default, {
-	        label: 'Ok',
+	        label: 'Cancel',
+	        primary: true,
+	        keyboardFocused: true,
+	        onTouchTap: this.handleClose
+	      }), _react2.default.createElement(_FlatButton2.default, {
+	        label: 'Add Chore',
 	        primary: true,
 	        keyboardFocused: true,
 	        onTouchTap: this.handleClose
 	      })];
-	      if (this.state) {
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(_RaisedButton2.default, { label: 'Dialog With Date Picker', onClick: this.handleOpen.bind(this) })
-	        );
-	      } else {
-	        return _react2.default.createElement('div', null);
-	      }
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_RaisedButton2.default, { label: 'Dialog With Date Picker', onTouchTap: this.handleOpen }),
+	        _react2.default.createElement(
+	          _Dialog2.default,
+	          {
+	            title: 'Add Chore',
+	            actions: actions,
+	            modal: false,
+	            open: this.state.open,
+	            onRequestClose: this.handleClose
+	          },
+	          _react2.default.createElement(_SelectField2.default, {
+	            onChange: this.update("housemate"),
+	            hintText: 'Housemate'
+	          }),
+	          'Complete By',
+	          _react2.default.createElement(_DatePicker2.default, { hintText: 'Date Picker' })
+	        )
+	      );
 	    }
 	  }]);
 	
 	  return CreateChore;
 	}(_react2.default.Component);
 	
-	exports.default = CreateChore;
+	exports.default = (0, _reactRouter.withRouter)(CreateChore);
 
 /***/ }
 /******/ ]);

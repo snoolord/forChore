@@ -3,55 +3,85 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
-
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import {withRouter} from 'react-router';
 /**
  * Dialogs can be nested. This example opens a Date Picker from within a Dialog.
  */
-export default class CreateChore extends React.Component {
-  contructor(props) {
+class CreateChore extends React.Component {
+
+  constructor(props) {
+    super(props);
     this.state = {
-      open: false
+      open: false,
+      housemate: '',
+
     };
-    console.log("does this hit");
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
-
   componentDidMount() {
     this.state = {
       open: false
     };
   }
-  handleOpen() {
+  update(field) {
     return e => {
-      console.log("opening");
+      this.setState({[field]: e.currentTarget.value});
     };
   }
+  handleOpen(e) {
+    e.preventDefault();
+    console.log(new Date());
+    this.setState({open: true});
+  }
 
-  handleClose()  {
-    return e => {
-      console.log("closing");
-    };
+  handleClose(e)  {
+    e.preventDefault();
+    this.setState({open: false});
   }
 
   render() {
+    console.log(this.props);
+    let housemates = this.props.housemates;
     const actions = [
       <FlatButton
-        label="Ok"
+        label="Cancel"
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Add Chore"
         primary={true}
         keyboardFocused={true}
         onTouchTap={this.handleClose}
       />,
     ];
-    if (this.state) {
-      return (
-        <div>
-          <RaisedButton label="Dialog With Date Picker" onClick={this.handleOpen.bind(this)} />
-        </div>
-      );
-    } else {
-      return <div></div>;
-    }
+
+    return (
+      <div>
+        <RaisedButton label="Dialog With Date Picker" onTouchTap={this.handleOpen} />
+        <Dialog
+          title="Add Chore"
+          actions={actions}
+          modal={false}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+        >
+        <SelectField
+          onChange={this.update("housemate")}
+          hintText="Housemate"
+          >
+        </SelectField>
+          Complete By
+          <DatePicker hintText="Date Picker" />
+        </Dialog>
+      </div>
+    );
   }
 
 }
+
+export default withRouter(CreateChore);
