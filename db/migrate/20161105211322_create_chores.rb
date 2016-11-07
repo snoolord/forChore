@@ -4,9 +4,8 @@ class CreateChores < ActiveRecord::Migration
       t.integer :user_id, null: false
       t.integer :group_id, null: false
       t.date :complete_by, null: false
-      t.boolean :complete, null: false
-      t.integer :reminders
-      t.date :completed_on
+      t.boolean :complete, default: false
+      t.integer :reminders, null: false
       t.timestamps null: false
     end
     add_index :chores, :user_id

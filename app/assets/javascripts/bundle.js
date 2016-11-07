@@ -71285,8 +71285,8 @@
 	  var newState = state;
 	  switch (action.type) {
 	    case _group_actions.RECEIVE_GROUP:
-	      console.log("receiving group!!! from success");
-	      console.log(action);
+	      // console.log("receiving group!!! from success");
+	      // console.log(action);
 	      return (0, _merge2.default)({}, _defaultState, action.group);
 	    case _group_actions.RECEIVE_ERRORS:
 	      newState.errors = action.errors;
@@ -73545,7 +73545,7 @@
 	  return function (next) {
 	    return function (action) {
 	      var successCallback = function successCallback(group) {
-	        console.log(group, "In thiS SUCCESS");
+	        // console.log(group, "In thiS SUCCESS");
 	        dispatch((0, _group_actions.receiveGroup)(group));
 	      };
 	      var errorCallback = function errorCallback(errors) {

@@ -17,14 +17,13 @@ ActiveRecord::Schema.define(version: 20161105211322) do
   enable_extension "plpgsql"
 
   create_table "chores", force: :cascade do |t|
-    t.integer  "user_id",      null: false
-    t.integer  "group_id",     null: false
-    t.date     "complete_by",  null: false
-    t.boolean  "complete",     null: false
-    t.integer  "reminders"
-    t.date     "completed_on"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "user_id",                     null: false
+    t.integer  "group_id",                    null: false
+    t.date     "complete_by",                 null: false
+    t.boolean  "complete",    default: false
+    t.integer  "reminders",                   null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "chores", ["group_id"], name: "index_chores_on_group_id", using: :btree

@@ -23,7 +23,7 @@ import {
 
 export default ({ getState, dispatch }) => next => action => {
   const successCallback = group => {
-    console.log(group, "In thiS SUCCESS");
+    // console.log(group, "In thiS SUCCESS");
     dispatch(receiveGroup(group));
   };
   const errorCallback = errors => dispatch(receiveErrors(errors.responseJSON));
