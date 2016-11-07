@@ -34406,6 +34406,36 @@
 	
 	var _values2 = _interopRequireDefault(_values);
 	
+	var _List = __webpack_require__(592);
+	
+	var _inbox = __webpack_require__(752);
+	
+	var _inbox2 = _interopRequireDefault(_inbox);
+	
+	var _grade = __webpack_require__(753);
+	
+	var _grade2 = _interopRequireDefault(_grade);
+	
+	var _send = __webpack_require__(754);
+	
+	var _send2 = _interopRequireDefault(_send);
+	
+	var _drafts = __webpack_require__(755);
+	
+	var _drafts2 = _interopRequireDefault(_drafts);
+	
+	var _Divider = __webpack_require__(537);
+	
+	var _Divider2 = _interopRequireDefault(_Divider);
+	
+	var _info = __webpack_require__(756);
+	
+	var _info2 = _interopRequireDefault(_info);
+	
+	var _Subheader = __webpack_require__(523);
+	
+	var _Subheader2 = _interopRequireDefault(_Subheader);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34428,6 +34458,7 @@
 	    _this.renderCenter = _this.renderCenter.bind(_this);
 	    _this.handleDestroy = _this.handleDestroy.bind(_this);
 	    _this.editButton = _this.editButton.bind(_this);
+	    _this.handleTouch = _this.handleTouch.bind(_this);
 	    return _this;
 	  }
 	
@@ -34460,26 +34491,21 @@
 	  }, {
 	    key: 'groupLink',
 	    value: function groupLink(groupName, groupId) {
-	      return _react2.default.createElement(
-	        'li',
-	        { key: groupId + groupName },
-	        _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/dashboard/groups/' + groupId },
-	          _react2.default.createElement(
-	            _FlatButton2.default,
-	            {
-	              className: 'sidebar-button'
-	            },
-	            groupName
-	          )
-	        ),
-	        _react2.default.createElement(
+	      return _react2.default.createElement(_List.ListItem, { primaryText: groupName, rightIcon: _react2.default.createElement(
 	          'button',
 	          { onClick: this.handleDestroy(groupId) },
-	          '----'
-	        )
-	      );
+	          '-'
+	        ), onTouchTap: this.handleTouch('/dashboard/groups/' + groupId) });
+	      // <li key={groupId + groupName}>
+	      //   <Link to={`/dashboard/groups/${groupId}`}>
+	      //     <FlatButton
+	      //       className="sidebar-button"
+	      //       >
+	      //       {groupName}
+	      //     </FlatButton>
+	      //   </Link>
+	      //   <button onClick={this.handleDestroy(groupId)}>----</button>
+	      // </li>
 	    }
 	  }, {
 	    key: 'renderCenter',
@@ -34529,9 +34555,18 @@
 	      }
 	    }
 	  }, {
+	    key: 'handleTouch',
+	    value: function handleTouch(route) {
+	      var _this4 = this;
+	
+	      return function (e) {
+	        _this4.props.router.push(route);
+	      };
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this4 = this;
+	      var _this5 = this;
 	
 	      var housemates = (0, _values2.default)(this.props.housemates);
 	      if (this.props.loggedIn) {
@@ -34546,65 +34581,29 @@
 	              className: 'sidebar'
 	            },
 	            _react2.default.createElement(
-	              'ul',
-	              {
-	                className: 'sidebar-ul'
-	              },
+	              _List.List,
+	              null,
+	              _react2.default.createElement(_List.ListItem, { primaryText: 'myChores', onTouchTap: this.handleTouch('/dashboard/myChores') }),
+	              _react2.default.createElement(_List.ListItem, { primaryText: 'recentActivity', onTouchTap: this.handleTouch('dashboard/recentActivity') }),
 	              _react2.default.createElement(
-	                'li',
-	                null,
+	                'div',
+	                { className: 'groups' },
+	                _react2.default.createElement(
+	                  _Subheader2.default,
+	                  null,
+	                  'groups'
+	                ),
 	                _react2.default.createElement(
 	                  _reactRouter.Link,
-	                  { to: '/dashboard/myChores' },
-	                  _react2.default.createElement(
-	                    _FlatButton2.default,
-	                    {
-	                      id: 'my-chores',
-	                      className: 'sidebar-button'
-	                    },
-	                    'myChores'
-	                  )
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  _reactRouter.Link,
-	                  { to: '/dashboard/recent_activity' },
-	                  _react2.default.createElement(
-	                    _FlatButton2.default,
-	                    {
-	                      className: 'sidebar-button'
-	                    },
-	                    'recentActivity'
-	                  )
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'div',
-	                  {
-	                    className: 'groups'
+	                  { to: '/create_group',
+	                    className: 'group-create-link'
 	                  },
-	                  _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    'groups'
-	                  ),
-	                  _react2.default.createElement(
-	                    _reactRouter.Link,
-	                    { to: '/create_group',
-	                      className: 'group-create-link'
-	                    },
-	                    '+'
-	                  )
+	                  'add+'
 	                )
 	              ),
+	              _react2.default.createElement(_Divider2.default, null),
 	              this.props.groups.slice(0, 5).map(function (group) {
-	                return _this4.groupLink(group.title, group.id);
+	                return _this5.groupLink(group.title, group.id);
 	              })
 	            )
 	          ),
@@ -34616,7 +34615,7 @@
 	              'ul',
 	              null,
 	              housemates.map(function (housemate) {
-	                return _this4.housemate(housemate);
+	                return _this5.housemate(housemate);
 	              }),
 	              this.editButton()
 	            )
@@ -73520,6 +73519,191 @@
 	    error: error
 	  });
 	};
+
+/***/ },
+/* 752 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _pure = __webpack_require__(483);
+	
+	var _pure2 = _interopRequireDefault(_pure);
+	
+	var _SvgIcon = __webpack_require__(492);
+	
+	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ContentInbox = function ContentInbox(props) {
+	  return _react2.default.createElement(
+	    _SvgIcon2.default,
+	    props,
+	    _react2.default.createElement('path', { d: 'M19 3H4.99c-1.11 0-1.98.89-1.98 2L3 19c0 1.1.88 2 1.99 2H19c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 12h-4c0 1.66-1.35 3-3 3s-3-1.34-3-3H4.99V5H19v10z' })
+	  );
+	};
+	ContentInbox = (0, _pure2.default)(ContentInbox);
+	ContentInbox.displayName = 'ContentInbox';
+	ContentInbox.muiName = 'SvgIcon';
+	
+	exports.default = ContentInbox;
+
+/***/ },
+/* 753 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _pure = __webpack_require__(483);
+	
+	var _pure2 = _interopRequireDefault(_pure);
+	
+	var _SvgIcon = __webpack_require__(492);
+	
+	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ActionGrade = function ActionGrade(props) {
+	  return _react2.default.createElement(
+	    _SvgIcon2.default,
+	    props,
+	    _react2.default.createElement('path', { d: 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z' })
+	  );
+	};
+	ActionGrade = (0, _pure2.default)(ActionGrade);
+	ActionGrade.displayName = 'ActionGrade';
+	ActionGrade.muiName = 'SvgIcon';
+	
+	exports.default = ActionGrade;
+
+/***/ },
+/* 754 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _pure = __webpack_require__(483);
+	
+	var _pure2 = _interopRequireDefault(_pure);
+	
+	var _SvgIcon = __webpack_require__(492);
+	
+	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ContentSend = function ContentSend(props) {
+	  return _react2.default.createElement(
+	    _SvgIcon2.default,
+	    props,
+	    _react2.default.createElement('path', { d: 'M2.01 21L23 12 2.01 3 2 10l15 2-15 2z' })
+	  );
+	};
+	ContentSend = (0, _pure2.default)(ContentSend);
+	ContentSend.displayName = 'ContentSend';
+	ContentSend.muiName = 'SvgIcon';
+	
+	exports.default = ContentSend;
+
+/***/ },
+/* 755 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _pure = __webpack_require__(483);
+	
+	var _pure2 = _interopRequireDefault(_pure);
+	
+	var _SvgIcon = __webpack_require__(492);
+	
+	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ContentDrafts = function ContentDrafts(props) {
+	  return _react2.default.createElement(
+	    _SvgIcon2.default,
+	    props,
+	    _react2.default.createElement('path', { d: 'M21.99 8c0-.72-.37-1.35-.94-1.7L12 1 2.95 6.3C2.38 6.65 2 7.28 2 8v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2l-.01-10zM12 13L3.74 7.84 12 3l8.26 4.84L12 13z' })
+	  );
+	};
+	ContentDrafts = (0, _pure2.default)(ContentDrafts);
+	ContentDrafts.displayName = 'ContentDrafts';
+	ContentDrafts.muiName = 'SvgIcon';
+	
+	exports.default = ContentDrafts;
+
+/***/ },
+/* 756 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _pure = __webpack_require__(483);
+	
+	var _pure2 = _interopRequireDefault(_pure);
+	
+	var _SvgIcon = __webpack_require__(492);
+	
+	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ActionInfo = function ActionInfo(props) {
+	  return _react2.default.createElement(
+	    _SvgIcon2.default,
+	    props,
+	    _react2.default.createElement('path', { d: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z' })
+	  );
+	};
+	ActionInfo = (0, _pure2.default)(ActionInfo);
+	ActionInfo.displayName = 'ActionInfo';
+	ActionInfo.muiName = 'SvgIcon';
+	
+	exports.default = ActionInfo;
 
 /***/ }
 /******/ ]);
