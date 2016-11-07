@@ -142,7 +142,8 @@ class CreateGroup extends React.Component {
             searchText={housemate}
             onUpdateInput={this.memberUpdate(memberIndex)}
             onNewRequest={this.memberUpdate(memberIndex)}
-            onFocus={this.handleFocus}>
+            onFocus={this.handleFocus}
+            >
           </AutoComplete>
         </div>
       );
@@ -178,7 +179,8 @@ class CreateGroup extends React.Component {
           <div className="create-group-name">
             <TextField
               onChange={this.update("title")}
-              hintText="123 Sesame Street">
+              hintText="123 Sesame Street"
+              >
             </TextField>
 
           </div>

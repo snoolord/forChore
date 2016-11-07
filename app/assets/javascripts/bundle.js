@@ -70008,7 +70008,8 @@
 	            searchText: housemate,
 	            onUpdateInput: this.memberUpdate(memberIndex),
 	            onNewRequest: this.memberUpdate(memberIndex),
-	            onFocus: this.handleFocus })
+	            onFocus: this.handleFocus
+	          })
 	        );
 	      }
 	    }
@@ -70067,7 +70068,8 @@
 	            { className: 'create-group-name' },
 	            _react2.default.createElement(_TextField2.default, {
 	              onChange: this.update("title"),
-	              hintText: '123 Sesame Street' })
+	              hintText: '123 Sesame Street'
+	            })
 	          ),
 	          this.state.housemates.map(function (housemate, index) {
 	            return _this5.memberField(housemate, index);
@@ -70749,6 +70751,12 @@
 	  }
 	
 	  _createClass(GroupShow, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      console.log(this.props);
+	      this.props.fetchAGroup(this.props.routeParams.id);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      console.log(this.props);
