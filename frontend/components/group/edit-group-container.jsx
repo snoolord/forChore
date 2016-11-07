@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
 import EditGroup from './edit-group';
-import { createAGroup, receiveErrors, fetchAGroup } from '../../actions/group_actions';
+import { editGroup, receiveErrors, fetchAGroup } from '../../actions/group_actions';
 import { fetchUsers } from '../../actions/user_actions';
 
 const mapStateToProps = state => ({
   currentUser: state.session.currentUser,
+  groupId: state.group.id,
+  state,
   users: state.user.users,
   errors: state.group.errors,
   title: state.group.title,
@@ -13,7 +15,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createAGroup: group => dispatch(createAGroup(group)),
+  editGroup: (id, group) => dispatch(editGroup(id, group)),
   fetchUsers: () => dispatch(fetchUsers()),
   fetchAGroup: id => dispatch(fetchAGroup(id)),
   receiveErrors: (errors) => dispatch(receiveErrors(errors))

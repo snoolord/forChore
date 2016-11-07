@@ -70604,9 +70604,9 @@
 	
 	var _reactRedux = __webpack_require__(173);
 	
-	var _editGroup = __webpack_require__(671);
+	var _editGroup2 = __webpack_require__(671);
 	
-	var _editGroup2 = _interopRequireDefault(_editGroup);
+	var _editGroup3 = _interopRequireDefault(_editGroup2);
 	
 	var _group_actions = __webpack_require__(463);
 	
@@ -70617,6 +70617,8 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
 	    currentUser: state.session.currentUser,
+	    groupId: state.group.id,
+	    state: state,
 	    users: state.user.users,
 	    errors: state.group.errors,
 	    title: state.group.title,
@@ -70627,8 +70629,8 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    createAGroup: function createAGroup(group) {
-	      return dispatch((0, _group_actions.createAGroup)(group));
+	    editGroup: function editGroup(id, group) {
+	      return dispatch((0, _group_actions.editGroup)(id, group));
 	    },
 	    fetchUsers: function fetchUsers() {
 	      return dispatch((0, _user_actions.fetchUsers)());
@@ -70642,7 +70644,7 @@
 	  };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_editGroup2.default);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_editGroup3.default);
 
 /***/ },
 /* 671 */
@@ -70712,7 +70714,7 @@
 	      title: '',
 	      housemates: [],
 	      fieldName: "housemate-fields-active",
-	      created: false,
+	      updated: false,
 	      clearClick: false
 	    };
 	    _this.renderError = _this.renderError.bind(_this);
@@ -70731,13 +70733,6 @@
 	    value: function componentWillUnmount() {
 	      var errors = [];
 	      this.props.receiveErrors(errors);
-	      this.state = {
-	        title: '',
-	        housemates: [],
-	        fieldName: "housemate-fields",
-	        created: false,
-	        clearClick: false
-	      };
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
@@ -70807,20 +70802,22 @@
 	      var allUsers = this.props.users;
 	      var filledOutUsers = _defineProperty({}, this.props.currentUser.username, this.props.currentUser.id);
 	      var housemates = this.state.housemates;
-	      var errors = ["", "", "", "", ""];
+	      var errors = [];
 	      housemates.forEach(function (housemate, index) {
 	        if (allUsers[housemate] && !filledOutUsers[housemate]) {
 	          filledOutUsers[housemate] = allUsers[housemate];
 	        } else if (housemate === "") {} else {
-	          errors[index] = "Invalid user";
+	          errors[index] = "Invalid User";
 	        }
 	      });
 	      if (errors.every(function (error) {
 	        return error === "";
 	      })) {
-	        var group = { creator_id: this.props.currentUser.id, title: this.state.title, housemate_ids: (0, _values2.default)(filledOutUsers) };
-	        this.props.createAGroup(group);
-	        this.setState(_defineProperty({}, "created", true));
+	        var group = { title: this.state.title, housemate_ids: (0, _values2.default)(filledOutUsers) };
+	        var groupId = parseInt(this.props.routeParams);
+	        console.log(groupId, group);
+	        this.props.editGroup(groupId, group);
+	        this.setState(_defineProperty({}, "updated", true));
 	      } else {
 	        this.props.receiveErrors(errors);
 	      }
@@ -70828,12 +70825,12 @@
 	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate() {
-	      this.redirectIfCreated();
+	      this.redirectIfUpdated();
 	    }
 	  }, {
-	    key: 'redirectIfCreated',
-	    value: function redirectIfCreated() {
-	      if (this.state.created) {
+	    key: 'redirectIfUpdated',
+	    value: function redirectIfUpdated() {
+	      if (this.state.updated) {
 	        this.props.router.push('/dashboard');
 	      }
 	    }
@@ -70867,6 +70864,7 @@
 	      var _this4 = this;
 	
 	      return function (e) {
+	        e.preventDefault();
 	        var housemates = _this4.state.housemates;
 	        housemates.push("");
 	        _this4.setState({ 'housemates': housemates });
@@ -70893,20 +70891,24 @@
 	    key: 'memberField',
 	    value: function memberField(housemate, memberIndex) {
 	      var users = Object.keys(this.props.users);
-	      return _react2.default.createElement(
-	        'div',
-	        { className: this.state.fieldName, key: memberIndex },
-	        _react2.default.createElement(_AutoComplete2.default, {
-	          className: 'housemate-field',
-	          hintText: 'Housemate ' + (memberIndex + 1),
-	          dataSource: users,
-	          errorText: this.renderError(memberIndex),
-	          filter: _AutoComplete2.default.fuzzyFilter,
-	          searchText: housemate,
-	          onUpdateInput: this.memberUpdate(memberIndex),
-	          onNewRequest: this.memberUpdate(memberIndex),
-	          onFocus: this.handleFocus })
-	      );
+	      if (housemate === this.props.currentUser.username) {
+	        return _react2.default.createElement('div', null);
+	      } else {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: this.state.fieldName, key: memberIndex },
+	          _react2.default.createElement(_AutoComplete2.default, {
+	            className: 'housemate-field',
+	            hintText: 'Housemate ' + (memberIndex + 1),
+	            dataSource: users,
+	            errorText: this.renderError(memberIndex),
+	            filter: _AutoComplete2.default.fuzzyFilter,
+	            searchText: housemate,
+	            onUpdateInput: this.memberUpdate(memberIndex),
+	            onNewRequest: this.memberUpdate(memberIndex),
+	            onFocus: this.handleFocus })
+	        );
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -70915,23 +70917,23 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'create-group' },
+	        { className: 'edit-group' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'create-group-name' },
+	          { className: 'edit-group-name' },
 	          'forChore'
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'create-group-prompt' },
-	          'Start a new group!'
+	          { className: 'edit-group-prompt' },
+	          'Update your group!'
 	        ),
 	        _react2.default.createElement(
 	          'form',
-	          { className: 'create-group-form', onSubmit: this.handleSubmit },
+	          { className: 'edit-group-form', onSubmit: this.handleSubmit },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'create-group-name' },
+	            { className: 'edit-group-name' },
 	            _react2.default.createElement(_TextField2.default, {
 	              onChange: this.update("title"),
 	              hintText: '123 Sesame Street',
@@ -70943,11 +70945,11 @@
 	          this.addFieldButton(),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'group-save-button' },
+	            { className: 'update-group-button' },
 	            _react2.default.createElement(
 	              _RaisedButton2.default,
-	              { id: 'group-save-button', type: 'submit', disabled: this.state.title.length === 0 ? true : false },
-	              'Create Group'
+	              { id: 'update-group-button', type: 'submit', disabled: this.state.title.length === 0 ? true : false },
+	              'Update Group'
 	            )
 	          )
 	        )

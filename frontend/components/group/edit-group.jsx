@@ -15,7 +15,7 @@ class EditGroup extends React.Component {
       title: '',
       housemates: [],
       fieldName: "housemate-fields-active",
-      created: false,
+      updated: false,
       clearClick: false
     };
     this.renderError = this.renderError.bind(this);
@@ -30,13 +30,6 @@ class EditGroup extends React.Component {
   componentWillUnmount() {
     let errors = [];
     this.props.receiveErrors(errors);
-    this.state = {
-      title: '',
-      housemates: [],
-      fieldName: "housemate-fields",
-      created: false,
-      clearClick: false
-    };
   }
 
 
@@ -94,33 +87,35 @@ class EditGroup extends React.Component {
     let allUsers = this.props.users;
     let filledOutUsers = { [this.props.currentUser.username]: this.props.currentUser.id };
     let housemates = this.state.housemates;
-    let errors = ["","","","",""];
+    let errors = [];
     housemates.forEach( (housemate, index) => {
       if (allUsers[housemate] && !filledOutUsers[housemate]){
         filledOutUsers[housemate] = allUsers[housemate];
       } else if (housemate === ""){
 
       } else {
-        errors[index] = "Invalid user";
+        errors[index] = "Invalid User";
       }
     });
     if (errors.every((error) => {
       return error === "";
     })){
-      let group = { creator_id: this.props.currentUser.id, title: this.state.title, housemate_ids: values(filledOutUsers) };
-      this.props.createAGroup(group);
-      this.setState({["created"]: true});
+      let group = { title: this.state.title, housemate_ids: values(filledOutUsers)};
+      let groupId = parseInt(this.props.routeParams);
+      console.log(groupId, group);
+      this.props.editGroup(groupId, group);
+      this.setState({["updated"]: true});
     } else {
       this.props.receiveErrors(errors);
     }
   }
 
   componentDidUpdate() {
-    this.redirectIfCreated();
+    this.redirectIfUpdated();
   }
 
-  redirectIfCreated() {
-    if (this.state.created) {
+  redirectIfUpdated() {
+    if (this.state.updated) {
       this.props.router.push(`/dashboard`);
     }
   }
@@ -149,6 +144,7 @@ class EditGroup extends React.Component {
 
   handleAddField() {
     return e => {
+      e.preventDefault();
       let housemates = this.state.housemates;
       housemates.push("");
       this.setState({'housemates': housemates});
@@ -166,6 +162,9 @@ class EditGroup extends React.Component {
   }
   memberField(housemate, memberIndex) {
     let users = Object.keys(this.props.users);
+    if (housemate === this.props.currentUser.username){
+      return <div></div>;
+    } else {
       return (
         <div className={this.state.fieldName} key={memberIndex}>
           <AutoComplete
@@ -181,19 +180,20 @@ class EditGroup extends React.Component {
           </AutoComplete>
         </div>
       );
+    }
   }
 
   render() {
     return (
-      <div className="create-group">
-        <div className="create-group-name">
+      <div className="edit-group">
+        <div className="edit-group-name">
           forChore
         </div>
-        <div className="create-group-prompt">
-          Start a new group!
+        <div className="edit-group-prompt">
+          Update your group!
         </div>
-        <form className="create-group-form" onSubmit={this.handleSubmit}>
-          <div className="create-group-name">
+        <form className="edit-group-form" onSubmit={this.handleSubmit}>
+          <div className="edit-group-name">
             <TextField
               onChange={this.update("title")}
               hintText="123 Sesame Street"
@@ -205,8 +205,8 @@ class EditGroup extends React.Component {
             return this.memberField(housemate, index);
           })}
           {this.addFieldButton()}
-          <div className="group-save-button">
-            <RaisedButton id="group-save-button" type="submit" disabled={this.state.title.length === 0 ? true : false}>Create Group</RaisedButton>
+          <div className="update-group-button">
+            <RaisedButton id="update-group-button" type="submit" disabled={this.state.title.length === 0 ? true : false}>Update Group</RaisedButton>
           </div>
         </form>
       </div>
