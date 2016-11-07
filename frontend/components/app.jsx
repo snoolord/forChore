@@ -23,11 +23,13 @@ class App extends React.Component {
   logo() {
     if (this.props.loggedIn) {
       return (
-        <Link to="/dashboard"><FlatButton className="logo-button">forChore</FlatButton></Link>
+        <div>
+          <Link to="/dashboard"><img src="http://i.imgur.com/u9xEJsy.png" className="logo"></img></Link>
+        </div>
       );
     } else {
       return (
-        <Link to="/"><FlatButton className="logo-button">forChore</FlatButton></Link>
+        <Link to="/"><img src="http://i.imgur.com/u9xEJsy.png" className="logo"></img></Link>
       );
     }
   }

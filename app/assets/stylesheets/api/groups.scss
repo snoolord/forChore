@@ -14,6 +14,14 @@ animation: bounce 800ms ease-out;
   opacity: 1;
 }
 
+.housemate-fields-active div div{
+  align-text: center !important;
+  font-size: 12px !important;
+}
+
+.housemate-fields-active div div input {
+  align-text: center !important;
+}
 .create-group {
   display: flex;
   align-items: center;

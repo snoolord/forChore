@@ -13,23 +13,33 @@ html, body, main, .main{
   margin-top: 5px !important;
   color: white !important;
 }
+.logo {
+  width: 130px;
+}
 
+.logo:hover {
+  background-color: rgba(153,153,153,.2);
+}
 .login-signup {
-  margin-top: 5px !important;
-  color: white !important;
+  margin-top: 15px !important;
+  color: rgb(115,194,252) !important;
+  font-family: 'Ubuntu Condensed', sans-serif !important;
 }
 
 #logout-button {
-  margin-top: 5px !important;
-  color: white !important;
+  margin-top: 15px !important;
+  color: rgb(115,194,252) !important;
+  font-family: 'Ubuntu Condensed', sans-serif !important;
 }
 
 #session-submit-button {
   color: white !important;
+  font-family: 'Ubuntu Condensed', sans-serif !important;
 }
 #demo-login-button {
   color: white !important;
   padding: 0 15px !important;
+  font-family: 'Ubuntu Condensed', sans-serif !important  ;
 }
 
 .center-container {
@@ -66,7 +76,7 @@ html, body, main, .main{
 
 .main-full-header {
   width: 100%;
-  background-color: rgb(70, 199, 240);
+  background-color: rgba(253,188,78, 0.25);
 }
 
 .icon-spacing {

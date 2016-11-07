@@ -28329,23 +28329,19 @@
 	    value: function logo() {
 	      if (this.props.loggedIn) {
 	        return _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/dashboard' },
+	          'div',
+	          null,
 	          _react2.default.createElement(
-	            _FlatButton2.default,
-	            { className: 'logo-button' },
-	            'forChore'
+	            _reactRouter.Link,
+	            { to: '/dashboard' },
+	            _react2.default.createElement('img', { src: 'http://i.imgur.com/u9xEJsy.png', className: 'logo' })
 	          )
 	        );
 	      } else {
 	        return _react2.default.createElement(
 	          _reactRouter.Link,
 	          { to: '/' },
-	          _react2.default.createElement(
-	            _FlatButton2.default,
-	            { className: 'logo-button' },
-	            'forChore'
-	          )
+	          _react2.default.createElement('img', { src: 'http://i.imgur.com/u9xEJsy.png', className: 'logo' })
 	        );
 	      }
 	    }
@@ -33941,7 +33937,7 @@
 	  spacing: _spacing2.default,
 	  fontFamily: 'Roboto, sans-serif',
 	  palette: {
-	    primary1Color: _colors.cyan500,
+	    primary1Color: _colors.grey500,
 	    primary2Color: _colors.cyan700,
 	    primary3Color: _colors.grey400,
 	    accent1Color: _colors.cyan500,
@@ -70071,9 +70067,13 @@
 	              hintText: '123 Sesame Street'
 	            })
 	          ),
-	          this.state.housemates.map(function (housemate, index) {
-	            return _this5.memberField(housemate, index);
-	          }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'housemate-text-fields' },
+	            this.state.housemates.map(function (housemate, index) {
+	              return _this5.memberField(housemate, index);
+	            })
+	          ),
 	          this.addFieldButton(),
 	          _react2.default.createElement(
 	            'div',

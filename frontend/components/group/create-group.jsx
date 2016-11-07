@@ -184,9 +184,11 @@ class CreateGroup extends React.Component {
             </TextField>
 
           </div>
-          {this.state.housemates.map((housemate, index) => {
-            return this.memberField(housemate, index);
+          <div className="housemate-text-fields">
+            {this.state.housemates.map((housemate, index) => {
+              return this.memberField(housemate, index);
           })}
+          </div>
           {this.addFieldButton()}
           <div className="group-save-button">
             <RaisedButton id="group-save-button" type="submit" disabled={this.state.title.length === 0 ? true : false}>Create Group</RaisedButton>

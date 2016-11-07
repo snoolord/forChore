@@ -12,7 +12,7 @@ const theme = {
   spacing: spacing,
   fontFamily: 'Roboto, sans-serif',
   palette: {
-    primary1Color: cyan500,
+    primary1Color: grey500,
     primary2Color: cyan700,
     primary3Color: grey400,
     accent1Color: cyan500,
