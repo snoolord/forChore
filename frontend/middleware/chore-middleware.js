@@ -24,6 +24,9 @@ export default ({ getState, dispatch }) => next => action => {
     console.log("create chore");
       postChore(action.chore, successCallback, errorCallback);
       return next(action);
+    case COMPLETE_CHORE:
+      finishChore(action.id, successCallback, errorCallback);
+      return next(action);
     default:
       return next(action);
   }

@@ -90,6 +90,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	window.completeChore = ChoreAction.completeChore;
 	window.createChore = ChoreAction.createChore;
 	window.fetchUserGroups = UserAction.fetchUserGroups;
 	window.fetchUsers = UserAction.fetchUsers;
@@ -73854,6 +73855,9 @@
 	        case _chore_actions.CREATE_CHORE:
 	          console.log("create chore");
 	          (0, _chore_api_util.postChore)(action.chore, successCallback, errorCallback);
+	          return next(action);
+	        case _chore_actions.COMPLETE_CHORE:
+	          (0, _chore_api_util.finishChore)(action.id, successCallback, errorCallback);
 	          return next(action);
 	        default:
 	          return next(action);

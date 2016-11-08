@@ -13,8 +13,9 @@ class Api::ChoresController < ApplicationController
   end
 
   def update
-    @chore.find(params[:id])
-    if @chore.update_attribute(complete: true)
+    p params[:id]
+    @chore = Chore.find(params[:id].to_i)
+    if @chore.update_attribute('complete', true)
       render :show
     else
       render json: @chore.errors.full_messages
