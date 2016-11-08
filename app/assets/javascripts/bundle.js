@@ -70716,6 +70716,8 @@
 	
 	var _chore_actions = __webpack_require__(757);
 	
+	var _selector = __webpack_require__(765);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
@@ -70725,7 +70727,8 @@
 	    title: state.group.title,
 	    housemates: state.group.housemates,
 	    housemateChores: state.group.housemateChores,
-	    chores: state.group.chores,
+	    currentChores: (0, _selector.selectCurrentChores)(state.group.chores),
+	    completedChores: (0, _selector.selectCompletedChores)(state.group.chores),
 	    state: state
 	  };
 	};
@@ -70781,6 +70784,10 @@
 	
 	var _List = __webpack_require__(463);
 	
+	var _Divider = __webpack_require__(492);
+	
+	var _Divider2 = _interopRequireDefault(_Divider);
+	
 	var _values = __webpack_require__(440);
 	
 	var _values2 = _interopRequireDefault(_values);
@@ -70833,9 +70840,13 @@
 	      var _this3 = this;
 	
 	      console.log(this.props);
-	      var chores = [];
-	      if (this.props.chores) {
-	        chores = (0, _values2.default)(this.props.chores);
+	      var currentChores = [];
+	      var completedChores = [];
+	      if (this.props.currentChores) {
+	        currentChores = this.props.currentChores;
+	      }
+	      if (this.props.completedChores) {
+	        completedChores = this.props.completedChores;
 	      }
 	      return _react2.default.createElement(
 	        'div',
@@ -70852,14 +70863,22 @@
 	          _react2.default.createElement(
 	            _List.List,
 	            null,
-	            chores.map(function (chore) {
-	              if (!chore.complete) {
-	                return _react2.default.createElement(_List.ListItem, { key: chore.id, primaryText: chore.task, rightIcon: _react2.default.createElement(
-	                    'button',
-	                    { onClick: _this3.handleDestroy(chore.id) },
-	                    'x'
-	                  ) });
-	              }
+	            'current',
+	            currentChores.map(function (chore) {
+	              return _react2.default.createElement(_List.ListItem, { key: chore.id, primaryText: chore.task, rightIcon: _react2.default.createElement(
+	                  'button',
+	                  { onClick: _this3.handleDestroy(chore.id) },
+	                  'x'
+	                ) });
+	            }),
+	            _react2.default.createElement(_Divider2.default, null),
+	            'completed',
+	            completedChores.map(function (chore) {
+	              return _react2.default.createElement(_List.ListItem, { key: chore.id, primaryText: chore.task, rightIcon: _react2.default.createElement(
+	                  'button',
+	                  { onClick: _this3.handleDestroy(chore.id) },
+	                  'x'
+	                ) });
 	            })
 	          )
 	        )
@@ -74349,6 +74368,51 @@
 	NavigationMoreVert.muiName = 'SvgIcon';
 	
 	exports.default = NavigationMoreVert;
+
+/***/ },
+/* 765 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.selectCompletedChores = exports.selectCurrentChores = undefined;
+	
+	var _values = __webpack_require__(440);
+	
+	var _values2 = _interopRequireDefault(_values);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var selectCurrentChores = exports.selectCurrentChores = function selectCurrentChores(chores) {
+	  var current = [];
+	  (0, _values2.default)(chores).forEach(function (chore) {
+	    if (!chore.complete) {
+	      current.push(chore);
+	    }
+	  });
+	  current.sort(function (a, b) {
+	    return new Date(a.complete_by) - new Date(b.complete_by);
+	  });
+	  console.log(current);
+	  return current;
+	};
+	
+	var selectCompletedChores = exports.selectCompletedChores = function selectCompletedChores(chores) {
+	  var completed = [];
+	  (0, _values2.default)(chores).forEach(function (chore) {
+	    if (chore.complete) {
+	      completed.push(chore);
+	    }
+	  });
+	  completed.sort(function (a, b) {
+	    return new Date(b.updated_at) - new Date(a.updated_at);
+	  });
+	  console.log(completed);
+	  return completed;
+	};
 
 /***/ }
 /******/ ]);

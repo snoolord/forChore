@@ -3,6 +3,8 @@ import GroupShow from './group-show';
 import { fetchAGroup, receiveErrors } from '../../actions/group_actions';
 import { fetchUsers } from '../../actions/user_actions';
 import { completeChore } from '../../actions/chore_actions';
+import { selectCurrentChores, selectCompletedChores } from '../../reducers/selectors/selector';
+
 const mapStateToProps = state => {
   return {
     currentUser: state.session.currentUser,
@@ -10,7 +12,8 @@ const mapStateToProps = state => {
     title: state.group.title,
     housemates: state.group.housemates,
     housemateChores: state.group.housemateChores,
-    chores: state.group.chores,
+    currentChores: selectCurrentChores(state.group.chores),
+    completedChores: selectCompletedChores(state.group.chores),
     state
   };
 };

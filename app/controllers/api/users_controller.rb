@@ -18,6 +18,7 @@ class Api::UsersController < ApplicationController
       render "api/users/dashboard"
     else
       @user = User.find(params[:id])
+      
       render :show
     end
   end

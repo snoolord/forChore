@@ -5,6 +5,7 @@ import Dialog from 'material-ui/Dialog';
 import DatePicker from 'material-ui/DatePicker';
 import CreateChoreContainer from './create-chore-container';
 import {List, ListItem} from 'material-ui/List';
+import Divider from 'material-ui/Divider';
 import values from 'lodash/values';
 
 // todo: NEED TO CHANGE TO CREATE CHORE CONTAINER
@@ -32,21 +33,29 @@ class GroupShow extends React.Component {
 
   render() {
     console.log(this.props);
-    let chores = [];
-     if (this.props.chores) {
-       chores = values(this.props.chores);
-     }
-     return(
+    let currentChores = [];
+    let completedChores = [];
+    if (this.props.currentChores) {
+      currentChores = this.props.currentChores;
+    }
+    if (this.props.completedChores) {
+      completedChores = this.props.completedChores;
+    }
+    return(
       <div className="group-show">
         <div className="group-show-center">
           <h2>{this.props.title}</h2>
           <CreateChoreContainer state={this.props}/>
             <List>
-              {chores.map((chore) => {
-                if (!chore.complete) {
-                  return <ListItem key={chore.id}primaryText={chore.task} rightIcon={<button onClick={this.handleDestroy(chore.id)}>x</button>}></ListItem>;
-                }
+              current
+              {currentChores.map((chore) => {
+                return <ListItem key={chore.id}primaryText={chore.task} rightIcon={<button onClick={this.handleDestroy(chore.id)}>x</button>}></ListItem>;
                 })}
+              <Divider/>
+              completed
+              {completedChores.map((chore) => {
+                return <ListItem key={chore.id}primaryText={chore.task} rightIcon={<button onClick={this.handleDestroy(chore.id)}>x</button>}></ListItem>;
+              })}
             </List>
         </div>
       </div>
