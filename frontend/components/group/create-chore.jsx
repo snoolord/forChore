@@ -69,6 +69,7 @@ class CreateChore extends React.Component {
     chore.complete_by = this.state.date;
     console.log(chore);
     this.props.createChore(chore);
+    this.props.fetchAGroup(chore.group_id);
     this.setState({open: false});
   }
 
@@ -103,7 +104,9 @@ class CreateChore extends React.Component {
 
     return (
       <div>
-        <RaisedButton label="Add Chore" onTouchTap={this.handleOpen} />
+        <div className="add-chore">
+          <RaisedButton label="Add Chore" onTouchTap={this.handleOpen} />
+        </div>
         <div className="create-chore" onSubmit={this.handleSubmit}>
           <Dialog
             actions={actions}

@@ -7,7 +7,9 @@ const mapStateToProps = state => ({
   currentUser: state.session.currentUser,
   users: state.user.users,
   title: state.group.title,
-  housemates: state.group.housemates
+  housemates: state.group.housemates,
+  housemateChores: state.group.housemateChores,
+  chores: state.group.chores
 });
 
 const mapDispatchToProps = dispatch => ({

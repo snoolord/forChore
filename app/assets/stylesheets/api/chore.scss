@@ -12,3 +12,12 @@
   flex-direction: column;
   align-items: center;
 }
+h2 {
+  display: flex;
+  justify-content: center;
+}
+
+.add-chore {
+  float: right;
+  margin-top: -30px;
+}

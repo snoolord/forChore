@@ -1,15 +1,21 @@
 import {
         createChore,
-        CREATE_CHORE
+        CREATE_CHORE,
+        completeChore,
+        COMPLETE_CHORE
       } from '../actions/chore_actions';
 import {
-        postChore
+        postChore,
+        finishChore
       } from '../util/chore_api_util';
+import {
+        fetchUserGroups
+      } from '../actions/user_actions';
 
 export default ({ getState, dispatch }) => next => action => {
   const successCallback = chore => {
     // console.log(group, "In thiS SUCCESS");
-    console.log("success");
+    dispatch(fetchUserGroups());
   };
   const errorCallback = errors => console.log(errors);
 

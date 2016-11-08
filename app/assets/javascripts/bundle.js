@@ -21535,6 +21535,10 @@
 	
 	var _editGroupContainer2 = _interopRequireDefault(_editGroupContainer);
 	
+	var _myChoreContainer = __webpack_require__(762);
+	
+	var _myChoreContainer2 = _interopRequireDefault(_myChoreContainer);
+	
 	var _group_actions = __webpack_require__(495);
 	
 	var _theme = __webpack_require__(390);
@@ -21556,6 +21560,8 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// actions
+	
+	// containers
 	var muiTheme = (0, _getMuiTheme2.default)({
 	  appBar: {
 	    height: 40
@@ -21578,8 +21584,6 @@
 	  }
 	});
 	// themes
-	
-	// containers
 	
 	
 	var myTheme = (0, _getMuiTheme2.default)(_theme2.default);
@@ -21633,7 +21637,8 @@
 	          _react2.default.createElement(
 	            _reactRouter.Route,
 	            { path: '/dashboard', component: _sideBarContainer2.default },
-	            _react2.default.createElement(_reactRouter.Route, { path: 'groups/:id', component: _groupShowContainer2.default, onEnter: _requestAGroup })
+	            _react2.default.createElement(_reactRouter.Route, { path: 'groups/:id', component: _groupShowContainer2.default, onEnter: _requestAGroup }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'myChores', component: _myChoreContainer2.default })
 	          )
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/create_group', component: _createGroupContainer2.default }),
@@ -70701,7 +70706,9 @@
 	    currentUser: state.session.currentUser,
 	    users: state.user.users,
 	    title: state.group.title,
-	    housemates: state.group.housemates
+	    housemates: state.group.housemates,
+	    housemateChores: state.group.housemateChores,
+	    chores: state.group.chores
 	  };
 	};
 	
@@ -70751,6 +70758,8 @@
 	
 	var _createChoreContainer2 = _interopRequireDefault(_createChoreContainer);
 	
+	var _List = __webpack_require__(463);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -70786,6 +70795,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      console.log(this.props.chores);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'group-show' },
@@ -70797,7 +70807,14 @@
 	            null,
 	            this.props.title
 	          ),
-	          _react2.default.createElement(_createChoreContainer2.default, { state: this.props })
+	          _react2.default.createElement(_createChoreContainer2.default, { state: this.props }),
+	          _react2.default.createElement(
+	            _List.List,
+	            null,
+	            this.props.chores.map(function (chore) {
+	              return _react2.default.createElement(_List.ListItem, { key: chore.id, primaryText: chore.task });
+	            })
+	          )
 	        )
 	      );
 	    }
@@ -71307,6 +71324,8 @@
 	var _defaultState = {
 	  title: '',
 	  housemates: {},
+	  chores: [],
+	  housemateChores: [],
 	  errors: []
 	};
 	
@@ -73459,7 +73478,8 @@
 	
 	var _defaultState = {
 	  users: {},
-	  groups: []
+	  groups: [],
+	  chores: []
 	};
 	
 	var UserReducer = function UserReducer() {
@@ -73470,6 +73490,7 @@
 	    case _user_actions.RECEIVE_USER_GROUPS:
 	      var newState = state;
 	      newState.groups = action.groups;
+	      newState.chores = action.chores;
 	      return (0, _merge2.default)({}, state, action.groups);
 	    case _user_actions.RECEIVE_USERS:
 	      return (0, _merge2.default)({}, state, action.users);
@@ -73752,11 +73773,20 @@
 	  value: true
 	});
 	var CREATE_CHORE = exports.CREATE_CHORE = "CREATE_CHORE";
+	var COMPLETE_CHORE = exports.COMPLETE_CHORE = "COMPLETE_CHORE";
+	var RECEIVE_CHORE = exports.RECEIVE_CHORE = "RECEIVE_CHORE";
 	
 	var createChore = exports.createChore = function createChore(chore) {
 	  return {
 	    type: CREATE_CHORE,
 	    chore: chore
+	  };
+	};
+	
+	var completeChore = exports.completeChore = function completeChore(id) {
+	  return {
+	    type: COMPLETE_CHORE,
+	    id: id
 	  };
 	};
 
@@ -73774,6 +73804,8 @@
 	
 	var _chore_api_util = __webpack_require__(759);
 	
+	var _user_actions = __webpack_require__(394);
+	
 	exports.default = function (_ref) {
 	  var getState = _ref.getState,
 	      dispatch = _ref.dispatch;
@@ -73781,7 +73813,7 @@
 	    return function (action) {
 	      var successCallback = function successCallback(chore) {
 	        // console.log(group, "In thiS SUCCESS");
-	        console.log("success");
+	        dispatch((0, _user_actions.fetchUserGroups)());
 	      };
 	      var errorCallback = function errorCallback(errors) {
 	        return console.log(errors);
@@ -73817,6 +73849,15 @@
 	    error: error
 	  });
 	};
+	
+	var finishChore = exports.finishChore = function finishChore(id, success, error) {
+	  $.ajax({
+	    method: "PATCH",
+	    url: "api/chores/" + id,
+	    success: success,
+	    error: error
+	  });
+	};
 
 /***/ },
 /* 760 */
@@ -73836,6 +73877,8 @@
 	
 	var _chore_actions = __webpack_require__(757);
 	
+	var _group_actions = __webpack_require__(495);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
@@ -73849,6 +73892,9 @@
 	  return {
 	    createChore: function createChore(chore) {
 	      return dispatch((0, _chore_actions.createChore)(chore));
+	    },
+	    fetchAGroup: function fetchAGroup(id) {
+	      return dispatch((0, _group_actions.fetchAGroup)(id));
 	    }
 	  };
 	};
@@ -73996,6 +74042,7 @@
 	      chore.complete_by = this.state.date;
 	      console.log(chore);
 	      this.props.createChore(chore);
+	      this.props.fetchAGroup(chore.group_id);
 	      this.setState({ open: false });
 	    }
 	  }, {
@@ -74033,7 +74080,11 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_RaisedButton2.default, { label: 'Add Chore', onTouchTap: this.handleOpen }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'add-chore' },
+	          _react2.default.createElement(_RaisedButton2.default, { label: 'Add Chore', onTouchTap: this.handleOpen })
+	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'create-chore', onSubmit: this.handleSubmit },
@@ -74096,6 +74147,109 @@
 	}(_react2.default.Component);
 	
 	exports.default = (0, _reactRouter.withRouter)(CreateChore);
+
+/***/ },
+/* 762 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(173);
+	
+	var _myChore = __webpack_require__(763);
+	
+	var _myChore2 = _interopRequireDefault(_myChore);
+	
+	var _chore_actions = __webpack_require__(757);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    chores: state.user.chores,
+	    currentUser: state.session.currentUser.username
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    createChore: function createChore(chore) {
+	      return dispatch((0, _chore_actions.createChore)(chore));
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_myChore2.default);
+
+/***/ },
+/* 763 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _List = __webpack_require__(463);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var MyChore = function (_React$Component) {
+	  _inherits(MyChore, _React$Component);
+	
+	  function MyChore(props) {
+	    _classCallCheck(this, MyChore);
+	
+	    return _possibleConstructorReturn(this, (MyChore.__proto__ || Object.getPrototypeOf(MyChore)).call(this, props));
+	  }
+	
+	  _createClass(MyChore, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'group-show' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'group-show-center' },
+	          _react2.default.createElement(
+	            'h2',
+	            null,
+	            'YourChores! forChore!'
+	          ),
+	          _react2.default.createElement(
+	            _List.List,
+	            null,
+	            this.props.chores.map(function (chore) {
+	              return _react2.default.createElement(_List.ListItem, { key: chore.id, primaryText: chore.task });
+	            })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return MyChore;
+	}(_react2.default.Component);
+	
+	exports.default = MyChore;
 
 /***/ }
 /******/ ]);

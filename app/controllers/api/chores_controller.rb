@@ -5,15 +5,22 @@ class Api::ChoresController < ApplicationController
     chore_param["group_id"] = chore_params["group_id"].to_i
     @chore = Chore.new(chore_param)
     @chore.reminders = 0
-    p @chore
     if @chore.save
       render :show
     else
-      p @chore.errors.full_messages
       render json: @chore.errors.full_messages
     end
   end
 
+  def update
+    @chore.find(params[:id])
+    if @chore.update_attribute(complete: true)
+      render :show
+    else
+      render json: @chore.errors.full_messages
+    end
+
+  end
 
   private
   def chore_params

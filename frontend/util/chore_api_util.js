@@ -8,3 +8,12 @@ export const postChore = (chore, success, error) => {
     error
   });
 };
+
+export const finishChore = (id, success, error) => {
+  $.ajax({
+    method: "PATCH",
+    url: `api/chores/${id}`,
+    success,
+    error
+  });
+};

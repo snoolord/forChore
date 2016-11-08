@@ -4,6 +4,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import DatePicker from 'material-ui/DatePicker';
 import CreateChoreContainer from './create-chore-container';
+import {List, ListItem} from 'material-ui/List';
+
 // todo: NEED TO CHANGE TO CREATE CHORE CONTAINER
 
 class GroupShow extends React.Component {
@@ -20,11 +22,17 @@ class GroupShow extends React.Component {
   }
 
   render() {
+    console.log(this.props.chores);
      return(
       <div className="group-show">
         <div className="group-show-center">
           <h2>{this.props.title}</h2>
           <CreateChoreContainer state={this.props}/>
+            <List>
+              {this.props.chores.map((chore) => {
+                return <ListItem key={chore.id}primaryText={chore.task}></ListItem>;
+              })}
+            </List>
         </div>
       </div>
     );

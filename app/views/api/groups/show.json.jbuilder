@@ -6,4 +6,5 @@ json.housemates do
   end
 end
 
+json.housemateChores @housemateChores
 json.chores @chores

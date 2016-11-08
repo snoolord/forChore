@@ -9,6 +9,7 @@ import SideBarContainer from './side-bar/side-bar-container';
 import CreateGroupContainer from './group/create-group-container';
 import GroupShowContainer from './group/group-show-container';
 import EditGroupContainer from './group/edit-group-container';
+import MyChoreContainer from './chores/my-chore-container';
 // actions
 import { fetchAGroup } from '../actions/group_actions';
 // themes
@@ -87,6 +88,7 @@ const Root = ({ store }) => {
             <Route path="/signup" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
             <Route path="/dashboard" component={SideBarContainer}>
               <Route path="groups/:id" component={GroupShowContainer} onEnter={_requestAGroup} />
+              <Route path="myChores" component={MyChoreContainer} />
             </Route>
           </Route>
           <Route path="/create_group" component={CreateGroupContainer}/>
