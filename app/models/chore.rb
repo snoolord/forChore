@@ -1,5 +1,5 @@
 class Chore < ActiveRecord::Base
-  validates :user_id, :group_id, :complete_by, :reminders, presence: true
+  validates :user_id, :group_id, :complete_by, :reminders, :task, presence: true
 
   belongs_to :user,
     primary_key: :id,

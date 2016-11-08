@@ -73848,7 +73848,7 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    createChore: function createChore(chore) {
-	      return dispatch((0, _chore_actions.createChore)());
+	      return dispatch((0, _chore_actions.createChore)(chore));
 	    }
 	  };
 	};
@@ -73938,10 +73938,11 @@
 	
 	    _this.state = {
 	      open: false,
-	      housemate: '',
+	      housemate: {},
 	      date: null,
 	      chore: ''
 	    };
+	    console.log(_this.props);
 	    _this.handleOpen = _this.handleOpen.bind(_this);
 	    _this.handleClose = _this.handleClose.bind(_this);
 	    _this.upDate = _this.upDate.bind(_this);
@@ -73981,37 +73982,42 @@
 	  }, {
 	    key: 'handleClose',
 	    value: function handleClose(e) {
-	      e.preventDefault();
 	      this.setState({ open: false });
 	    }
 	  }, {
 	    key: 'handleSubmit',
-	    value: function handleSubmit() {
+	    value: function handleSubmit(e) {
+	      e.preventDefault();
+	      var chore = {};
+	      var userId = this.state.housemate.id;
+	      chore.user_id = userId;
+	      chore.group_id = parseInt(this.props.params.id);
+	      chore.task = this.state.chore;
+	      chore.complete_by = this.state.date;
+	      console.log(chore);
+	      this.props.createChore(chore);
 	      this.setState({ open: false });
-	      console.log("hello");
 	    }
 	  }, {
 	    key: 'disablePastDates',
 	    value: function disablePastDates(date) {
-	      return date < new Date();
+	      return date <= new Date();
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this4 = this;
 	
-	      console.log(this.props);
 	      var housemates = [];
 	      if (this.props.housemates) {
 	        (0, _values2.default)(this.props.housemates).forEach(function (housemate, index) {
 	          if (_this4.props.currentUser.username !== housemate) {
 	            housemates.push(_react2.default.createElement(_MenuItem2.default, { key: housemate + index,
-	              value: housemate.username,
+	              value: housemate,
 	              primaryText: housemate.username }));
 	          }
 	        });
 	      }
-	      console.log(this.state);
 	      var actions = [_react2.default.createElement(_FlatButton2.default, {
 	        label: 'Cancel',
 	        primary: true,

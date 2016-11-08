@@ -7,7 +7,7 @@ class Api::ChoresController < ApplicationController
     @chore.reminders = 0
     p @chore
     if @chore.save
-      render "api/groups/show"
+      render :show
     else
       p @chore.errors.full_messages
       render json: @chore.errors.full_messages
@@ -17,6 +17,6 @@ class Api::ChoresController < ApplicationController
 
   private
   def chore_params
-    params.require(:chore).permit(:user_id, :group_id, :complete_by)
+    params.require(:chore).permit(:user_id, :group_id, :complete_by, :task)
   end
 end

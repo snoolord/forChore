@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createChore: (chore) => dispatch(createChore())
+    createChore: (chore) => dispatch(createChore(chore))
   };
 };
 export default connect(

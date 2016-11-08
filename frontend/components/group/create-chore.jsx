@@ -25,10 +25,11 @@ class CreateChore extends React.Component {
     super(props);
     this.state = {
       open: false,
-      housemate: '',
+      housemate: {},
       date: null,
       chore: ''
     };
+    console.log(this.props);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.upDate = this.upDate.bind(this);
@@ -55,31 +56,36 @@ class CreateChore extends React.Component {
   }
 
   handleClose(e)  {
-    e.preventDefault();
     this.setState({open: false});
   }
 
-  handleSubmit() {
+  handleSubmit(e) {
+    e.preventDefault();
+    let chore = {};
+    let userId = this.state.housemate.id;
+    chore.user_id = userId;
+    chore.group_id = parseInt(this.props.params.id);
+    chore.task = this.state.chore;
+    chore.complete_by = this.state.date;
+    console.log(chore);
+    this.props.createChore(chore);
     this.setState({open: false});
-    console.log("hello");
   }
 
   disablePastDates(date) {
-    return date < new Date;
+    return date <= new Date;
   }
   render() {
-    console.log(this.props);
     let housemates = [];
     if (this.props.housemates) {
       values(this.props.housemates).forEach((housemate, index)=> {
         if (this.props.currentUser.username !== housemate) {
           housemates.push(<MenuItem key={housemate+index}
-                          value={housemate.username}
+                          value={housemate}
                           primaryText={housemate.username}></MenuItem>)  ;
         }
       });
     }
-    console.log(this.state);
     const actions = [
       <FlatButton
         label="Cancel"
