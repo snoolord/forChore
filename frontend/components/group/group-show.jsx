@@ -11,6 +11,7 @@ import {List, ListItem} from 'material-ui/List';
 class GroupShow extends React.Component {
   constructor(props) {
     super(props);
+    console.log(this.props);
   }
   handleOpen(){
    this.setState({open: true});
@@ -21,13 +22,17 @@ class GroupShow extends React.Component {
   }
 
   render() {
+    let chores = [];
+     if (this.props.chores) {
+       chores = this.props.chores;
+     }
      return(
       <div className="group-show">
         <div className="group-show-center">
           <h2>{this.props.title}</h2>
           <CreateChoreContainer state={this.props}/>
             <List>
-              {this.props.chores.map((chore) => {
+              {chores.map((chore) => {
                 return <ListItem key={chore.id}primaryText={chore.task}></ListItem>;
               })}
             </List>

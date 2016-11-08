@@ -29,7 +29,6 @@ class CreateChore extends React.Component {
       date: null,
       chore: ''
     };
-    console.log(this.props);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.upDate = this.upDate.bind(this);
@@ -67,7 +66,6 @@ class CreateChore extends React.Component {
     chore.group_id = parseInt(this.props.params.id);
     chore.task = this.state.chore;
     chore.complete_by = this.state.date;
-    console.log(chore);
     this.props.createChore(chore);
     this.props.fetchAGroup(chore.group_id);
     this.setState({open: false});

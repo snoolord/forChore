@@ -21637,7 +21637,7 @@
 	          _react2.default.createElement(
 	            _reactRouter.Route,
 	            { path: '/dashboard', component: _sideBarContainer2.default },
-	            _react2.default.createElement(_reactRouter.IndexRoute, { path: 'myChores', component: _myChoreContainer2.default }),
+	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _myChoreContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'groups/:id', component: _groupShowContainer2.default, onEnter: _requestAGroup })
 	          )
 	        ),
@@ -28339,7 +28339,7 @@
 	          null,
 	          _react2.default.createElement(
 	            _reactRouter.Link,
-	            { to: '/dashboard' },
+	            { to: '/dashboard/' },
 	            _react2.default.createElement('img', { src: 'http://i.imgur.com/u9xEJsy.png', className: 'logo' })
 	          )
 	        );
@@ -34492,6 +34492,7 @@
 	
 	      return function (e) {
 	        _this3.props.leaveGroup(_this3.props.currentUserId, groupId);
+	        _this3.props.router.push('/dashboard/');
 	      };
 	    }
 	  }, {
@@ -34568,7 +34569,6 @@
 	    value: function render() {
 	      var _this5 = this;
 	
-	      console.log(this.props);
 	      var housemates = (0, _values2.default)(this.props.housemates);
 	      if (this.props.loggedIn) {
 	        return _react2.default.createElement(
@@ -69957,6 +69957,7 @@
 	      })) {
 	        var group = { creator_id: this.props.currentUser.id, title: this.state.title, housemate_ids: (0, _values2.default)(filledOutUsers) };
 	        this.props.createAGroup(group);
+	        console.log(this.props);
 	        this.setState(_defineProperty({}, "created", true));
 	      } else {
 	        this.props.receiveErrors(errors);
@@ -69971,7 +69972,7 @@
 	    key: 'redirectIfCreated',
 	    value: function redirectIfCreated() {
 	      if (this.state.created) {
-	        this.props.router.push('/dashboard');
+	        this.props.router.push('/dashboard/');
 	      }
 	    }
 	  }, {
@@ -70715,13 +70716,15 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
+	  console.log(state, "MAPPGIN STATE");
 	  return {
 	    currentUser: state.session.currentUser,
 	    users: state.user.users,
 	    title: state.group.title,
 	    housemates: state.group.housemates,
 	    housemateChores: state.group.housemateChores,
-	    chores: state.group.chores
+	    chores: state.group.chores,
+	    state: state
 	  };
 	};
 	
@@ -70789,7 +70792,10 @@
 	  function GroupShow(props) {
 	    _classCallCheck(this, GroupShow);
 	
-	    return _possibleConstructorReturn(this, (GroupShow.__proto__ || Object.getPrototypeOf(GroupShow)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (GroupShow.__proto__ || Object.getPrototypeOf(GroupShow)).call(this, props));
+	
+	    console.log(_this.props);
+	    return _this;
 	  }
 	
 	  _createClass(GroupShow, [{
@@ -70805,6 +70811,10 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var chores = [];
+	      if (this.props.chores) {
+	        chores = this.props.chores;
+	      }
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'group-show' },
@@ -70820,7 +70830,7 @@
 	          _react2.default.createElement(
 	            _List.List,
 	            null,
-	            this.props.chores.map(function (chore) {
+	            chores.map(function (chore) {
 	              return _react2.default.createElement(_List.ListItem, { key: chore.id, primaryText: chore.task });
 	            })
 	          )
@@ -71344,7 +71354,7 @@
 	  title: '',
 	  housemates: {},
 	  chores: [],
-	  housemateChores: [],
+	  housemateChores: {},
 	  errors: []
 	};
 	
@@ -73510,7 +73520,7 @@
 	      var newState = state;
 	      newState.groups = action.groups;
 	      newState.chores = action.chores;
-	      return (0, _merge2.default)({}, state, action.groups);
+	      return (0, _merge2.default)({}, _defaultState, action.groups);
 	    case _user_actions.RECEIVE_USERS:
 	      return (0, _merge2.default)({}, state, action.users);
 	    default:
@@ -74007,7 +74017,6 @@
 	      date: null,
 	      chore: ''
 	    };
-	    console.log(_this.props);
 	    _this.handleOpen = _this.handleOpen.bind(_this);
 	    _this.handleClose = _this.handleClose.bind(_this);
 	    _this.upDate = _this.upDate.bind(_this);
@@ -74059,7 +74068,6 @@
 	      chore.group_id = parseInt(this.props.params.id);
 	      chore.task = this.state.chore;
 	      chore.complete_by = this.state.date;
-	      console.log(chore);
 	      this.props.createChore(chore);
 	      this.props.fetchAGroup(chore.group_id);
 	      this.setState({ open: false });

@@ -87,7 +87,7 @@ const Root = ({ store }) => {
             <Route path="/login" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
             <Route path="/signup" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
             <Route path="/dashboard" component={SideBarContainer}>
-              <IndexRoute path="myChores" component={MyChoreContainer} />
+              <IndexRoute component={MyChoreContainer} />
               <Route path="groups/:id" component={GroupShowContainer} onEnter={_requestAGroup} />
             </Route>
           </Route>

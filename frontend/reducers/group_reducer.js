@@ -1,7 +1,8 @@
 import {
   RECEIVE_GROUP,
   RECEIVE_ERRORS,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  LEAVE_GROUP
 } from '../actions/group_actions';
 
 import merge from 'lodash/merge';
@@ -10,7 +11,7 @@ const _defaultState = {
   title: '',
   housemates: {},
   chores: [],
-  housemateChores: [],
+  housemateChores: {},
   errors: []
 };
 

@@ -43,6 +43,7 @@ class SideBar extends React.Component {
   handleDestroy(groupId) {
     return e => {
       this.props.leaveGroup(this.props.currentUserId, groupId);
+      this.props.router.push('/dashboard/');
     };
   }
 
@@ -103,7 +104,6 @@ class SideBar extends React.Component {
     };
   }
   render() {
-    console.log(this.props);
     let housemates = values(this.props.housemates);
     if (this.props.loggedIn) {
       return (
