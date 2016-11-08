@@ -5,9 +5,5 @@ json.housemates do
 
   end
 end
-# #
-# json.chores do
-#   # @group.chores.each do |chore|
-#   #   json.set! chore.user_id, housemates
-#   # end
-# end
+
+json.chores @chores

@@ -74040,40 +74040,52 @@
 	          _react2.default.createElement(
 	            _Dialog2.default,
 	            {
-	              title: '',
 	              actions: actions,
 	              modal: false,
 	              open: this.state.open,
 	              onRequestClose: this.handleClose
 	            },
-	            _react2.default.createElement(_TextField2.default, {
-	              onChange: this.updateChore(),
-	              hintText: 'Chore'
-	            }),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'drop-down-text' },
-	              'for'
-	            ),
-	            _react2.default.createElement(
-	              _DropDownMenu2.default,
-	              {
-	                style: styles.customWidth,
-	                value: this.state.housemate,
-	                onChange: this.update("housemate")
-	              },
-	              housemates
+	              { className: 'drop-down clearfix' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'drop-down-text' },
+	                'for'
+	              ),
+	              _react2.default.createElement(
+	                _DropDownMenu2.default,
+	                {
+	                  style: styles.customWidth,
+	                  value: this.state.housemate,
+	                  className: 'drop-down-menu',
+	                  onChange: this.update("housemate")
+	                },
+	                housemates
+	              )
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'complete-by-text' },
-	              'by'
+	              { className: 'task' },
+	              _react2.default.createElement(_TextField2.default, {
+	                onChange: this.updateChore(),
+	                hintText: 'Chore'
+	              })
 	            ),
-	            _react2.default.createElement(_DatePicker2.default, { hintText: 'Date Picker',
-	              value: this.state.date,
-	              onChange: this.upDate,
-	              shouldDisableDate: this.disablePastDates
-	            })
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'date-picker' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'complete-by-text' },
+	                'by'
+	              ),
+	              _react2.default.createElement(_DatePicker2.default, { hintText: 'Date Picker',
+	                value: this.state.date,
+	                onChange: this.upDate,
+	                shouldDisableDate: this.disablePastDates
+	              })
+	            )
 	          )
 	        )
 	      );

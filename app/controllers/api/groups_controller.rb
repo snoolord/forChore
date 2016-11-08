@@ -31,6 +31,10 @@ class Api::GroupsController < ApplicationController
   end
   def show
     @group = Group.find(params[:id])
+    @chores = Hash.new { |hash, key| hash[key] = [] }
+    @group.housemates.each do | housemate |
+      @chores[housemate.id] = housemate.chores
+    end
   end
 
   private

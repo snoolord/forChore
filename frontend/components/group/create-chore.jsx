@@ -106,31 +106,37 @@ class CreateChore extends React.Component {
         <RaisedButton label="Add Chore" onTouchTap={this.handleOpen} />
         <div className="create-chore" onSubmit={this.handleSubmit}>
           <Dialog
-            title=""
             actions={actions}
             modal={false}
             open={this.state.open}
             onRequestClose={this.handleClose}
             >
-            <TextField
-              onChange={this.updateChore()}
-              hintText="Chore"
-              >
-            </TextField>
-            <div className="drop-down-text">for</div>
-            <DropDownMenu
-              style={styles.customWidth}
-              value={this.state.housemate}
-              onChange={this.update("housemate")}
-              >
-              {housemates}
-            </DropDownMenu>
-            <div className="complete-by-text">by</div>
-            <DatePicker hintText="Date Picker"
-              value={this.state.date}
-              onChange={this.upDate}
-              shouldDisableDate={this.disablePastDates}
-              />
+            <div className="drop-down clearfix">
+              <div className="drop-down-text">for</div>
+              <DropDownMenu
+                style={styles.customWidth}
+                value={this.state.housemate}
+                className="drop-down-menu"
+                onChange={this.update("housemate")}
+                >
+                {housemates}
+              </DropDownMenu>
+            </div>
+            <div className="task">
+              <TextField
+                onChange={this.updateChore()}
+                hintText="Chore"
+                >
+              </TextField>
+            </div>
+            <div className="date-picker">
+              <div className="complete-by-text">by</div>
+              <DatePicker hintText="Date Picker"
+                value={this.state.date}
+                onChange={this.upDate}
+                shouldDisableDate={this.disablePastDates}
+                />
+            </div>
           </Dialog>
         </div>
       </div>
