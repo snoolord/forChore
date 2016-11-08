@@ -167,31 +167,36 @@ class CreateGroup extends React.Component {
   render() {
     return (
       <div className="create-group">
-        <div className="create-group-name">
-          forChore
+        <div className="broom">
+          <img src="http://i.imgur.com/XopfC9T.png"/>
         </div>
-        <div className="create-group-prompt">
-          Start a new group!
-        </div>
-        <form className="create-group-form" onSubmit={this.handleSubmit}>
+        <div className="create-group-right">
           <div className="create-group-name">
-            <TextField
-              onChange={this.update("title")}
-              hintText="123 Sesame Street"
-              >
-            </TextField>
+            forChore
+          </div>
+          <div className="create-group-prompt">
+            Start a new group!
+          </div>
+          <form className="create-group-form" onSubmit={this.handleSubmit}>
+            <div className="create-group-name">
+              <TextField
+                onChange={this.update("title")}
+                hintText="123 Sesame Street"
+                >
+              </TextField>
 
-          </div>
-          <div className="housemate-text-fields">
-            {this.state.housemates.map((housemate, index) => {
-              return this.memberField(housemate, index);
-          })}
-          </div>
-          {this.addFieldButton()}
-          <div className="group-save-button">
-            <RaisedButton id="group-save-button" type="submit" disabled={this.state.title.length === 0 ? true : false}>Create Group</RaisedButton>
-          </div>
-        </form>
+            </div>
+            <div className="housemate-text-fields">
+              {this.state.housemates.map((housemate, index) => {
+                return this.memberField(housemate, index);
+              })}
+            </div>
+            {this.addFieldButton()}
+            <div className="group-save-button">
+              <RaisedButton id="group-save-button" type="submit" disabled={this.state.title.length === 0 ? true : false}>Create Group</RaisedButton>
+            </div>
+          </form>
+        </div>
       </div>
 
     );

@@ -5,6 +5,7 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 import { Link, withRouter } from 'react-router';
 import values from 'lodash/values';
 
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import {List, ListItem} from 'material-ui/List';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
@@ -78,7 +79,7 @@ class SideBar extends React.Component {
     if (this.props.location.pathname === '/dashboard'){
       return <div key={housemate.id}></div>;
     } else if (this.props.location.pathname.includes('groups/')){
-      return <ListItem key={housemate.id} primaryText={housemate.username} />;
+      return <ListItem key={housemate.id} primaryText={housemate.username}/>;
     }
   }
 
@@ -98,11 +99,11 @@ class SideBar extends React.Component {
 
   handleTouch(route) {
     return e => {
-      console.log("handling touch");
       this.props.router.push(route);
     };
   }
   render() {
+    console.log(this.props);
     let housemates = values(this.props.housemates);
     if (this.props.loggedIn) {
       return (
@@ -113,7 +114,7 @@ class SideBar extends React.Component {
           className="sidebar"
           >
           <List>
-             <ListItem primaryText="myChores" onTouchTap={this.handleTouch('/dashboard/myChores')}/>
+             <ListItem primaryText="myChores" onTouchTap={this.handleTouch('/dashboard/')}/>
              <ListItem primaryText="recentActivity" onTouchTap={this.handleTouch('dashboard/recentActivity')}/>
              <div className='groups'>
                <Subheader>groups</Subheader>

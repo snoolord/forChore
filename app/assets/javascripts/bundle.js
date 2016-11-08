@@ -21637,8 +21637,8 @@
 	          _react2.default.createElement(
 	            _reactRouter.Route,
 	            { path: '/dashboard', component: _sideBarContainer2.default },
-	            _react2.default.createElement(_reactRouter.Route, { path: 'groups/:id', component: _groupShowContainer2.default, onEnter: _requestAGroup }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'myChores', component: _myChoreContainer2.default })
+	            _react2.default.createElement(_reactRouter.IndexRoute, { path: 'myChores', component: _myChoreContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'groups/:id', component: _groupShowContainer2.default, onEnter: _requestAGroup })
 	          )
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/create_group', component: _createGroupContainer2.default }),
@@ -34408,6 +34408,10 @@
 	
 	var _values2 = _interopRequireDefault(_values);
 	
+	var _moreVert = __webpack_require__(764);
+	
+	var _moreVert2 = _interopRequireDefault(_moreVert);
+	
 	var _List = __webpack_require__(463);
 	
 	var _inbox = __webpack_require__(488);
@@ -34556,7 +34560,6 @@
 	      var _this4 = this;
 	
 	      return function (e) {
-	        console.log("handling touch");
 	        _this4.props.router.push(route);
 	      };
 	    }
@@ -34565,6 +34568,7 @@
 	    value: function render() {
 	      var _this5 = this;
 	
+	      console.log(this.props);
 	      var housemates = (0, _values2.default)(this.props.housemates);
 	      if (this.props.loggedIn) {
 	        return _react2.default.createElement(
@@ -34580,7 +34584,7 @@
 	            _react2.default.createElement(
 	              _List.List,
 	              null,
-	              _react2.default.createElement(_List.ListItem, { primaryText: 'myChores', onTouchTap: this.handleTouch('/dashboard/myChores') }),
+	              _react2.default.createElement(_List.ListItem, { primaryText: 'myChores', onTouchTap: this.handleTouch('/dashboard/') }),
 	              _react2.default.createElement(_List.ListItem, { primaryText: 'recentActivity', onTouchTap: this.handleTouch('dashboard/recentActivity') }),
 	              _react2.default.createElement(
 	                'div',
@@ -70055,40 +70059,49 @@
 	        { className: 'create-group' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'create-group-name' },
-	          'forChore'
+	          { className: 'broom' },
+	          _react2.default.createElement('img', { src: 'http://i.imgur.com/XopfC9T.png' })
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'create-group-prompt' },
-	          'Start a new group!'
-	        ),
-	        _react2.default.createElement(
-	          'form',
-	          { className: 'create-group-form', onSubmit: this.handleSubmit },
+	          { className: 'create-group-right' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'create-group-name' },
-	            _react2.default.createElement(_TextField2.default, {
-	              onChange: this.update("title"),
-	              hintText: '123 Sesame Street'
-	            })
+	            'forChore'
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'housemate-text-fields' },
-	            this.state.housemates.map(function (housemate, index) {
-	              return _this5.memberField(housemate, index);
-	            })
+	            { className: 'create-group-prompt' },
+	            'Start a new group!'
 	          ),
-	          this.addFieldButton(),
 	          _react2.default.createElement(
-	            'div',
-	            { className: 'group-save-button' },
+	            'form',
+	            { className: 'create-group-form', onSubmit: this.handleSubmit },
 	            _react2.default.createElement(
-	              _RaisedButton2.default,
-	              { id: 'group-save-button', type: 'submit', disabled: this.state.title.length === 0 ? true : false },
-	              'Create Group'
+	              'div',
+	              { className: 'create-group-name' },
+	              _react2.default.createElement(_TextField2.default, {
+	                onChange: this.update("title"),
+	                hintText: '123 Sesame Street'
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'housemate-text-fields' },
+	              this.state.housemates.map(function (housemate, index) {
+	                return _this5.memberField(housemate, index);
+	              })
+	            ),
+	            this.addFieldButton(),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'group-save-button' },
+	              _react2.default.createElement(
+	                _RaisedButton2.default,
+	                { id: 'group-save-button', type: 'submit', disabled: this.state.title.length === 0 ? true : false },
+	                'Create Group'
+	              )
 	            )
 	          )
 	        )
@@ -70776,10 +70789,7 @@
 	  function GroupShow(props) {
 	    _classCallCheck(this, GroupShow);
 	
-	    var _this = _possibleConstructorReturn(this, (GroupShow.__proto__ || Object.getPrototypeOf(GroupShow)).call(this, props));
-	
-	    console.log(_this.props);
-	    return _this;
+	    return _possibleConstructorReturn(this, (GroupShow.__proto__ || Object.getPrototypeOf(GroupShow)).call(this, props));
 	  }
 	
 	  _createClass(GroupShow, [{
@@ -70795,7 +70805,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props.chores);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'group-show' },
@@ -71156,36 +71165,46 @@
 	        { className: 'edit-group' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'edit-group-name' },
-	          'forChore'
+	          { className: 'broom' },
+	          _react2.default.createElement('img', { src: 'http://i.imgur.com/XopfC9T.png' })
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'edit-group-prompt' },
-	          'Update your group!'
-	        ),
-	        _react2.default.createElement(
-	          'form',
-	          { className: 'edit-group-form', onSubmit: this.handleSubmit },
+	          {
+	            className: 'edit-form-right' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'edit-group-name' },
-	            _react2.default.createElement(_TextField2.default, {
-	              onChange: this.update("title"),
-	              hintText: '123 Sesame Street',
-	              value: this.state.title })
+	            'forChore'
 	          ),
-	          this.state.housemates.map(function (housemate, index) {
-	            return _this7.memberField(housemate, index);
-	          }),
-	          this.addFieldButton(),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'update-group-button' },
+	            { className: 'edit-group-prompt' },
+	            'Update your group!'
+	          ),
+	          _react2.default.createElement(
+	            'form',
+	            { className: 'edit-group-form', onSubmit: this.handleSubmit },
 	            _react2.default.createElement(
-	              _RaisedButton2.default,
-	              { id: 'update-group-button', type: 'submit', disabled: this.state.title.length === 0 ? true : false },
-	              'Update Group'
+	              'div',
+	              { className: 'edit-group-name' },
+	              _react2.default.createElement(_TextField2.default, {
+	                onChange: this.update("title"),
+	                hintText: '123 Sesame Street',
+	                value: this.state.title })
+	            ),
+	            this.state.housemates.map(function (housemate, index) {
+	              return _this7.memberField(housemate, index);
+	            }),
+	            this.addFieldButton(),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'update-group-button' },
+	              _react2.default.createElement(
+	                _RaisedButton2.default,
+	                { id: 'update-group-button', type: 'submit', disabled: this.state.title.length === 0 ? true : false },
+	                'Update Group'
+	              )
 	            )
 	          )
 	        )
@@ -74250,6 +74269,43 @@
 	}(_react2.default.Component);
 	
 	exports.default = MyChore;
+
+/***/ },
+/* 764 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _pure = __webpack_require__(474);
+	
+	var _pure2 = _interopRequireDefault(_pure);
+	
+	var _SvgIcon = __webpack_require__(483);
+	
+	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var NavigationMoreVert = function NavigationMoreVert(props) {
+	  return _react2.default.createElement(
+	    _SvgIcon2.default,
+	    props,
+	    _react2.default.createElement('path', { d: 'M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' })
+	  );
+	};
+	NavigationMoreVert = (0, _pure2.default)(NavigationMoreVert);
+	NavigationMoreVert.displayName = 'NavigationMoreVert';
+	NavigationMoreVert.muiName = 'SvgIcon';
+	
+	exports.default = NavigationMoreVert;
 
 /***/ }
 /******/ ]);

@@ -11,7 +11,6 @@ import {List, ListItem} from 'material-ui/List';
 class GroupShow extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
   }
   handleOpen(){
    this.setState({open: true});
@@ -22,7 +21,6 @@ class GroupShow extends React.Component {
   }
 
   render() {
-    console.log(this.props.chores);
      return(
       <div className="group-show">
         <div className="group-show-center">

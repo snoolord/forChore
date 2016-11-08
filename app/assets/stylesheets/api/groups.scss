@@ -22,19 +22,19 @@ animation: bounce 800ms ease-out;
 .housemate-fields-active div div input {
   align-text: center !important;
 }
+.broom {
+  float: left;
+}
 .create-group {
   display: flex;
-  align-items: center;
-  margin: 0 auto;
-  flex-direction: column;
-  width: 200px;
+  justify-content: center;
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
 }
 
 .group-save-button {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .group-save-button div div {
@@ -43,17 +43,14 @@ animation: bounce 800ms ease-out;
 
 .edit-group {
   display: flex;
-  align-items: center;
-  margin: 0 auto;
-  flex-direction: column;
-  width: 200px;
+  justify-content: center;
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
 }
 
 .update-group-button {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .update-group-button div div {
