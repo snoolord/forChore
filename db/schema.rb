@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20161105211322) do
   create_table "chores", force: :cascade do |t|
     t.integer  "user_id",                     null: false
     t.integer  "group_id",                    null: false
+    t.string   "task",                        null: false
     t.date     "complete_by",                 null: false
     t.boolean  "complete",    default: false
     t.integer  "reminders",                   null: false

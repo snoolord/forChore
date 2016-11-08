@@ -190,30 +190,36 @@ class EditGroup extends React.Component {
 
     return (
       <div className="edit-group">
-        <div className="edit-group-name">
-          forChore
+        <div className="broom">
+          <img src="http://i.imgur.com/XopfC9T.png"/>
         </div>
-        <div className="edit-group-prompt">
-          Update your group!
-        </div>
-        <form className="edit-group-form" onSubmit={this.handleSubmit}>
+        <div
+          className="edit-form-right">
           <div className="edit-group-name">
-            <TextField
-              onChange={this.update("title")}
-              hintText="123 Sesame Street"
-              value={this.state.title}>
-            </TextField>
-
+            forChore
           </div>
-
-          {this.state.housemates.map((housemate, index) => {
-            return this.memberField(housemate, index);
-          })}
-          {this.addFieldButton()}
-          <div className="update-group-button">
-            <RaisedButton id="update-group-button" type="submit" disabled={this.state.title.length === 0 ? true : false}>Update Group</RaisedButton>
+          <div className="edit-group-prompt">
+            Update your group!
           </div>
+          <form className="edit-group-form" onSubmit={this.handleSubmit}>
+            <div className="edit-group-name">
+              <TextField
+                onChange={this.update("title")}
+                hintText="123 Sesame Street"
+                value={this.state.title}>
+              </TextField>
+
+            </div>
+
+            {this.state.housemates.map((housemate, index) => {
+              return this.memberField(housemate, index);
+            })}
+            {this.addFieldButton()}
+            <div className="update-group-button">
+              <RaisedButton id="update-group-button" type="submit" disabled={this.state.title.length === 0 ? true : false}>Update Group</RaisedButton>
+            </div>
         </form>
+      </div>
       </div>
 
     );

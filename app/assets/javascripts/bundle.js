@@ -90,6 +90,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	window.completeChore = ChoreAction.completeChore;
 	window.createChore = ChoreAction.createChore;
 	window.fetchUserGroups = UserAction.fetchUserGroups;
 	window.fetchUsers = UserAction.fetchUsers;
@@ -21535,6 +21536,10 @@
 	
 	var _editGroupContainer2 = _interopRequireDefault(_editGroupContainer);
 	
+	var _myChoreContainer = __webpack_require__(762);
+	
+	var _myChoreContainer2 = _interopRequireDefault(_myChoreContainer);
+	
 	var _group_actions = __webpack_require__(495);
 	
 	var _theme = __webpack_require__(390);
@@ -21556,6 +21561,8 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// actions
+	
+	// containers
 	var muiTheme = (0, _getMuiTheme2.default)({
 	  appBar: {
 	    height: 40
@@ -21579,8 +21586,6 @@
 	});
 	// themes
 	
-	// containers
-	
 	
 	var myTheme = (0, _getMuiTheme2.default)(_theme2.default);
 	
@@ -21588,17 +21593,16 @@
 	  var store = _ref.store;
 	
 	
-	  var _ensureLoggedIn = function _ensureLoggedIn(nextState, replace) {
+	  var _redirectIfLoggedIn = function _redirectIfLoggedIn(nextState, replace) {
 	    var currentUser = store.getState().session.currentUser;
-	    if (!currentUser) {
-	      replace('/login');
+	    if (currentUser) {
+	      replace('/dashboard');
 	    }
 	  };
 	
-	  var _redirectIfLoggedIn = function _redirectIfLoggedIn(nextState, replace) {
+	  var _preventRootAccess = function _preventRootAccess(nextState, replace) {
 	    var currentUser = store.getState().session.currentUser;
-	    console.log("are we going here?");
-	    if (currentUser) {
+	    if (currentUser && nextState.location.pathname === '/') {
 	      replace('/dashboard');
 	    }
 	  };
@@ -21612,8 +21616,8 @@
 	  //   }
 	  // };
 	
+	
 	  var _requestAGroup = function _requestAGroup(nextState) {
-	    console.log("the show page");
 	    store.dispatch((0, _group_actions.fetchAGroup)(nextState.params.id));
 	  };
 	
@@ -21628,13 +21632,14 @@
 	        { history: _reactRouter.hashHistory },
 	        _react2.default.createElement(
 	          _reactRouter.Route,
-	          { path: '/', component: _app_container2.default },
+	          { path: '/', component: _app_container2.default, onEnter: _preventRootAccess },
 	          _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _sessionFormContainer2.default, onEnter: _redirectIfLoggedIn }),
 	          _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _sessionFormContainer2.default, onEnter: _redirectIfLoggedIn }),
 	          _react2.default.createElement(
 	            _reactRouter.Route,
 	            { path: '/dashboard', component: _sideBarContainer2.default },
-	            _react2.default.createElement(_reactRouter.Route, { path: '/dashboard/groups/:id', component: _groupShowContainer2.default, onEnter: _requestAGroup })
+	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _myChoreContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'groups/:id', component: _groupShowContainer2.default, onEnter: _requestAGroup })
 	          )
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/create_group', component: _createGroupContainer2.default }),
@@ -28327,13 +28332,6 @@
 	  }
 	
 	  _createClass(App, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      if (this.props.loggedIn) {
-	        this.props.router.push('/dashboard');
-	      }
-	    }
-	  }, {
 	    key: 'logo',
 	    value: function logo() {
 	      if (this.props.loggedIn) {
@@ -28342,7 +28340,7 @@
 	          null,
 	          _react2.default.createElement(
 	            _reactRouter.Link,
-	            { to: '/dashboard' },
+	            { to: '/dashboard/' },
 	            _react2.default.createElement('img', { src: 'http://i.imgur.com/u9xEJsy.png', className: 'logo' })
 	          )
 	        );
@@ -34411,6 +34409,10 @@
 	
 	var _values2 = _interopRequireDefault(_values);
 	
+	var _moreVert = __webpack_require__(764);
+	
+	var _moreVert2 = _interopRequireDefault(_moreVert);
+	
 	var _List = __webpack_require__(463);
 	
 	var _inbox = __webpack_require__(488);
@@ -34491,16 +34493,19 @@
 	
 	      return function (e) {
 	        _this3.props.leaveGroup(_this3.props.currentUserId, groupId);
+	        _this3.props.router.push('/dashboard/');
 	      };
 	    }
 	  }, {
 	    key: 'groupLink',
 	    value: function groupLink(groupName, groupId) {
-	      return _react2.default.createElement(_List.ListItem, { key: groupId, primaryText: groupName, rightIcon: _react2.default.createElement(
+	      return _react2.default.createElement(_List.ListItem, { key: groupId, primaryText: groupName,
+	        rightIcon: _react2.default.createElement(
 	          'button',
 	          { onClick: this.handleDestroy(groupId) },
 	          '-'
-	        ), onTouchTap: this.handleTouch('/dashboard/groups/' + groupId) });
+	        ),
+	        onTouchTap: this.handleTouch('/dashboard/groups/' + groupId) });
 	      // <li key={groupId + groupName}>
 	      //   <Link to={`/dashboard/groups/${groupId}`}>
 	      //     <FlatButton
@@ -34580,7 +34585,7 @@
 	            _react2.default.createElement(
 	              _List.List,
 	              null,
-	              _react2.default.createElement(_List.ListItem, { primaryText: 'myChores', onTouchTap: this.handleTouch('/dashboard/myChores') }),
+	              _react2.default.createElement(_List.ListItem, { primaryText: 'myChores', onTouchTap: this.handleTouch('/dashboard/') }),
 	              _react2.default.createElement(_List.ListItem, { primaryText: 'recentActivity', onTouchTap: this.handleTouch('dashboard/recentActivity') }),
 	              _react2.default.createElement(
 	                'div',
@@ -69953,6 +69958,7 @@
 	      })) {
 	        var group = { creator_id: this.props.currentUser.id, title: this.state.title, housemate_ids: (0, _values2.default)(filledOutUsers) };
 	        this.props.createAGroup(group);
+	        console.log(this.props);
 	        this.setState(_defineProperty({}, "created", true));
 	      } else {
 	        this.props.receiveErrors(errors);
@@ -69967,7 +69973,7 @@
 	    key: 'redirectIfCreated',
 	    value: function redirectIfCreated() {
 	      if (this.state.created) {
-	        this.props.router.push('/dashboard');
+	        this.props.router.push('/dashboard/');
 	      }
 	    }
 	  }, {
@@ -70055,40 +70061,49 @@
 	        { className: 'create-group' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'create-group-name' },
-	          'forChore'
+	          { className: 'broom' },
+	          _react2.default.createElement('img', { src: 'http://i.imgur.com/XopfC9T.png' })
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'create-group-prompt' },
-	          'Start a new group!'
-	        ),
-	        _react2.default.createElement(
-	          'form',
-	          { className: 'create-group-form', onSubmit: this.handleSubmit },
+	          { className: 'create-group-right' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'create-group-name' },
-	            _react2.default.createElement(_TextField2.default, {
-	              onChange: this.update("title"),
-	              hintText: '123 Sesame Street'
-	            })
+	            'forChore'
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'housemate-text-fields' },
-	            this.state.housemates.map(function (housemate, index) {
-	              return _this5.memberField(housemate, index);
-	            })
+	            { className: 'create-group-prompt' },
+	            'Start a new group!'
 	          ),
-	          this.addFieldButton(),
 	          _react2.default.createElement(
-	            'div',
-	            { className: 'group-save-button' },
+	            'form',
+	            { className: 'create-group-form', onSubmit: this.handleSubmit },
 	            _react2.default.createElement(
-	              _RaisedButton2.default,
-	              { id: 'group-save-button', type: 'submit', disabled: this.state.title.length === 0 ? true : false },
-	              'Create Group'
+	              'div',
+	              { className: 'create-group-name' },
+	              _react2.default.createElement(_TextField2.default, {
+	                onChange: this.update("title"),
+	                hintText: '123 Sesame Street'
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'housemate-text-fields' },
+	              this.state.housemates.map(function (housemate, index) {
+	                return _this5.memberField(housemate, index);
+	              })
+	            ),
+	            this.addFieldButton(),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'group-save-button' },
+	              _react2.default.createElement(
+	                _RaisedButton2.default,
+	                { id: 'group-save-button', type: 'submit', disabled: this.state.title.length === 0 ? true : false },
+	                'Create Group'
+	              )
 	            )
 	          )
 	        )
@@ -70699,6 +70714,10 @@
 	
 	var _user_actions = __webpack_require__(394);
 	
+	var _chore_actions = __webpack_require__(757);
+	
+	var _selector = __webpack_require__(765);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
@@ -70706,7 +70725,11 @@
 	    currentUser: state.session.currentUser,
 	    users: state.user.users,
 	    title: state.group.title,
-	    housemates: state.group.housemates
+	    housemates: state.group.housemates,
+	    housemateChores: state.group.housemateChores,
+	    currentChores: (0, _selector.selectCurrentChores)(state.group.chores),
+	    completedChores: (0, _selector.selectCompletedChores)(state.group.chores),
+	    state: state
 	  };
 	};
 	
@@ -70714,6 +70737,9 @@
 	  return {
 	    fetchAGroup: function fetchAGroup(id) {
 	      return dispatch((0, _group_actions.fetchAGroup)(id));
+	    },
+	    completeChore: function completeChore(id) {
+	      return dispatch((0, _chore_actions.completeChore)(id));
 	    }
 	  };
 	};
@@ -70736,9 +70762,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _materialUi = __webpack_require__(529);
+	var _FlatButton = __webpack_require__(259);
 	
-	var _materialUi2 = _interopRequireDefault(_materialUi);
+	var _FlatButton2 = _interopRequireDefault(_FlatButton);
 	
 	var _RaisedButton = __webpack_require__(385);
 	
@@ -70748,6 +70774,24 @@
 	
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 	
+	var _DatePicker = __webpack_require__(561);
+	
+	var _DatePicker2 = _interopRequireDefault(_DatePicker);
+	
+	var _createChoreContainer = __webpack_require__(760);
+	
+	var _createChoreContainer2 = _interopRequireDefault(_createChoreContainer);
+	
+	var _List = __webpack_require__(463);
+	
+	var _Divider = __webpack_require__(492);
+	
+	var _Divider2 = _interopRequireDefault(_Divider);
+	
+	var _values = __webpack_require__(440);
+	
+	var _values2 = _interopRequireDefault(_values);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -70755,6 +70799,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// todo: NEED TO CHANGE TO CREATE CHORE CONTAINER
 	
 	var GroupShow = function (_React$Component) {
 	  _inherits(GroupShow, _React$Component);
@@ -70764,15 +70810,21 @@
 	
 	    var _this = _possibleConstructorReturn(this, (GroupShow.__proto__ || Object.getPrototypeOf(GroupShow)).call(this, props));
 	
-	    _this.state = {
-	      open: false
-	    };
-	    _this.handleOpen = _this.handleOpen.bind(_this);
-	    _this.handleClose = _this.handleClose.bind(_this);
+	    console.log(_this.props);
+	    _this.handleDestroy = _this.handleDestroy.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(GroupShow, [{
+	    key: 'handleDestroy',
+	    value: function handleDestroy(id) {
+	      var _this2 = this;
+	
+	      return function (e) {
+	        _this2.props.completeChore(id);
+	      };
+	    }
+	  }, {
 	    key: 'handleOpen',
 	    value: function handleOpen() {
 	      this.setState({ open: true });
@@ -70785,6 +70837,17 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+	
+	      console.log(this.props);
+	      var currentChores = [];
+	      var completedChores = [];
+	      if (this.props.currentChores) {
+	        currentChores = this.props.currentChores;
+	      }
+	      if (this.props.completedChores) {
+	        completedChores = this.props.completedChores;
+	      }
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'group-show' },
@@ -70796,7 +70859,28 @@
 	            null,
 	            this.props.title
 	          ),
-	          _react2.default.createElement(_RaisedButton2.default, { label: 'Add Chore', onTouchTap: this.handleOpen })
+	          _react2.default.createElement(_createChoreContainer2.default, { state: this.props }),
+	          _react2.default.createElement(
+	            _List.List,
+	            null,
+	            'current',
+	            currentChores.map(function (chore) {
+	              return _react2.default.createElement(_List.ListItem, { key: chore.id, primaryText: chore.task, rightIcon: _react2.default.createElement(
+	                  'button',
+	                  { onClick: _this3.handleDestroy(chore.id) },
+	                  'x'
+	                ) });
+	            }),
+	            _react2.default.createElement(_Divider2.default, null),
+	            'completed',
+	            completedChores.map(function (chore) {
+	              return _react2.default.createElement(_List.ListItem, { key: chore.id, primaryText: chore.task, rightIcon: _react2.default.createElement(
+	                  'button',
+	                  { onClick: _this3.handleDestroy(chore.id) },
+	                  'x'
+	                ) });
+	            })
+	          )
 	        )
 	      );
 	    }
@@ -71138,36 +71222,46 @@
 	        { className: 'edit-group' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'edit-group-name' },
-	          'forChore'
+	          { className: 'broom' },
+	          _react2.default.createElement('img', { src: 'http://i.imgur.com/XopfC9T.png' })
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'edit-group-prompt' },
-	          'Update your group!'
-	        ),
-	        _react2.default.createElement(
-	          'form',
-	          { className: 'edit-group-form', onSubmit: this.handleSubmit },
+	          {
+	            className: 'edit-form-right' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'edit-group-name' },
-	            _react2.default.createElement(_TextField2.default, {
-	              onChange: this.update("title"),
-	              hintText: '123 Sesame Street',
-	              value: this.state.title })
+	            'forChore'
 	          ),
-	          this.state.housemates.map(function (housemate, index) {
-	            return _this7.memberField(housemate, index);
-	          }),
-	          this.addFieldButton(),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'update-group-button' },
+	            { className: 'edit-group-prompt' },
+	            'Update your group!'
+	          ),
+	          _react2.default.createElement(
+	            'form',
+	            { className: 'edit-group-form', onSubmit: this.handleSubmit },
 	            _react2.default.createElement(
-	              _RaisedButton2.default,
-	              { id: 'update-group-button', type: 'submit', disabled: this.state.title.length === 0 ? true : false },
-	              'Update Group'
+	              'div',
+	              { className: 'edit-group-name' },
+	              _react2.default.createElement(_TextField2.default, {
+	                onChange: this.update("title"),
+	                hintText: '123 Sesame Street',
+	                value: this.state.title })
+	            ),
+	            this.state.housemates.map(function (housemate, index) {
+	              return _this7.memberField(housemate, index);
+	            }),
+	            this.addFieldButton(),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'update-group-button' },
+	              _react2.default.createElement(
+	                _RaisedButton2.default,
+	                { id: 'update-group-button', type: 'submit', disabled: this.state.title.length === 0 ? true : false },
+	                'Update Group'
+	              )
 	            )
 	          )
 	        )
@@ -71306,6 +71400,7 @@
 	var _defaultState = {
 	  title: '',
 	  housemates: {},
+	  chores: {},
 	  errors: []
 	};
 	
@@ -71316,8 +71411,8 @@
 	  var newState = state;
 	  switch (action.type) {
 	    case _group_actions.RECEIVE_GROUP:
-	      // console.log("receiving group!!! from success");
-	      // console.log(action);
+	      console.log("receiving group!!! from success");
+	      console.log(action);
 	      return (0, _merge2.default)({}, _defaultState, action.group);
 	    case _group_actions.RECEIVE_ERRORS:
 	      newState.errors = action.errors;
@@ -73458,7 +73553,8 @@
 	
 	var _defaultState = {
 	  users: {},
-	  groups: []
+	  groups: [],
+	  chores: []
 	};
 	
 	var UserReducer = function UserReducer() {
@@ -73469,7 +73565,8 @@
 	    case _user_actions.RECEIVE_USER_GROUPS:
 	      var newState = state;
 	      newState.groups = action.groups;
-	      return (0, _merge2.default)({}, state, action.groups);
+	      newState.chores = action.chores;
+	      return (0, _merge2.default)({}, _defaultState, action.groups);
 	    case _user_actions.RECEIVE_USERS:
 	      return (0, _merge2.default)({}, state, action.users);
 	    default:
@@ -73592,6 +73689,7 @@
 	          (0, _group_api_util.createGroup)(action.group, successCallback, errorCallback);
 	          return next(action);
 	        case _group_actions.FETCH_A_GROUP:
+	          console.log("fetching group");
 	          (0, _group_api_util.fetchGroup)(action.id, successCallback, errorCallback);
 	          return next(action);
 	        case _group_actions.EDIT_GROUP:
@@ -73750,11 +73848,20 @@
 	  value: true
 	});
 	var CREATE_CHORE = exports.CREATE_CHORE = "CREATE_CHORE";
+	var COMPLETE_CHORE = exports.COMPLETE_CHORE = "COMPLETE_CHORE";
+	var RECEIVE_CHORE = exports.RECEIVE_CHORE = "RECEIVE_CHORE";
 	
 	var createChore = exports.createChore = function createChore(chore) {
 	  return {
 	    type: CREATE_CHORE,
 	    chore: chore
+	  };
+	};
+	
+	var completeChore = exports.completeChore = function completeChore(id) {
+	  return {
+	    type: COMPLETE_CHORE,
+	    id: id
 	  };
 	};
 
@@ -73772,6 +73879,10 @@
 	
 	var _chore_api_util = __webpack_require__(759);
 	
+	var _user_actions = __webpack_require__(394);
+	
+	var _group_actions = __webpack_require__(495);
+	
 	exports.default = function (_ref) {
 	  var getState = _ref.getState,
 	      dispatch = _ref.dispatch;
@@ -73779,7 +73890,7 @@
 	    return function (action) {
 	      var successCallback = function successCallback(chore) {
 	        // console.log(group, "In thiS SUCCESS");
-	        console.log("success");
+	        dispatch((0, _user_actions.fetchUserGroups)());
 	      };
 	      var errorCallback = function errorCallback(errors) {
 	        return console.log(errors);
@@ -73787,11 +73898,16 @@
 	
 	      switch (action.type) {
 	        case _chore_actions.CREATE_CHORE:
-	          console.log("create chore");
 	          (0, _chore_api_util.postChore)(action.chore, successCallback, errorCallback);
 	          return next(action);
+	        case _chore_actions.COMPLETE_CHORE:
+	          var finishSuccess = function finishSuccess(chore) {
+	            console.log(chore);
+	            dispatch((0, _group_actions.fetchAGroup)(chore.chore.group_id));
+	          };
+	          (0, _chore_api_util.finishChore)(action.id, finishSuccess, errorCallback);
+	          return next(action);
 	        default:
-	          console.log("default");
 	          return next(action);
 	      }
 	    };
@@ -73815,6 +73931,487 @@
 	    success: success,
 	    error: error
 	  });
+	};
+	
+	var finishChore = exports.finishChore = function finishChore(id, success, error) {
+	  $.ajax({
+	    method: "PATCH",
+	    url: "api/chores/" + id,
+	    success: success,
+	    error: error
+	  });
+	};
+
+/***/ },
+/* 760 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(173);
+	
+	var _createChore2 = __webpack_require__(761);
+	
+	var _createChore3 = _interopRequireDefault(_createChore2);
+	
+	var _chore_actions = __webpack_require__(757);
+	
+	var _group_actions = __webpack_require__(495);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    housemates: state.group.housemates,
+	    currentUser: state.session.currentUser
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    createChore: function createChore(chore) {
+	      return dispatch((0, _chore_actions.createChore)(chore));
+	    },
+	    fetchAGroup: function fetchAGroup(id) {
+	      return dispatch((0, _group_actions.fetchAGroup)(id));
+	    }
+	  };
+	};
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_createChore3.default);
+
+/***/ },
+/* 761 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Dialog = __webpack_require__(577);
+	
+	var _Dialog2 = _interopRequireDefault(_Dialog);
+	
+	var _FlatButton = __webpack_require__(259);
+	
+	var _FlatButton2 = _interopRequireDefault(_FlatButton);
+	
+	var _RaisedButton = __webpack_require__(385);
+	
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+	
+	var _DatePicker = __webpack_require__(561);
+	
+	var _DatePicker2 = _interopRequireDefault(_DatePicker);
+	
+	var _TextField = __webpack_require__(500);
+	
+	var _TextField2 = _interopRequireDefault(_TextField);
+	
+	var _SelectField = __webpack_require__(615);
+	
+	var _SelectField2 = _interopRequireDefault(_SelectField);
+	
+	var _reactRouter = __webpack_require__(203);
+	
+	var _values = __webpack_require__(440);
+	
+	var _values2 = _interopRequireDefault(_values);
+	
+	var _DropDownMenu = __webpack_require__(584);
+	
+	var _DropDownMenu2 = _interopRequireDefault(_DropDownMenu);
+	
+	var _MenuItem = __webpack_require__(539);
+	
+	var _MenuItem2 = _interopRequireDefault(_MenuItem);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	/**
+	 * Dialogs can be nested. This example opens a Date Picker from within a Dialog.
+	 */
+	
+	var styles = {
+	  customWidth: {
+	    width: 150
+	  }
+	};
+	
+	var CreateChore = function (_React$Component) {
+	  _inherits(CreateChore, _React$Component);
+	
+	  function CreateChore(props) {
+	    _classCallCheck(this, CreateChore);
+	
+	    var _this = _possibleConstructorReturn(this, (CreateChore.__proto__ || Object.getPrototypeOf(CreateChore)).call(this, props));
+	
+	    _this.state = {
+	      open: false,
+	      housemate: {},
+	      date: null,
+	      chore: ''
+	    };
+	    _this.handleOpen = _this.handleOpen.bind(_this);
+	    _this.handleClose = _this.handleClose.bind(_this);
+	    _this.upDate = _this.upDate.bind(_this);
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(CreateChore, [{
+	    key: 'update',
+	    value: function update(field) {
+	      var _this2 = this;
+	
+	      return function (e, index, value) {
+	        _this2.setState(_defineProperty({}, field, value));
+	      };
+	    }
+	  }, {
+	    key: 'updateChore',
+	    value: function updateChore() {
+	      var _this3 = this;
+	
+	      return function (e) {
+	        _this3.setState({ chore: e.currentTarget.value });
+	      };
+	    }
+	  }, {
+	    key: 'upDate',
+	    value: function upDate(e, date) {
+	      this.setState({ date: date });
+	    }
+	  }, {
+	    key: 'handleOpen',
+	    value: function handleOpen(e) {
+	      e.preventDefault();
+	      this.setState({ open: true });
+	    }
+	  }, {
+	    key: 'handleClose',
+	    value: function handleClose(e) {
+	      this.setState({ open: false });
+	    }
+	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
+	      e.preventDefault();
+	      var chore = {};
+	      var userId = this.state.housemate.id;
+	      chore.user_id = userId;
+	      chore.group_id = parseInt(this.props.params.id);
+	      chore.task = this.state.chore;
+	      chore.complete_by = this.state.date;
+	      this.props.createChore(chore);
+	      this.props.fetchAGroup(chore.group_id);
+	      this.setState({ open: false });
+	    }
+	  }, {
+	    key: 'disablePastDates',
+	    value: function disablePastDates(date) {
+	      return date <= new Date();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this4 = this;
+	
+	      var housemates = [];
+	      if (this.props.housemates) {
+	        (0, _values2.default)(this.props.housemates).forEach(function (housemate, index) {
+	          if (_this4.props.currentUser.username !== housemate) {
+	            housemates.push(_react2.default.createElement(_MenuItem2.default, { key: housemate + index,
+	              value: housemate,
+	              primaryText: housemate.username }));
+	          }
+	        });
+	      }
+	      var actions = [_react2.default.createElement(_FlatButton2.default, {
+	        label: 'Cancel',
+	        primary: true,
+	        keyboardFocused: true,
+	        onTouchTap: this.handleClose
+	      }), _react2.default.createElement(_FlatButton2.default, {
+	        label: 'Add Chore',
+	        primary: true,
+	        keyboardFocused: true,
+	        onTouchTap: this.handleSubmit
+	      })];
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'add-chore' },
+	          _react2.default.createElement(_RaisedButton2.default, { label: 'Add Chore', onTouchTap: this.handleOpen })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'create-chore', onSubmit: this.handleSubmit },
+	          _react2.default.createElement(
+	            _Dialog2.default,
+	            {
+	              actions: actions,
+	              modal: false,
+	              open: this.state.open,
+	              onRequestClose: this.handleClose
+	            },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'drop-down clearfix' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'drop-down-text' },
+	                'for'
+	              ),
+	              _react2.default.createElement(
+	                _DropDownMenu2.default,
+	                {
+	                  style: styles.customWidth,
+	                  value: this.state.housemate,
+	                  className: 'drop-down-menu',
+	                  onChange: this.update("housemate")
+	                },
+	                housemates
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'task' },
+	              _react2.default.createElement(_TextField2.default, {
+	                onChange: this.updateChore(),
+	                hintText: 'Chore'
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'date-picker' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'complete-by-text' },
+	                'by'
+	              ),
+	              _react2.default.createElement(_DatePicker2.default, { hintText: 'Date Picker',
+	                value: this.state.date,
+	                onChange: this.upDate,
+	                shouldDisableDate: this.disablePastDates
+	              })
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return CreateChore;
+	}(_react2.default.Component);
+	
+	exports.default = (0, _reactRouter.withRouter)(CreateChore);
+
+/***/ },
+/* 762 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(173);
+	
+	var _myChore = __webpack_require__(763);
+	
+	var _myChore2 = _interopRequireDefault(_myChore);
+	
+	var _chore_actions = __webpack_require__(757);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    chores: state.user.chores,
+	    currentUser: state.session.currentUser.username
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    createChore: function createChore(chore) {
+	      return dispatch((0, _chore_actions.createChore)(chore));
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_myChore2.default);
+
+/***/ },
+/* 763 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _List = __webpack_require__(463);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var MyChore = function (_React$Component) {
+	  _inherits(MyChore, _React$Component);
+	
+	  function MyChore(props) {
+	    _classCallCheck(this, MyChore);
+	
+	    return _possibleConstructorReturn(this, (MyChore.__proto__ || Object.getPrototypeOf(MyChore)).call(this, props));
+	  }
+	
+	  _createClass(MyChore, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'group-show' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'group-show-center' },
+	          _react2.default.createElement(
+	            'h2',
+	            null,
+	            'YourChores! forChore!'
+	          ),
+	          _react2.default.createElement(
+	            _List.List,
+	            null,
+	            this.props.chores.map(function (chore) {
+	              return _react2.default.createElement(_List.ListItem, { key: chore.id, primaryText: chore.task });
+	            })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return MyChore;
+	}(_react2.default.Component);
+	
+	exports.default = MyChore;
+
+/***/ },
+/* 764 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _pure = __webpack_require__(474);
+	
+	var _pure2 = _interopRequireDefault(_pure);
+	
+	var _SvgIcon = __webpack_require__(483);
+	
+	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var NavigationMoreVert = function NavigationMoreVert(props) {
+	  return _react2.default.createElement(
+	    _SvgIcon2.default,
+	    props,
+	    _react2.default.createElement('path', { d: 'M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' })
+	  );
+	};
+	NavigationMoreVert = (0, _pure2.default)(NavigationMoreVert);
+	NavigationMoreVert.displayName = 'NavigationMoreVert';
+	NavigationMoreVert.muiName = 'SvgIcon';
+	
+	exports.default = NavigationMoreVert;
+
+/***/ },
+/* 765 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.selectCompletedChores = exports.selectCurrentChores = undefined;
+	
+	var _values = __webpack_require__(440);
+	
+	var _values2 = _interopRequireDefault(_values);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var selectCurrentChores = exports.selectCurrentChores = function selectCurrentChores(chores) {
+	  var current = [];
+	  (0, _values2.default)(chores).forEach(function (chore) {
+	    if (!chore.complete) {
+	      current.push(chore);
+	    }
+	  });
+	  current.sort(function (a, b) {
+	    return new Date(a.complete_by) - new Date(b.complete_by);
+	  });
+	  console.log(current);
+	  return current;
+	};
+	
+	var selectCompletedChores = exports.selectCompletedChores = function selectCompletedChores(chores) {
+	  var completed = [];
+	  (0, _values2.default)(chores).forEach(function (chore) {
+	    if (chore.complete) {
+	      completed.push(chore);
+	    }
+	  });
+	  completed.sort(function (a, b) {
+	    return new Date(b.updated_at) - new Date(a.updated_at);
+	  });
+	  console.log(completed);
+	  return completed;
 	};
 
 /***/ }

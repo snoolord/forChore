@@ -7,7 +7,8 @@ import merge from 'lodash/merge';
 
 const _defaultState = {
   users: {},
-  groups: []
+  groups: [],
+  chores: []
 };
 
 const UserReducer = function( state = _defaultState, action ) {
@@ -15,7 +16,8 @@ const UserReducer = function( state = _defaultState, action ) {
     case RECEIVE_USER_GROUPS:
       let newState = state;
       newState.groups = action.groups;
-      return merge({}, state, action.groups);
+      newState.chores = action.chores;
+      return merge({}, _defaultState, action.groups);
     case RECEIVE_USERS:
       return merge({}, state, action.users);
     default:

@@ -31,6 +31,17 @@ class Api::GroupsController < ApplicationController
   end
   def show
     @group = Group.find(params[:id])
+    # @housemateChores = Hash.new { |hash, key| hash[key] = [] }
+    # @group.housemates.each do | housemate |
+    #   housemate.chores.each do |chore|
+    #     if chore.group_id == params[:id]
+    #       @housemateChores[housemate.id] << chore
+    #     end
+    #   end
+    # end
+    # puts @housemateChores
+    @housemates = @group.housemates
+    @chores = @group.chores
   end
 
   private

@@ -15,16 +15,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-    if (this.props.loggedIn) {
-      this.props.router.push('/dashboard');
-    }
-  }
+
   logo() {
     if (this.props.loggedIn) {
       return (
         <div>
-          <Link to="/dashboard"><img src="http://i.imgur.com/u9xEJsy.png" className="logo"></img></Link>
+          <Link to="/dashboard/"><img src="http://i.imgur.com/u9xEJsy.png" className="logo"></img></Link>
         </div>
       );
     } else {

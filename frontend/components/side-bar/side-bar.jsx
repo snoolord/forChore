@@ -5,6 +5,7 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 import { Link, withRouter } from 'react-router';
 import values from 'lodash/values';
 
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import {List, ListItem} from 'material-ui/List';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
@@ -42,12 +43,16 @@ class SideBar extends React.Component {
   handleDestroy(groupId) {
     return e => {
       this.props.leaveGroup(this.props.currentUserId, groupId);
+      this.props.router.push('/dashboard/');
     };
   }
 
   groupLink(groupName, groupId) {
     return (
-      <ListItem key={groupId} primaryText={groupName} rightIcon={<button onClick={this.handleDestroy(groupId)}>-</button>} onTouchTap={this.handleTouch('/dashboard/groups/' + groupId)}></ListItem>
+      <ListItem key={groupId} primaryText={groupName}
+         rightIcon={<button onClick={this.handleDestroy(groupId)}>-</button>}
+         onTouchTap={this.handleTouch('/dashboard/groups/' + groupId)}>
+      </ListItem>
     );
     // <li key={groupId + groupName}>
     //   <Link to={`/dashboard/groups/${groupId}`}>
@@ -64,9 +69,9 @@ class SideBar extends React.Component {
   renderCenter() {
     if (this.props.location.pathname === '/dashboard') {
       return <div className="group-show">
-        <div className="group-show-center">
-        </div>
-        </div>;
+              <div className="group-show-center">
+              </div>
+            </div>;
     } else {
       return this.props.children;
     }
@@ -75,7 +80,7 @@ class SideBar extends React.Component {
     if (this.props.location.pathname === '/dashboard'){
       return <div key={housemate.id}></div>;
     } else if (this.props.location.pathname.includes('groups/')){
-      return <ListItem key={housemate.id} primaryText={housemate.username} />;
+      return <ListItem key={housemate.id} primaryText={housemate.username}/>;
     }
   }
 
@@ -109,7 +114,7 @@ class SideBar extends React.Component {
           className="sidebar"
           >
           <List>
-             <ListItem primaryText="myChores" onTouchTap={this.handleTouch('/dashboard/myChores')}/>
+             <ListItem primaryText="myChores" onTouchTap={this.handleTouch('/dashboard/')}/>
              <ListItem primaryText="recentActivity" onTouchTap={this.handleTouch('dashboard/recentActivity')}/>
              <div className='groups'>
                <Subheader>groups</Subheader>
