@@ -13,7 +13,15 @@ class GroupShow extends React.Component {
   constructor(props) {
     super(props);
     console.log(this.props);
+    this.handleDestroy = this.handleDestroy.bind(this);
   }
+
+  handleDestroy(id) {
+    return e => {
+      this.props.completeChore(id);
+    };
+  }
+
   handleOpen(){
    this.setState({open: true});
   }
@@ -23,6 +31,7 @@ class GroupShow extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     let chores = [];
      if (this.props.chores) {
        chores = values(this.props.chores);
@@ -34,7 +43,9 @@ class GroupShow extends React.Component {
           <CreateChoreContainer state={this.props}/>
             <List>
               {chores.map((chore) => {
-                return <ListItem key={chore.id}primaryText={chore.task}></ListItem>;
+                if (!chore.complete) {
+                  return <ListItem key={chore.id}primaryText={chore.task} rightIcon={<button onClick={this.handleDestroy(chore.id)}>x</button>}></ListItem>;
+                }
                 })}
             </List>
         </div>

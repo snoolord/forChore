@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import GroupShow from './group-show';
 import { fetchAGroup, receiveErrors } from '../../actions/group_actions';
 import { fetchUsers } from '../../actions/user_actions';
-
+import { completeChore } from '../../actions/chore_actions';
 const mapStateToProps = state => {
   return {
     currentUser: state.session.currentUser,
@@ -16,7 +16,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchAGroup: id => dispatch(fetchAGroup(id))
+  fetchAGroup: id => dispatch(fetchAGroup(id)),
+  completeChore: id => dispatch(completeChore(id))
 });
 
 export default connect(

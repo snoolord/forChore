@@ -70714,6 +70714,8 @@
 	
 	var _user_actions = __webpack_require__(394);
 	
+	var _chore_actions = __webpack_require__(757);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
@@ -70732,6 +70734,9 @@
 	  return {
 	    fetchAGroup: function fetchAGroup(id) {
 	      return dispatch((0, _group_actions.fetchAGroup)(id));
+	    },
+	    completeChore: function completeChore(id) {
+	      return dispatch((0, _chore_actions.completeChore)(id));
 	    }
 	  };
 	};
@@ -70799,10 +70804,20 @@
 	    var _this = _possibleConstructorReturn(this, (GroupShow.__proto__ || Object.getPrototypeOf(GroupShow)).call(this, props));
 	
 	    console.log(_this.props);
+	    _this.handleDestroy = _this.handleDestroy.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(GroupShow, [{
+	    key: 'handleDestroy',
+	    value: function handleDestroy(id) {
+	      var _this2 = this;
+	
+	      return function (e) {
+	        _this2.props.completeChore(id);
+	      };
+	    }
+	  }, {
 	    key: 'handleOpen',
 	    value: function handleOpen() {
 	      this.setState({ open: true });
@@ -70815,6 +70830,9 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+	
+	      console.log(this.props);
 	      var chores = [];
 	      if (this.props.chores) {
 	        chores = (0, _values2.default)(this.props.chores);
@@ -70835,7 +70853,13 @@
 	            _List.List,
 	            null,
 	            chores.map(function (chore) {
-	              return _react2.default.createElement(_List.ListItem, { key: chore.id, primaryText: chore.task });
+	              if (!chore.complete) {
+	                return _react2.default.createElement(_List.ListItem, { key: chore.id, primaryText: chore.task, rightIcon: _react2.default.createElement(
+	                    'button',
+	                    { onClick: _this3.handleDestroy(chore.id) },
+	                    'x'
+	                  ) });
+	              }
 	            })
 	          )
 	        )
@@ -73838,6 +73862,8 @@
 	
 	var _user_actions = __webpack_require__(394);
 	
+	var _group_actions = __webpack_require__(495);
+	
 	exports.default = function (_ref) {
 	  var getState = _ref.getState,
 	      dispatch = _ref.dispatch;
@@ -73853,11 +73879,14 @@
 	
 	      switch (action.type) {
 	        case _chore_actions.CREATE_CHORE:
-	          console.log("create chore");
 	          (0, _chore_api_util.postChore)(action.chore, successCallback, errorCallback);
 	          return next(action);
 	        case _chore_actions.COMPLETE_CHORE:
-	          (0, _chore_api_util.finishChore)(action.id, successCallback, errorCallback);
+	          var finishSuccess = function finishSuccess(chore) {
+	            console.log(chore);
+	            dispatch((0, _group_actions.fetchAGroup)(chore.chore.group_id));
+	          };
+	          (0, _chore_api_util.finishChore)(action.id, finishSuccess, errorCallback);
 	          return next(action);
 	        default:
 	          return next(action);

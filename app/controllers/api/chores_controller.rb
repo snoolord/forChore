@@ -12,6 +12,10 @@ class Api::ChoresController < ApplicationController
     end
   end
 
+  def show
+    @chore = Chore.find(params[:id])
+  end
+  
   def update
     p params[:id]
     @chore = Chore.find(params[:id].to_i)

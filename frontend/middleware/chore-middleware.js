@@ -11,7 +11,9 @@ import {
 import {
         fetchUserGroups
       } from '../actions/user_actions';
-
+import {
+        fetchAGroup
+      } from '../actions/group_actions';
 export default ({ getState, dispatch }) => next => action => {
   const successCallback = chore => {
     // console.log(group, "In thiS SUCCESS");
@@ -21,11 +23,14 @@ export default ({ getState, dispatch }) => next => action => {
 
   switch(action.type) {
     case CREATE_CHORE:
-    console.log("create chore");
       postChore(action.chore, successCallback, errorCallback);
       return next(action);
     case COMPLETE_CHORE:
-      finishChore(action.id, successCallback, errorCallback);
+      const finishSuccess = chore => {
+        console.log(chore);
+        dispatch(fetchAGroup(chore.chore.group_id));
+      };
+      finishChore(action.id, finishSuccess, errorCallback);
       return next(action);
     default:
       return next(action);
