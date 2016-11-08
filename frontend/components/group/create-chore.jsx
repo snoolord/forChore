@@ -6,9 +6,19 @@ import DatePicker from 'material-ui/DatePicker';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import {withRouter} from 'react-router';
+import values from 'lodash/values';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 /**
  * Dialogs can be nested. This example opens a Date Picker from within a Dialog.
  */
+
+ const styles = {
+  customWidth: {
+    width: 150,
+  },
+};
+
 class CreateChore extends React.Component {
 
   constructor(props) {
@@ -16,24 +26,31 @@ class CreateChore extends React.Component {
     this.state = {
       open: false,
       housemate: '',
-
+      date: null,
+      chore: ''
     };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.upDate = this.upDate.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-  componentDidMount() {
-    this.state = {
-      open: false
-    };
-  }
+
   update(field) {
-    return e => {
-      this.setState({[field]: e.currentTarget.value});
+    return (e, index, value) => {
+      this.setState({[field]: value});
     };
+  }
+
+  updateChore() {
+    return (e) => {
+      this.setState({chore: e.currentTarget.value});
+    };
+  }
+  upDate(e, date) {
+    this.setState({date: date});
   }
   handleOpen(e) {
     e.preventDefault();
-    console.log(new Date());
     this.setState({open: true});
   }
 
@@ -42,9 +59,27 @@ class CreateChore extends React.Component {
     this.setState({open: false});
   }
 
+  handleSubmit() {
+    this.setState({open: false});
+    console.log("hello");
+  }
+
+  disablePastDates(date) {
+    return date < new Date;
+  }
   render() {
     console.log(this.props);
-    let housemates = this.props.housemates;
+    let housemates = [];
+    if (this.props.housemates) {
+      values(this.props.housemates).forEach((housemate, index)=> {
+        if (this.props.currentUser.username !== housemate) {
+          housemates.push(<MenuItem key={housemate+index}
+                          value={housemate.username}
+                          primaryText={housemate.username}></MenuItem>)  ;
+        }
+      });
+    }
+    console.log(this.state);
     const actions = [
       <FlatButton
         label="Cancel"
@@ -56,28 +91,42 @@ class CreateChore extends React.Component {
         label="Add Chore"
         primary={true}
         keyboardFocused={true}
-        onTouchTap={this.handleClose}
+        onTouchTap={this.handleSubmit}
       />,
     ];
 
     return (
       <div>
-        <RaisedButton label="Dialog With Date Picker" onTouchTap={this.handleOpen} />
-        <Dialog
-          title="Add Chore"
-          actions={actions}
-          modal={false}
-          open={this.state.open}
-          onRequestClose={this.handleClose}
-        >
-        <SelectField
-          onChange={this.update("housemate")}
-          hintText="Housemate"
-          >
-        </SelectField>
-          Complete By
-          <DatePicker hintText="Date Picker" />
-        </Dialog>
+        <RaisedButton label="Add Chore" onTouchTap={this.handleOpen} />
+        <div className="create-chore" onSubmit={this.handleSubmit}>
+          <Dialog
+            title=""
+            actions={actions}
+            modal={false}
+            open={this.state.open}
+            onRequestClose={this.handleClose}
+            >
+            <TextField
+              onChange={this.updateChore()}
+              hintText="Chore"
+              >
+            </TextField>
+            <div className="drop-down-text">for</div>
+            <DropDownMenu
+              style={styles.customWidth}
+              value={this.state.housemate}
+              onChange={this.update("housemate")}
+              >
+              {housemates}
+            </DropDownMenu>
+            <div className="complete-by-text">by</div>
+            <DatePicker hintText="Date Picker"
+              value={this.state.date}
+              onChange={this.upDate}
+              shouldDisableDate={this.disablePastDates}
+              />
+          </Dialog>
+        </div>
       </div>
     );
   }

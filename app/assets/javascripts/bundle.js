@@ -21588,17 +21588,16 @@
 	  var store = _ref.store;
 	
 	
-	  var _ensureLoggedIn = function _ensureLoggedIn(nextState, replace) {
+	  var _redirectIfLoggedIn = function _redirectIfLoggedIn(nextState, replace) {
 	    var currentUser = store.getState().session.currentUser;
-	    if (!currentUser) {
-	      replace('/login');
+	    if (currentUser) {
+	      replace('/dashboard');
 	    }
 	  };
 	
-	  var _redirectIfLoggedIn = function _redirectIfLoggedIn(nextState, replace) {
+	  var _preventRootAccess = function _preventRootAccess(nextState, replace) {
 	    var currentUser = store.getState().session.currentUser;
-	    console.log("are we going here?");
-	    if (currentUser) {
+	    if (currentUser && nextState.location.pathname === '/') {
 	      replace('/dashboard');
 	    }
 	  };
@@ -21612,8 +21611,8 @@
 	  //   }
 	  // };
 	
+	
 	  var _requestAGroup = function _requestAGroup(nextState) {
-	    console.log("the show page");
 	    store.dispatch((0, _group_actions.fetchAGroup)(nextState.params.id));
 	  };
 	
@@ -21628,13 +21627,13 @@
 	        { history: _reactRouter.hashHistory },
 	        _react2.default.createElement(
 	          _reactRouter.Route,
-	          { path: '/', component: _app_container2.default },
+	          { path: '/', component: _app_container2.default, onEnter: _preventRootAccess },
 	          _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _sessionFormContainer2.default, onEnter: _redirectIfLoggedIn }),
 	          _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _sessionFormContainer2.default, onEnter: _redirectIfLoggedIn }),
 	          _react2.default.createElement(
 	            _reactRouter.Route,
 	            { path: '/dashboard', component: _sideBarContainer2.default },
-	            _react2.default.createElement(_reactRouter.Route, { path: '/dashboard/groups/:id', component: _groupShowContainer2.default, onEnter: _requestAGroup })
+	            _react2.default.createElement(_reactRouter.Route, { path: 'groups/:id', component: _groupShowContainer2.default, onEnter: _requestAGroup })
 	          )
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/create_group', component: _createGroupContainer2.default }),
@@ -28327,13 +28326,6 @@
 	  }
 	
 	  _createClass(App, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      if (this.props.loggedIn) {
-	        this.props.router.push('/dashboard');
-	      }
-	    }
-	  }, {
 	    key: 'logo',
 	    value: function logo() {
 	      if (this.props.loggedIn) {
@@ -34496,11 +34488,13 @@
 	  }, {
 	    key: 'groupLink',
 	    value: function groupLink(groupName, groupId) {
-	      return _react2.default.createElement(_List.ListItem, { key: groupId, primaryText: groupName, rightIcon: _react2.default.createElement(
+	      return _react2.default.createElement(_List.ListItem, { key: groupId, primaryText: groupName,
+	        rightIcon: _react2.default.createElement(
 	          'button',
 	          { onClick: this.handleDestroy(groupId) },
 	          '-'
-	        ), onTouchTap: this.handleTouch('/dashboard/groups/' + groupId) });
+	        ),
+	        onTouchTap: this.handleTouch('/dashboard/groups/' + groupId) });
 	      // <li key={groupId + groupName}>
 	      //   <Link to={`/dashboard/groups/${groupId}`}>
 	      //     <FlatButton
@@ -34557,6 +34551,7 @@
 	      var _this4 = this;
 	
 	      return function (e) {
+	        console.log("handling touch");
 	        _this4.props.router.push(route);
 	      };
 	    }
@@ -71322,8 +71317,8 @@
 	  var newState = state;
 	  switch (action.type) {
 	    case _group_actions.RECEIVE_GROUP:
-	      // console.log("receiving group!!! from success");
-	      // console.log(action);
+	      console.log("receiving group!!! from success");
+	      console.log(action);
 	      return (0, _merge2.default)({}, _defaultState, action.group);
 	    case _group_actions.RECEIVE_ERRORS:
 	      newState.errors = action.errors;
@@ -73598,6 +73593,7 @@
 	          (0, _group_api_util.createGroup)(action.group, successCallback, errorCallback);
 	          return next(action);
 	        case _group_actions.FETCH_A_GROUP:
+	          console.log("fetching group");
 	          (0, _group_api_util.fetchGroup)(action.id, successCallback, errorCallback);
 	          return next(action);
 	        case _group_actions.EDIT_GROUP:
@@ -73797,7 +73793,6 @@
 	          (0, _chore_api_util.postChore)(action.chore, successCallback, errorCallback);
 	          return next(action);
 	        default:
-	          console.log("default");
 	          return next(action);
 	      }
 	    };
@@ -73835,21 +73830,29 @@
 	
 	var _reactRedux = __webpack_require__(173);
 	
-	var _createChore = __webpack_require__(761);
+	var _createChore2 = __webpack_require__(761);
 	
-	var _createChore2 = _interopRequireDefault(_createChore);
+	var _createChore3 = _interopRequireDefault(_createChore2);
+	
+	var _chore_actions = __webpack_require__(757);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  console.log(state);
-	  console.log("mapping state");
 	  return {
-	    housemates: state.group.housemates
+	    housemates: state.group.housemates,
+	    currentUser: state.session.currentUser
 	  };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(_createChore2.default);
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    createChore: function createChore(chore) {
+	      return dispatch((0, _chore_actions.createChore)());
+	    }
+	  };
+	};
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_createChore3.default);
 
 /***/ },
 /* 761 */
@@ -73893,6 +73896,18 @@
 	
 	var _reactRouter = __webpack_require__(203);
 	
+	var _values = __webpack_require__(440);
+	
+	var _values2 = _interopRequireDefault(_values);
+	
+	var _DropDownMenu = __webpack_require__(584);
+	
+	var _DropDownMenu2 = _interopRequireDefault(_DropDownMenu);
+	
+	var _MenuItem = __webpack_require__(539);
+	
+	var _MenuItem2 = _interopRequireDefault(_MenuItem);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -73906,6 +73921,13 @@
 	/**
 	 * Dialogs can be nested. This example opens a Date Picker from within a Dialog.
 	 */
+	
+	var styles = {
+	  customWidth: {
+	    width: 150
+	  }
+	};
+	
 	var CreateChore = function (_React$Component) {
 	  _inherits(CreateChore, _React$Component);
 	
@@ -73916,35 +73938,44 @@
 	
 	    _this.state = {
 	      open: false,
-	      housemate: ''
-	
+	      housemate: '',
+	      date: null,
+	      chore: ''
 	    };
 	    _this.handleOpen = _this.handleOpen.bind(_this);
 	    _this.handleClose = _this.handleClose.bind(_this);
+	    _this.upDate = _this.upDate.bind(_this);
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(CreateChore, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.state = {
-	        open: false
-	      };
-	    }
-	  }, {
 	    key: 'update',
 	    value: function update(field) {
 	      var _this2 = this;
 	
-	      return function (e) {
-	        _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+	      return function (e, index, value) {
+	        _this2.setState(_defineProperty({}, field, value));
 	      };
+	    }
+	  }, {
+	    key: 'updateChore',
+	    value: function updateChore() {
+	      var _this3 = this;
+	
+	      return function (e) {
+	        _this3.setState({ chore: e.currentTarget.value });
+	      };
+	    }
+	  }, {
+	    key: 'upDate',
+	    value: function upDate(e, date) {
+	      this.setState({ date: date });
 	    }
 	  }, {
 	    key: 'handleOpen',
 	    value: function handleOpen(e) {
 	      e.preventDefault();
-	      console.log(new Date());
 	      this.setState({ open: true });
 	    }
 	  }, {
@@ -73954,10 +73985,33 @@
 	      this.setState({ open: false });
 	    }
 	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit() {
+	      this.setState({ open: false });
+	      console.log("hello");
+	    }
+	  }, {
+	    key: 'disablePastDates',
+	    value: function disablePastDates(date) {
+	      return date < new Date();
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this4 = this;
+	
 	      console.log(this.props);
-	      var housemates = this.props.housemates;
+	      var housemates = [];
+	      if (this.props.housemates) {
+	        (0, _values2.default)(this.props.housemates).forEach(function (housemate, index) {
+	          if (_this4.props.currentUser.username !== housemate) {
+	            housemates.push(_react2.default.createElement(_MenuItem2.default, { key: housemate + index,
+	              value: housemate.username,
+	              primaryText: housemate.username }));
+	          }
+	        });
+	      }
+	      console.log(this.state);
 	      var actions = [_react2.default.createElement(_FlatButton2.default, {
 	        label: 'Cancel',
 	        primary: true,
@@ -73967,28 +74021,54 @@
 	        label: 'Add Chore',
 	        primary: true,
 	        keyboardFocused: true,
-	        onTouchTap: this.handleClose
+	        onTouchTap: this.handleSubmit
 	      })];
 	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_RaisedButton2.default, { label: 'Dialog With Date Picker', onTouchTap: this.handleOpen }),
+	        _react2.default.createElement(_RaisedButton2.default, { label: 'Add Chore', onTouchTap: this.handleOpen }),
 	        _react2.default.createElement(
-	          _Dialog2.default,
-	          {
-	            title: 'Add Chore',
-	            actions: actions,
-	            modal: false,
-	            open: this.state.open,
-	            onRequestClose: this.handleClose
-	          },
-	          _react2.default.createElement(_SelectField2.default, {
-	            onChange: this.update("housemate"),
-	            hintText: 'Housemate'
-	          }),
-	          'Complete By',
-	          _react2.default.createElement(_DatePicker2.default, { hintText: 'Date Picker' })
+	          'div',
+	          { className: 'create-chore', onSubmit: this.handleSubmit },
+	          _react2.default.createElement(
+	            _Dialog2.default,
+	            {
+	              title: '',
+	              actions: actions,
+	              modal: false,
+	              open: this.state.open,
+	              onRequestClose: this.handleClose
+	            },
+	            _react2.default.createElement(_TextField2.default, {
+	              onChange: this.updateChore(),
+	              hintText: 'Chore'
+	            }),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'drop-down-text' },
+	              'for'
+	            ),
+	            _react2.default.createElement(
+	              _DropDownMenu2.default,
+	              {
+	                style: styles.customWidth,
+	                value: this.state.housemate,
+	                onChange: this.update("housemate")
+	              },
+	              housemates
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'complete-by-text' },
+	              'by'
+	            ),
+	            _react2.default.createElement(_DatePicker2.default, { hintText: 'Date Picker',
+	              value: this.state.date,
+	              onChange: this.upDate,
+	              shouldDisableDate: this.disablePastDates
+	            })
+	          )
 	        )
 	      );
 	    }

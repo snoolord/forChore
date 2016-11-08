@@ -1,15 +1,20 @@
 import { connect } from 'react-redux';
 import CreateChore from './create-chore';
+import { createChore } from '../../actions/chore_actions.js';
 
 const mapStateToProps = (state) => {
-  console.log(state);
-  console.log("mapping state");
   return {
-    housemates: state.group.housemates
+    housemates: state.group.housemates,
+    currentUser: state.session.currentUser
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    createChore: (chore) => dispatch(createChore())
+  };
+};
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(CreateChore);

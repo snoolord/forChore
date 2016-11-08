@@ -15,11 +15,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-    if (this.props.loggedIn) {
-      this.props.router.push('/dashboard');
-    }
-  }
+  
   logo() {
     if (this.props.loggedIn) {
       return (

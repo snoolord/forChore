@@ -47,7 +47,10 @@ class SideBar extends React.Component {
 
   groupLink(groupName, groupId) {
     return (
-      <ListItem key={groupId} primaryText={groupName} rightIcon={<button onClick={this.handleDestroy(groupId)}>-</button>} onTouchTap={this.handleTouch('/dashboard/groups/' + groupId)}></ListItem>
+      <ListItem key={groupId} primaryText={groupName}
+         rightIcon={<button onClick={this.handleDestroy(groupId)}>-</button>}
+         onTouchTap={this.handleTouch('/dashboard/groups/' + groupId)}>
+      </ListItem>
     );
     // <li key={groupId + groupName}>
     //   <Link to={`/dashboard/groups/${groupId}`}>
@@ -64,9 +67,9 @@ class SideBar extends React.Component {
   renderCenter() {
     if (this.props.location.pathname === '/dashboard') {
       return <div className="group-show">
-        <div className="group-show-center">
-        </div>
-        </div>;
+              <div className="group-show-center">
+              </div>
+            </div>;
     } else {
       return this.props.children;
     }
@@ -95,6 +98,7 @@ class SideBar extends React.Component {
 
   handleTouch(route) {
     return e => {
+      console.log("handling touch");
       this.props.router.push(route);
     };
   }

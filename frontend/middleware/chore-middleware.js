@@ -19,7 +19,6 @@ export default ({ getState, dispatch }) => next => action => {
       postChore(action.chore, successCallback, errorCallback);
       return next(action);
     default:
-    console.log("default");
       return next(action);
   }
 };

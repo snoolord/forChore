@@ -49,20 +49,20 @@ const myTheme = getMuiTheme(theme);
 
 const Root = ({ store }) => {
 
-  const _ensureLoggedIn = (nextState, replace) => {
-    const currentUser = store.getState().session.currentUser;
-    if (!currentUser) {
-      replace('/login');
-    }
-  };
-
   const _redirectIfLoggedIn = (nextState, replace) => {
     const currentUser = store.getState().session.currentUser;
-    console.log("are we going here?");
     if (currentUser) {
       replace('/dashboard');
     }
   };
+
+  const _preventRootAccess = (nextState, replace) => {
+    const currentUser = store.getState().session.currentUser;
+    if (currentUser && nextState.location.pathname === '/') {
+      replace('/dashboard');
+    }
+  };
+
 
   // const _redirectIfLoggedOut = (nextState, replace) => {
   //   const currentUser = store.getState().session.currentUser;
@@ -73,8 +73,8 @@ const Root = ({ store }) => {
   //   }
   // };
 
+
   const _requestAGroup = (nextState) => {
-    console.log("the show page");
     store.dispatch(fetchAGroup(nextState.params.id));
   };
 
@@ -82,13 +82,12 @@ const Root = ({ store }) => {
     <MuiThemeProvider muiTheme={myTheme}>
       <Provider store={store}>
         <Router history={hashHistory}>
-          <Route path="/" component={AppContainer}>
+          <Route path="/" component={AppContainer} onEnter={_preventRootAccess}>
             <Route path="/login" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
             <Route path="/signup" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
             <Route path="/dashboard" component={SideBarContainer}>
-              <Route path="/dashboard/groups/:id" component={GroupShowContainer} onEnter={_requestAGroup} />
+              <Route path="groups/:id" component={GroupShowContainer} onEnter={_requestAGroup} />
             </Route>
-
           </Route>
           <Route path="/create_group" component={CreateGroupContainer}/>
           <Route path="/edit_group/:groupId" component={EditGroupContainer}/>
