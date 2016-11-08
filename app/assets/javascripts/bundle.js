@@ -70716,7 +70716,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  console.log(state, "MAPPGIN STATE");
 	  return {
 	    currentUser: state.session.currentUser,
 	    users: state.user.users,
@@ -70776,6 +70775,10 @@
 	
 	var _List = __webpack_require__(463);
 	
+	var _values = __webpack_require__(440);
+	
+	var _values2 = _interopRequireDefault(_values);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -70813,7 +70816,7 @@
 	    value: function render() {
 	      var chores = [];
 	      if (this.props.chores) {
-	        chores = this.props.chores;
+	        chores = (0, _values2.default)(this.props.chores);
 	      }
 	      return _react2.default.createElement(
 	        'div',
@@ -71353,8 +71356,7 @@
 	var _defaultState = {
 	  title: '',
 	  housemates: {},
-	  chores: [],
-	  housemateChores: {},
+	  chores: {},
 	  errors: []
 	};
 	

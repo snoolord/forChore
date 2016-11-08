@@ -10,8 +10,7 @@ import merge from 'lodash/merge';
 const _defaultState = {
   title: '',
   housemates: {},
-  chores: [],
-  housemateChores: {},
+  chores: {},
   errors: []
 };
 

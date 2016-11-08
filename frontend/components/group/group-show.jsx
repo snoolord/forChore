@@ -5,6 +5,7 @@ import Dialog from 'material-ui/Dialog';
 import DatePicker from 'material-ui/DatePicker';
 import CreateChoreContainer from './create-chore-container';
 import {List, ListItem} from 'material-ui/List';
+import values from 'lodash/values';
 
 // todo: NEED TO CHANGE TO CREATE CHORE CONTAINER
 
@@ -24,7 +25,7 @@ class GroupShow extends React.Component {
   render() {
     let chores = [];
      if (this.props.chores) {
-       chores = this.props.chores;
+       chores = values(this.props.chores);
      }
      return(
       <div className="group-show">
@@ -34,7 +35,7 @@ class GroupShow extends React.Component {
             <List>
               {chores.map((chore) => {
                 return <ListItem key={chore.id}primaryText={chore.task}></ListItem>;
-              })}
+                })}
             </List>
         </div>
       </div>

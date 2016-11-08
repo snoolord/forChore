@@ -4,7 +4,6 @@ import { fetchAGroup, receiveErrors } from '../../actions/group_actions';
 import { fetchUsers } from '../../actions/user_actions';
 
 const mapStateToProps = state => {
-  console.log(state, "MAPPGIN STATE");
   return {
     currentUser: state.session.currentUser,
     users: state.user.users,
