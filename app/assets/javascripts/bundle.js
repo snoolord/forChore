@@ -86,9 +86,15 @@
 	
 	var ChoreAction = _interopRequireWildcard(_chore_actions);
 	
+	var _comment_actions = __webpack_require__(874);
+	
+	var CommentAction = _interopRequireWildcard(_comment_actions);
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	window.createComment = CommentAction.createComment;
 	
 	window.completeChore = ChoreAction.completeChore;
 	window.createChore = ChoreAction.createChore;
@@ -70889,6 +70895,40 @@
 	      }
 	    }
 	  }, {
+	    key: 'currentChore',
+	    value: function currentChore(chore) {
+	      var ago = (0, _moment2.default)(chore.complete_by).fromNow();
+	      return _react2.default.createElement(
+	        'div',
+	        { key: chore.id },
+	        _react2.default.createElement(
+	          _List.ListItem,
+	          {
+	            primaryText: chore.task,
+	            className: this.highlight(ago),
+	            rightIcon: _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleDestroy(chore.id) },
+	              'x'
+	            ) },
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            ago
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'completedChore',
+	    value: function completedChore(chore) {
+	      return _react2.default.createElement(
+	        _List.ListItem,
+	        { key: chore.id, primaryText: chore.task },
+	        _react2.default.createElement('div', null)
+	      );
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this3 = this;
@@ -70918,32 +70958,12 @@
 	            null,
 	            'current',
 	            currentChores.map(function (chore) {
-	              var ago = (0, _moment2.default)(chore.complete_by).fromNow();
-	              return _react2.default.createElement(
-	                _List.ListItem,
-	                { key: chore.id,
-	                  primaryText: chore.task,
-	                  className: _this3.highlight(ago),
-	                  rightIcon: _react2.default.createElement(
-	                    'button',
-	                    { onClick: _this3.handleDestroy(chore.id) },
-	                    'x'
-	                  ) },
-	                _react2.default.createElement(
-	                  'div',
-	                  null,
-	                  ago
-	                )
-	              );
+	              return _this3.currentChore(chore);
 	            }),
 	            _react2.default.createElement(_Divider2.default, null),
 	            'completed',
 	            completedChores.map(function (chore) {
-	              return _react2.default.createElement(
-	                _List.ListItem,
-	                { key: chore.id, primaryText: chore.task },
-	                _react2.default.createElement('div', null)
-	              );
+	              return _this3.completedChore(chore);
 	            })
 	          )
 	        )
@@ -73679,9 +73699,13 @@
 	
 	var _choreMiddleware2 = _interopRequireDefault(_choreMiddleware);
 	
+	var _commentMiddleware = __webpack_require__(875);
+	
+	var _commentMiddleware2 = _interopRequireDefault(_commentMiddleware);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var RootMiddleware = (0, _redux.applyMiddleware)(_choreMiddleware2.default, _session_middleware2.default, _groupMiddleware2.default, _userMiddleware2.default);
+	var RootMiddleware = (0, _redux.applyMiddleware)(_commentMiddleware2.default, _choreMiddleware2.default, _session_middleware2.default, _groupMiddleware2.default, _userMiddleware2.default);
 	
 	exports.default = RootMiddleware;
 
@@ -88966,6 +88990,80 @@
 	    type: FILTER_USER,
 	    id: id
 	  };
+	};
+
+/***/ },
+/* 874 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var CREATE_COMMENT = exports.CREATE_COMMENT = "CREATE_COMMENT";
+	
+	var createComment = exports.createComment = function createComment(comment) {
+	  return {
+	    type: CREATE_COMMENT,
+	    comment: comment
+	  };
+	};
+
+/***/ },
+/* 875 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _comment_actions = __webpack_require__(874);
+	
+	var _comment_api_util = __webpack_require__(876);
+	
+	exports.default = function (_ref) {
+	  var getState = _ref.getState,
+	      dispatch = _ref.dispatch;
+	  return function (next) {
+	    return function (action) {
+	      var successCallback = function successCallback(comment) {
+	        // console.log(group, "In thiS SUCCESS");
+	        console.log("success");
+	      };
+	      var errorCallback = function errorCallback(errors) {
+	        return console.log(errors);
+	      };
+	      switch (action.type) {
+	        case _comment_actions.CREATE_COMMENT:
+	          (0, _comment_api_util.postComment)(action.comment, successCallback, errorCallback);
+	          return next(action);
+	        default:
+	          return next(action);
+	      }
+	    };
+	  };
+	};
+
+/***/ },
+/* 876 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var postComment = exports.postComment = function postComment(comment, success, error) {
+	  $.ajax({
+	    method: 'POST',
+	    url: 'api/comments',
+	    data: { comment: comment },
+	    success: success,
+	    error: error
+	  });
 	};
 
 /***/ }

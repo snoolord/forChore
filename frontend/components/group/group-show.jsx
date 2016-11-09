@@ -52,6 +52,26 @@ class GroupShow extends React.Component {
     }
   }
 
+  currentChore(chore) {
+    let ago = moment(chore.complete_by).fromNow();
+    return (
+        <div key={chore.id}>
+          <ListItem
+            primaryText={chore.task}
+            className={this.highlight(ago)}
+            rightIcon={<button onClick={this.handleDestroy(chore.id)}>x</button>}>
+            <div>
+              {ago}
+            </div>
+          </ListItem>
+        </div>
+         );
+  }
+
+  completedChore(chore) {
+    return <ListItem key={chore.id} primaryText={chore.task}><div>{}</div></ListItem>;
+  }
+
   render() {
     let currentChores = [];
     let completedChores = [];
@@ -71,21 +91,12 @@ class GroupShow extends React.Component {
             <List>
               current
               {currentChores.map((chore) => {
-                let ago = moment(chore.complete_by).fromNow();
-                return <ListItem key={chore.id}
-                                 primaryText={chore.task}
-                                 className={this.highlight(ago)}
-                                 rightIcon={<button onClick={this.handleDestroy(chore.id)}>x</button>}>
-                                 <div>
-                                   {ago}
-                                 </div>
-
-                                 </ListItem>;
-                })}
+                return this.currentChore(chore);
+              })}
               <Divider/>
               completed
               {completedChores.map((chore) => {
-                return <ListItem key={chore.id} primaryText={chore.task}><div>{}</div></ListItem>;
+                return this.completedChore(chore);
               })}
             </List>
         </div>

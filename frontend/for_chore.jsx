@@ -8,6 +8,9 @@ import * as GroupApi from './util/group_api_util';
 import * as GroupAction from './actions/group_actions';
 import * as UserAction from './actions/user_actions';
 import * as ChoreAction from './actions/chore_actions';
+import * as CommentAction from './actions/comment_actions';
+
+window.createComment = CommentAction.createComment;
 
 window.completeChore = ChoreAction.completeChore;
 window.createChore = ChoreAction.createChore;

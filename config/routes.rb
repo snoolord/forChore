@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :groups
     resources :groupings
     resources :chores
+    resources :comments, only: [:index, :create, :destroy]
     resource :user do
       get :dashboard
     end
