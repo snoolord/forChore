@@ -14,7 +14,6 @@ moment().format();
 class GroupShow extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.handleDestroy = this.handleDestroy.bind(this);
     this.highlight = this.highlight.bind(this);
   }
@@ -38,6 +37,8 @@ class GroupShow extends React.Component {
 
     if (days === null) {
       days = 0;
+    } else if (daysAgo.includes("minutes") || daysAgo.includes("hours")) {
+      days = 1;
     } else {
       days = days.join('');
     }

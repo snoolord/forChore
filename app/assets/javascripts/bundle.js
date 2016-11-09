@@ -70842,7 +70842,6 @@
 	
 	    var _this = _possibleConstructorReturn(this, (GroupShow.__proto__ || Object.getPrototypeOf(GroupShow)).call(this, props));
 	
-	    console.log(_this.props);
 	    _this.handleDestroy = _this.handleDestroy.bind(_this);
 	    _this.highlight = _this.highlight.bind(_this);
 	    return _this;
@@ -70875,6 +70874,8 @@
 	
 	      if (days === null) {
 	        days = 0;
+	      } else if (daysAgo.includes("minutes") || daysAgo.includes("hours")) {
+	        days = 1;
 	      } else {
 	        days = days.join('');
 	      }
