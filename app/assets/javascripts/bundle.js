@@ -89164,6 +89164,10 @@
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
+	var _reactAddonsCssTransitionGroup = __webpack_require__(665);
+	
+	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -89257,7 +89261,14 @@
 	        _react2.default.createElement(
 	          'div',
 	          null,
-	          this.state.shouldShowComment && _react2.default.createElement(_commentContainer2.default, null)
+	          _react2.default.createElement(
+	            _reactAddonsCssTransitionGroup2.default,
+	            {
+	              transitionName: 'example',
+	              transitionEnterTimeout: 500,
+	              transitionLeaveTimeout: 300 },
+	            this.state.shouldShowComment && _react2.default.createElement(_commentContainer2.default, null)
+	          )
 	        )
 	      );
 	    }

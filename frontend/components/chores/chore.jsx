@@ -3,6 +3,7 @@ import {List, ListItem} from 'material-ui/List';
 import CommentContainer from '../comments/comment-container';
 import Paper from 'material-ui/Paper';
 import moment from 'moment';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 moment().format();
 
 class Chore extends React.Component {
@@ -63,7 +64,12 @@ class Chore extends React.Component {
             </div>
           </ListItem>
           <div>
-            { this.state.shouldShowComment && <CommentContainer /> }
+            <ReactCSSTransitionGroup
+              transitionName="example"
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={300}>
+              { this.state.shouldShowComment && <CommentContainer /> }
+            </ReactCSSTransitionGroup>
           </div>
         </div>
     );
