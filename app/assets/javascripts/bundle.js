@@ -70815,6 +70815,10 @@
 	
 	var _createChoreContainer2 = _interopRequireDefault(_createChoreContainer);
 	
+	var _commentContainer = __webpack_require__(877);
+	
+	var _commentContainer2 = _interopRequireDefault(_commentContainer);
+	
 	var _List = __webpack_require__(463);
 	
 	var _Divider = __webpack_require__(492);
@@ -70838,7 +70842,6 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	(0, _moment2.default)().format();
-	// todo: NEED TO CHANGE TO CREATE CHORE CONTAINER
 	
 	var GroupShow = function (_React$Component) {
 	  _inherits(GroupShow, _React$Component);
@@ -70848,6 +70851,9 @@
 	
 	    var _this = _possibleConstructorReturn(this, (GroupShow.__proto__ || Object.getPrototypeOf(GroupShow)).call(this, props));
 	
+	    _this.state = {
+	      shouldShowComment: false
+	    };
 	    _this.handleDestroy = _this.handleDestroy.bind(_this);
 	    _this.highlight = _this.highlight.bind(_this);
 	    return _this;
@@ -70895,6 +70901,9 @@
 	      }
 	    }
 	  }, {
+	    key: 'toggleComment',
+	    value: function toggleComment() {}
+	  }, {
 	    key: 'currentChore',
 	    value: function currentChore(chore) {
 	      var ago = (0, _moment2.default)(chore.complete_by).fromNow();
@@ -70916,6 +70925,11 @@
 	            null,
 	            ago
 	          )
+	        ),
+	        _react2.default.createElement(
+	          _List.ListItem,
+	          null,
+	          _react2.default.createElement(_commentContainer2.default, null)
 	        )
 	      );
 	    }
@@ -89065,6 +89079,83 @@
 	    error: error
 	  });
 	};
+
+/***/ },
+/* 877 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(173);
+	
+	var _comment = __webpack_require__(878);
+	
+	var _comment2 = _interopRequireDefault(_comment);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  console.log("hello");
+	  return {
+	    state: state
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(_comment2.default);
+
+/***/ },
+/* 878 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Comment = function (_React$Component) {
+	  _inherits(Comment, _React$Component);
+	
+	  function Comment() {
+	    _classCallCheck(this, Comment);
+	
+	    return _possibleConstructorReturn(this, (Comment.__proto__ || Object.getPrototypeOf(Comment)).apply(this, arguments));
+	  }
+	
+	  _createClass(Comment, [{
+	    key: "render",
+	    value: function render() {
+	      console.log("does this hit");
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        "Hello!"
+	      );
+	    }
+	  }]);
+	
+	  return Comment;
+	}(_react2.default.Component);
+	
+	exports.default = Comment;
 
 /***/ }
 /******/ ]);
