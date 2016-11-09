@@ -6,19 +6,6 @@ import { completeChore } from '../../actions/chore_actions';
 import { selectCurrentChores, selectCompletedChores } from '../../reducers/selectors/selector';
 import { filterUser } from '../../actions/filter_actions';
 
-const mapStateToProps = state => {
-  return {
-    currentUser: state.session.currentUser,
-    users: state.user.users,
-    title: state.group.title,
-    housemates: state.group.housemates,
-    housemateChores: state.group.housemateChores,
-    currentChores: selectCurrentChores(state),
-    completedChores: selectCompletedChores(state),
-    state
-  };
-};
-
 const mapDispatchToProps = dispatch => ({
   fetchAGroup: id => dispatch(fetchAGroup(id)),
   completeChore: id => dispatch(completeChore(id)),
@@ -26,6 +13,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Chore);

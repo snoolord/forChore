@@ -70815,9 +70815,9 @@
 	
 	var _createChoreContainer2 = _interopRequireDefault(_createChoreContainer);
 	
-	var _commentContainer = __webpack_require__(877);
+	var _choreContainer = __webpack_require__(879);
 	
-	var _commentContainer2 = _interopRequireDefault(_commentContainer);
+	var _choreContainer2 = _interopRequireDefault(_choreContainer);
 	
 	var _List = __webpack_require__(463);
 	
@@ -70854,21 +70854,10 @@
 	    _this.state = {
 	      shouldShowComment: false
 	    };
-	    _this.handleDestroy = _this.handleDestroy.bind(_this);
-	    _this.highlight = _this.highlight.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(GroupShow, [{
-	    key: 'handleDestroy',
-	    value: function handleDestroy(id) {
-	      var _this2 = this;
-	
-	      return function (e) {
-	        _this2.props.completeChore(id);
-	      };
-	    }
-	  }, {
 	    key: 'handleOpen',
 	    value: function handleOpen() {
 	      this.setState({ open: true });
@@ -70879,73 +70868,19 @@
 	      this.setState({ open: false });
 	    }
 	  }, {
-	    key: 'highlight',
-	    value: function highlight(daysAgo) {
-	      var reg = /[0-9]/g;
-	      var days = daysAgo.match(reg);
-	
-	      if (days === null) {
-	        days = 0;
-	      } else if (daysAgo.includes("minutes") || daysAgo.includes("hours")) {
-	        days = 1;
-	      } else {
-	        days = days.join('');
-	      }
-	
-	      if (days < 3) {
-	        return "red";
-	      } else if (days > 2 && days < 5) {
-	        return "yellow";
-	      } else {
-	        return "";
-	      }
-	    }
-	  }, {
-	    key: 'toggleComment',
-	    value: function toggleComment() {}
-	  }, {
 	    key: 'currentChore',
 	    value: function currentChore(chore) {
-	      var ago = (0, _moment2.default)(chore.complete_by).fromNow();
-	      return _react2.default.createElement(
-	        'div',
-	        { key: chore.id },
-	        _react2.default.createElement(
-	          _List.ListItem,
-	          {
-	            primaryText: chore.task,
-	            className: this.highlight(ago),
-	            rightIcon: _react2.default.createElement(
-	              'button',
-	              { onClick: this.handleDestroy(chore.id) },
-	              'x'
-	            ) },
-	          _react2.default.createElement(
-	            'div',
-	            null,
-	            ago
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _List.ListItem,
-	          null,
-	          _react2.default.createElement(_commentContainer2.default, null)
-	        )
-	      );
+	      return _react2.default.createElement(_choreContainer2.default, { key: chore.id, chore: chore });
 	    }
 	  }, {
 	    key: 'completedChore',
 	    value: function completedChore(chore) {
-	      return _react2.default.createElement(
-	        _List.ListItem,
-	        { key: chore.id, primaryText: chore.task },
-	        _react2.default.createElement('div', null)
-	      );
+	      return _react2.default.createElement(_choreContainer2.default, { key: chore.id, chore: chore });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this3 = this;
+	      var _this2 = this;
 	
 	      var currentChores = [];
 	      var completedChores = [];
@@ -70972,12 +70907,12 @@
 	            null,
 	            'current',
 	            currentChores.map(function (chore) {
-	              return _this3.currentChore(chore);
+	              return _this2.currentChore(chore);
 	            }),
 	            _react2.default.createElement(_Divider2.default, null),
 	            'completed',
 	            completedChores.map(function (chore) {
-	              return _this3.completedChore(chore);
+	              return _this2.completedChore(chore);
 	            })
 	          )
 	        )
@@ -89099,7 +89034,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  console.log("hello");
 	  return {
 	    state: state
 	  };
@@ -89111,7 +89045,7 @@
 /* 878 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -89141,13 +89075,12 @@
 	  }
 	
 	  _createClass(Comment, [{
-	    key: "render",
+	    key: 'render',
 	    value: function render() {
-	      console.log("does this hit");
 	      return _react2.default.createElement(
-	        "div",
+	        'div',
 	        null,
-	        "Hello!"
+	        'Hello!'
 	      );
 	    }
 	  }]);
@@ -89156,6 +89089,184 @@
 	}(_react2.default.Component);
 	
 	exports.default = Comment;
+
+/***/ },
+/* 879 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(173);
+	
+	var _chore = __webpack_require__(880);
+	
+	var _chore2 = _interopRequireDefault(_chore);
+	
+	var _group_actions = __webpack_require__(495);
+	
+	var _user_actions = __webpack_require__(394);
+	
+	var _chore_actions = __webpack_require__(757);
+	
+	var _selector = __webpack_require__(765);
+	
+	var _filter_actions = __webpack_require__(873);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    fetchAGroup: function fetchAGroup(id) {
+	      return dispatch((0, _group_actions.fetchAGroup)(id));
+	    },
+	    completeChore: function completeChore(id) {
+	      return dispatch((0, _chore_actions.completeChore)(id));
+	    },
+	    filterUser: function filterUser(id) {
+	      return dispatch((0, _filter_actions.filterUser)(id));
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(_chore2.default);
+
+/***/ },
+/* 880 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _List = __webpack_require__(463);
+	
+	var _commentContainer = __webpack_require__(877);
+	
+	var _commentContainer2 = _interopRequireDefault(_commentContainer);
+	
+	var _Paper = __webpack_require__(387);
+	
+	var _Paper2 = _interopRequireDefault(_Paper);
+	
+	var _moment = __webpack_require__(766);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	(0, _moment2.default)().format();
+	
+	var Chore = function (_React$Component) {
+	  _inherits(Chore, _React$Component);
+	
+	  function Chore(props) {
+	    _classCallCheck(this, Chore);
+	
+	    var _this = _possibleConstructorReturn(this, (Chore.__proto__ || Object.getPrototypeOf(Chore)).call(this, props));
+	
+	    _this.state = {
+	      shouldShowComment: false
+	    };
+	    _this.handleDestroy = _this.handleDestroy.bind(_this);
+	    _this.highlight = _this.highlight.bind(_this);
+	    _this.toggleComment = _this.toggleComment.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Chore, [{
+	    key: 'toggleComment',
+	    value: function toggleComment() {
+	      this.setState({
+	        shouldShowComment: !this.state.shouldShowComment
+	      });
+	    }
+	  }, {
+	    key: 'handleDestroy',
+	    value: function handleDestroy(id) {
+	      var _this2 = this;
+	
+	      return function (e) {
+	        _this2.props.completeChore(id);
+	      };
+	    }
+	  }, {
+	    key: 'highlight',
+	    value: function highlight(daysAgo) {
+	      var reg = /[0-9]/g;
+	      var days = daysAgo.match(reg);
+	
+	      if (days === null) {
+	        days = 0;
+	      } else if (daysAgo.includes("minutes") || daysAgo.includes("hours")) {
+	        days = 1;
+	      } else {
+	        days = days.join('');
+	      }
+	
+	      if (days < 3) {
+	        return "red";
+	      } else if (days > 2 && days < 5) {
+	        return "yellow";
+	      } else {
+	        return "";
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var chore = this.props.chore;
+	      var ago = (0, _moment2.default)(chore.complete_by).fromNow();
+	      return _react2.default.createElement(
+	        'div',
+	        { key: chore.id },
+	        _react2.default.createElement(
+	          _List.ListItem,
+	          {
+	            primaryText: chore.task,
+	            className: chore.complete ? "" : this.highlight(ago),
+	            onTouchTap: this.toggleComment,
+	            rightIcon: chore.complete ? _react2.default.createElement('div', null) : _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleDestroy(chore.id) },
+	              'x'
+	            ) },
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            ago
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.shouldShowComment && _react2.default.createElement(_commentContainer2.default, null)
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Chore;
+	}(_react2.default.Component);
+	
+	exports.default = Chore;
 
 /***/ }
 /******/ ]);
