@@ -70844,6 +70844,7 @@
 	
 	    console.log(_this.props);
 	    _this.handleDestroy = _this.handleDestroy.bind(_this);
+	    _this.highlight = _this.highlight.bind(_this);
 	    return _this;
 	  }
 	
@@ -70865,6 +70866,26 @@
 	    key: 'handleClose',
 	    value: function handleClose() {
 	      this.setState({ open: false });
+	    }
+	  }, {
+	    key: 'highlight',
+	    value: function highlight(daysAgo) {
+	      var reg = /[0-9]/g;
+	      var days = daysAgo.match(reg);
+	
+	      if (days === null) {
+	        days = 0;
+	      } else {
+	        days = days.join('');
+	      }
+	
+	      if (days < 3) {
+	        return "red";
+	      } else if (days > 2 && days < 5) {
+	        return "yellow";
+	      } else {
+	        return "";
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -70897,12 +70918,11 @@
 	            'current',
 	            currentChores.map(function (chore) {
 	              var ago = (0, _moment2.default)(chore.complete_by).fromNow();
-	              var reg = /[0-9]/g;
-	              ago = ago.match(reg).join('');
 	              return _react2.default.createElement(
 	                _List.ListItem,
 	                { key: chore.id,
 	                  primaryText: chore.task,
+	                  className: _this3.highlight(ago),
 	                  rightIcon: _react2.default.createElement(
 	                    'button',
 	                    { onClick: _this3.handleDestroy(chore.id) },
@@ -70911,7 +70931,7 @@
 	                _react2.default.createElement(
 	                  'div',
 	                  null,
-	                  '//  here i  need to change the class for colors dending on each'
+	                  ago
 	                )
 	              );
 	            }),
@@ -70932,6 +70952,8 @@
 	
 	  return GroupShow;
 	}(_react2.default.Component);
+	// let reg = /[0-9]/g;
+	// let days = ago.match(reg).join('');
 	
 	// let ago = moment(chore.complete_by).fromNow();
 	// let className = '';
@@ -74193,7 +74215,6 @@
 	  }, {
 	    key: 'removeFilter',
 	    value: function removeFilter() {
-	      console.log("remove");
 	      this.props.filterUser(0);
 	    }
 	  }, {
@@ -74223,13 +74244,9 @@
 	        onTouchTap: this.handleSubmit
 	      })];
 	      var filter = 0;
-	      console.log(this.props);
 	      if (this.props.filter) {
-	        console.log(filter, "before");
-	        console.log(this.props.filter.id);
 	        filter = this.props.filter.id;
 	      }
-	      console.log(filter, "after");
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -74471,8 +74488,6 @@
 	  var current = [];
 	  var chores = state.group.chores;
 	  var filter = state.filter.id;
-	  console.log(state);
-	  console.log(filter);
 	  (0, _values2.default)(chores).forEach(function (chore) {
 	    if (!chore.complete && (chore.user_id === filter || filter === 0)) {
 	      current.push(chore);
@@ -74481,7 +74496,6 @@
 	  current.sort(function (a, b) {
 	    return new Date(a.complete_by) - new Date(b.complete_by);
 	  });
-	  console.log(current);
 	  return current;
 	};
 	
@@ -74489,7 +74503,6 @@
 	  var completed = [];
 	  var chores = state.group.chores;
 	  var filter = state.filter.id;
-	  console.log(filter);
 	  (0, _values2.default)(chores).forEach(function (chore) {
 	    if (chore.complete && (chore.user_id === filter || filter === 0)) {
 	      completed.push(chore);
@@ -74498,7 +74511,6 @@
 	  completed.sort(function (a, b) {
 	    return new Date(b.updated_at) - new Date(a.updated_at);
 	  });
-	  console.log(completed);
 	  return completed.slice(0, 10);
 	};
 

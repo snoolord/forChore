@@ -77,7 +77,6 @@ class CreateChore extends React.Component {
   }
 
   removeFilter() {
-    console.log("remove");
     this.props.filterUser(0);
   }
 
@@ -107,13 +106,9 @@ class CreateChore extends React.Component {
       />,
     ];
     let filter = 0;
-    console.log(this.props);
     if (this.props.filter) {
-      console.log(filter, "before");
-      console.log(this.props.filter.id);
       filter = this.props.filter.id;
     }
-    console.log(filter, "after");
     return (
       <div>
         <div className="add-chore">

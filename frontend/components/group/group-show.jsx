@@ -16,6 +16,7 @@ class GroupShow extends React.Component {
     super(props);
     console.log(this.props);
     this.handleDestroy = this.handleDestroy.bind(this);
+    this.highlight = this.highlight.bind(this);
   }
 
   handleDestroy(id) {
@@ -30,6 +31,24 @@ class GroupShow extends React.Component {
 
   handleClose(){
     this.setState({open: false});
+  }
+  highlight(daysAgo) {
+    let reg = /[0-9]/g;
+    let days = daysAgo.match(reg);
+
+    if (days === null) {
+      days = 0;
+    } else {
+      days = days.join('');
+    }
+
+    if (days < 3) {
+      return "red";
+    } else if (days >2 && days < 5){
+      return "yellow";
+    } else {
+      return "";
+    }
   }
 
   render() {
@@ -52,13 +71,12 @@ class GroupShow extends React.Component {
               current
               {currentChores.map((chore) => {
                 let ago = moment(chore.complete_by).fromNow();
-                let reg = /[0-9]/g;
-                ago = ago.match(reg).join('');
                 return <ListItem key={chore.id}
                                  primaryText={chore.task}
+                                 className={this.highlight(ago)}
                                  rightIcon={<button onClick={this.handleDestroy(chore.id)}>x</button>}>
                                  <div>
-                                  //  here i  need to change the class for colors dending on each
+                                   {ago}
                                  </div>
 
                                  </ListItem>;
@@ -74,6 +92,8 @@ class GroupShow extends React.Component {
     );
   }
 }
+// let reg = /[0-9]/g;
+// let days = ago.match(reg).join('');
 
 // let ago = moment(chore.complete_by).fromNow();
 // let className = '';
