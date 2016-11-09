@@ -33,6 +33,7 @@ class CreateChore extends React.Component {
     this.handleClose = this.handleClose.bind(this);
     this.upDate = this.upDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.removeFilter = this.removeFilter.bind(this);
   }
 
   update(field) {
@@ -74,6 +75,12 @@ class CreateChore extends React.Component {
   disablePastDates(date) {
     return date <= new Date;
   }
+
+  removeFilter() {
+    console.log("remove");
+    this.props.filterUser(0);
+  }
+
   render() {
     let housemates = [];
     if (this.props.housemates) {
@@ -99,11 +106,21 @@ class CreateChore extends React.Component {
         onTouchTap={this.handleSubmit}
       />,
     ];
-
+    let filter = 0;
+    console.log(this.props);
+    if (this.props.filter) {
+      console.log(filter, "before");
+      console.log(this.props.filter.id);
+      filter = this.props.filter.id;
+    }
+    console.log(filter, "after");
     return (
       <div>
         <div className="add-chore">
           <RaisedButton label="Add Chore" onTouchTap={this.handleOpen} />
+        </div>
+        <div>
+          {filter !== 0 ? <RaisedButton onTouchTap={this.removeFilter}>Remove Filter</RaisedButton> : <div></div>}
         </div>
         <div className="create-chore" onSubmit={this.handleSubmit}>
           <Dialog

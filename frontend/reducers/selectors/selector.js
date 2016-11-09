@@ -32,5 +32,5 @@ export const selectCompletedChores = (state) => {
     return new Date(b.updated_at) - new Date (a.updated_at);
   });
   console.log(completed);
-  return completed;
+  return completed.slice(0,10);
 };

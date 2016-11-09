@@ -21542,6 +21542,8 @@
 	
 	var _group_actions = __webpack_require__(495);
 	
+	var _filter_actions = __webpack_require__(873);
+	
 	var _theme = __webpack_require__(390);
 	
 	var _theme2 = _interopRequireDefault(_theme);
@@ -21560,9 +21562,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// actions
-	
-	// containers
 	var muiTheme = (0, _getMuiTheme2.default)({
 	  appBar: {
 	    height: 40
@@ -21585,6 +21584,10 @@
 	  }
 	});
 	// themes
+	
+	// actions
+	
+	// containers
 	
 	
 	var myTheme = (0, _getMuiTheme2.default)(_theme2.default);
@@ -21619,6 +21622,7 @@
 	
 	  var _requestAGroup = function _requestAGroup(nextState) {
 	    store.dispatch((0, _group_actions.fetchAGroup)(nextState.params.id));
+	    store.dispatch((0, _filter_actions.filterUser)(0));
 	  };
 	
 	  return _react2.default.createElement(
@@ -70736,6 +70740,8 @@
 	
 	var _selector = __webpack_require__(765);
 	
+	var _filter_actions = __webpack_require__(873);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
@@ -70758,6 +70764,9 @@
 	    },
 	    completeChore: function completeChore(id) {
 	      return dispatch((0, _chore_actions.completeChore)(id));
+	    },
+	    filterUser: function filterUser(id) {
+	      return dispatch((0, _filter_actions.filterUser)(id));
 	    }
 	  };
 	};
@@ -74005,12 +74014,15 @@
 	
 	var _group_actions = __webpack_require__(495);
 	
+	var _filter_actions = __webpack_require__(873);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
 	    housemates: state.group.housemates,
-	    currentUser: state.session.currentUser
+	    currentUser: state.session.currentUser,
+	    filter: state.filter
 	  };
 	};
 	
@@ -74021,6 +74033,9 @@
 	    },
 	    fetchAGroup: function fetchAGroup(id) {
 	      return dispatch((0, _group_actions.fetchAGroup)(id));
+	    },
+	    filterUser: function filterUser(id) {
+	      return dispatch((0, _filter_actions.filterUser)(id));
 	    }
 	  };
 	};
@@ -74118,6 +74133,7 @@
 	    _this.handleClose = _this.handleClose.bind(_this);
 	    _this.upDate = _this.upDate.bind(_this);
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    _this.removeFilter = _this.removeFilter.bind(_this);
 	    return _this;
 	  }
 	
@@ -74175,6 +74191,12 @@
 	      return date <= new Date();
 	    }
 	  }, {
+	    key: 'removeFilter',
+	    value: function removeFilter() {
+	      console.log("remove");
+	      this.props.filterUser(0);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this4 = this;
@@ -74200,7 +74222,14 @@
 	        keyboardFocused: true,
 	        onTouchTap: this.handleSubmit
 	      })];
-	
+	      var filter = 0;
+	      console.log(this.props);
+	      if (this.props.filter) {
+	        console.log(filter, "before");
+	        console.log(this.props.filter.id);
+	        filter = this.props.filter.id;
+	      }
+	      console.log(filter, "after");
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -74208,6 +74237,15 @@
 	          'div',
 	          { className: 'add-chore' },
 	          _react2.default.createElement(_RaisedButton2.default, { label: 'Add Chore', onTouchTap: this.handleOpen })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          filter !== 0 ? _react2.default.createElement(
+	            _RaisedButton2.default,
+	            { onTouchTap: this.removeFilter },
+	            'Remove Filter'
+	          ) : _react2.default.createElement('div', null)
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -74461,7 +74499,7 @@
 	    return new Date(b.updated_at) - new Date(a.updated_at);
 	  });
 	  console.log(completed);
-	  return completed;
+	  return completed.slice(0, 10);
 	};
 
 /***/ },

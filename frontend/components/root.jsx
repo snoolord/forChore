@@ -12,6 +12,7 @@ import EditGroupContainer from './group/edit-group-container';
 import MyChoreContainer from './chores/my-chore-container';
 // actions
 import { fetchAGroup } from '../actions/group_actions';
+import { filterUser } from '../actions/filter_actions';
 // themes
 import theme from './theme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -77,6 +78,7 @@ const Root = ({ store }) => {
 
   const _requestAGroup = (nextState) => {
     store.dispatch(fetchAGroup(nextState.params.id));
+    store.dispatch(filterUser(0));
   };
 
   return (
