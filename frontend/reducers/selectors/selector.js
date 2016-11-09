@@ -5,8 +5,8 @@ export const selectCurrentChores = (state) => {
   let chores = state.group.chores;
   let filter = state.filter.id;
   values(chores).forEach((chore)=> {
-    if (!chore.complete && (chore.user_id === filter || filter === 0)) {
-      current.push(chore);
+    if (!chore.chore.complete && (chore.chore.user_id === filter || filter === 0)) {
+      current.push(chore.chore);
     }
   });
   current.sort((a,b)=> {
@@ -20,8 +20,8 @@ export const selectCompletedChores = (state) => {
   let chores = state.group.chores;
   let filter = state.filter.id;
   values(chores).forEach((chore) => {
-    if (chore.complete && (chore.user_id === filter || filter === 0)) {
-      completed.push(chore);
+    if (chore.chore.complete && (chore.chore.user_id === filter || filter === 0)) {
+      completed.push(chore.chore);
     }
   });
   completed.sort((a,b) => {

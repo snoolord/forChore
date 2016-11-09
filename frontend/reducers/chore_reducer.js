@@ -13,8 +13,10 @@ const _defaultState = {
 
 const ChoreReducer = function(state = _defaultState, action) {
   let newState = state;
+  console.log("chore reducer");
   switch(action.type){
     case RECEIVE_CHORE:
+      console.log("receving chore", action);
       return merge({}, _defaultState, action.group);
     case RECEIVE_ERRORS:
       newState.errors = action.errors;

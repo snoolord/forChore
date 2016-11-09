@@ -80,7 +80,6 @@ class SideBar extends React.Component {
 
   filterBy(housemateId) {
     return e => {
-      console.log("filtering");
       this.props.filterUser(housemateId);
     };
   }
@@ -115,6 +114,7 @@ class SideBar extends React.Component {
     };
   }
   render() {
+    console.log(this.props);
     let housemates = values(this.props.housemates);
     if (this.props.loggedIn) {
       return (

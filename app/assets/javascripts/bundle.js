@@ -34552,7 +34552,6 @@
 	      var _this4 = this;
 	
 	      return function (e) {
-	        console.log("filtering");
 	        _this4.props.filterUser(housemateId);
 	      };
 	    }
@@ -34598,6 +34597,7 @@
 	    value: function render() {
 	      var _this6 = this;
 	
+	      console.log(this.props);
 	      var housemates = (0, _values2.default)(this.props.housemates);
 	      if (this.props.loggedIn) {
 	        return _react2.default.createElement(
@@ -71477,8 +71477,6 @@
 	  var newState = state;
 	  switch (action.type) {
 	    case _group_actions.RECEIVE_GROUP:
-	      console.log("receiving group!!! from success");
-	      console.log(action);
 	      return (0, _merge2.default)({}, _defaultState, action.group);
 	    case _group_actions.RECEIVE_ERRORS:
 	      newState.errors = action.errors;
@@ -73759,7 +73757,6 @@
 	          (0, _group_api_util.createGroup)(action.group, successCallback, errorCallback);
 	          return next(action);
 	        case _group_actions.FETCH_A_GROUP:
-	          console.log("fetching group");
 	          (0, _group_api_util.fetchGroup)(action.id, successCallback, errorCallback);
 	          return next(action);
 	        case _group_actions.EDIT_GROUP:
@@ -73868,7 +73865,6 @@
 	      };
 	      switch (action.type) {
 	        case _user_actions.FETCH_USER_GROUPS:
-	          console.log("fetching user groups");
 	          (0, _user_api_util.getGroups)(successUserGroupsCallback, errorCallback);
 	          return next(action);
 	        case _user_actions.FETCH_USERS:
@@ -74485,8 +74481,8 @@
 	  var chores = state.group.chores;
 	  var filter = state.filter.id;
 	  (0, _values2.default)(chores).forEach(function (chore) {
-	    if (!chore.complete && (chore.user_id === filter || filter === 0)) {
-	      current.push(chore);
+	    if (!chore.chore.complete && (chore.chore.user_id === filter || filter === 0)) {
+	      current.push(chore.chore);
 	    }
 	  });
 	  current.sort(function (a, b) {
@@ -74500,8 +74496,8 @@
 	  var chores = state.group.chores;
 	  var filter = state.filter.id;
 	  (0, _values2.default)(chores).forEach(function (chore) {
-	    if (chore.complete && (chore.user_id === filter || filter === 0)) {
-	      completed.push(chore);
+	    if (chore.chore.complete && (chore.chore.user_id === filter || filter === 0)) {
+	      completed.push(chore.chore);
 	    }
 	  });
 	  completed.sort(function (a, b) {
@@ -88935,7 +88931,6 @@
 	
 	  switch (action.type) {
 	    case _filter_actions.FILTER_USER:
-	      console.log(action.id, "IN THE FILTER REDUCER");
 	      var filter = { id: action.id };
 	      return (0, _merge2.default)({}, filter);
 	    default:
@@ -89053,6 +89048,10 @@
 	
 	var _comment2 = _interopRequireDefault(_comment);
 	
+	var _comment_actions = __webpack_require__(874);
+	
+	var _comment_actions2 = _interopRequireDefault(_comment_actions);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
@@ -89061,7 +89060,15 @@
 	  };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(_comment2.default);
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    createComment: function createComment(comment) {
+	      return dispatch((0, _comment_actions2.default)(comment));
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_comment2.default);
 
 /***/ },
 /* 878 */
@@ -89090,10 +89097,10 @@
 	var Comment = function (_React$Component) {
 	  _inherits(Comment, _React$Component);
 	
-	  function Comment() {
+	  function Comment(props) {
 	    _classCallCheck(this, Comment);
 	
-	    return _possibleConstructorReturn(this, (Comment.__proto__ || Object.getPrototypeOf(Comment)).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (Comment.__proto__ || Object.getPrototypeOf(Comment)).call(this, props));
 	  }
 	
 	  _createClass(Comment, [{
