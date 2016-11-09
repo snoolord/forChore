@@ -1,9 +1,12 @@
 import values from 'lodash/values';
 
-export const selectCurrentChores = (chores) => {
+export const selectCurrentChores = (state) => {
   let current = [];
+  let chores = state.group.chores;
+  let filter = state.filter.id;
+
   values(chores).forEach((chore)=> {
-    if (!chore.complete) {
+    if (!chore.complete && (chore.user_id === filter || filter === 0)) {
       current.push(chore);
     }
   });
@@ -14,10 +17,12 @@ export const selectCurrentChores = (chores) => {
   return current;
 };
 
-export const selectCompletedChores = (chores) => {
+export const selectCompletedChores = (state) => {
   let completed = [];
+  let chores = state.group.chores;
+  let filter = state.filter.id;
   values(chores).forEach((chore) => {
-    if (chore.complete) {
+    if (chore.complete && (chore.user_id === filter || filter === 0)) {
       completed.push(chore);
     }
   });

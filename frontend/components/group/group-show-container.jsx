@@ -12,8 +12,8 @@ const mapStateToProps = state => {
     title: state.group.title,
     housemates: state.group.housemates,
     housemateChores: state.group.housemateChores,
-    currentChores: selectCurrentChores(state.group.chores),
-    completedChores: selectCompletedChores(state.group.chores),
+    currentChores: selectCurrentChores(state),
+    completedChores: selectCompletedChores(state),
     state
   };
 };

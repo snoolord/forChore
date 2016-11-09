@@ -7,7 +7,8 @@ import CreateChoreContainer from './create-chore-container';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import values from 'lodash/values';
-
+import moment from 'moment';
+moment().format();
 // todo: NEED TO CHANGE TO CREATE CHORE CONTAINER
 
 class GroupShow extends React.Component {
@@ -33,6 +34,7 @@ class GroupShow extends React.Component {
 
   render() {
     console.log(this.props);
+
     let currentChores = [];
     let completedChores = [];
     if (this.props.currentChores) {
@@ -49,12 +51,24 @@ class GroupShow extends React.Component {
             <List>
               current
               {currentChores.map((chore) => {
-                return <ListItem key={chore.id}primaryText={chore.task} rightIcon={<button onClick={this.handleDestroy(chore.id)}>x</button>}></ListItem>;
+                let ago = moment(chore.complete_by).fromNow();
+                let reg = /[0-9]/g;
+                console.log(ago);
+                ago = ago.match(reg).join('');
+                console.log(ago);
+                return <ListItem key={chore.id}
+                                 primaryText={chore.task}
+                                 rightIcon={<button onClick={this.handleDestroy(chore.id)}>x</button>}>
+                                 <div>
+                                  //  here i  need to change the class for colors dending on each
+                                 </div>
+
+                                 </ListItem>;
                 })}
               <Divider/>
               completed
               {completedChores.map((chore) => {
-                return <ListItem key={chore.id}primaryText={chore.task} rightIcon={<button onClick={this.handleDestroy(chore.id)}>x</button>}></ListItem>;
+                return <ListItem key={chore.id} primaryText={chore.task}><div>{}</div></ListItem>;
               })}
             </List>
         </div>
@@ -63,4 +77,7 @@ class GroupShow extends React.Component {
   }
 }
 
+// let ago = moment(chore.complete_by).fromNow();
+// let className = '';
+// console.log(ago);
 export default GroupShow;
