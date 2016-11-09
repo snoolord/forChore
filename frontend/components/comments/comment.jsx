@@ -5,7 +5,8 @@ class Comment extends React.Component {
   constructor(props){
     super(props);
   }
-  render() {
+  render(){
+    console.log(this.props);
     return <div>Hello!</div>;
   }
 }

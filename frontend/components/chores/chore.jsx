@@ -52,6 +52,7 @@ class Chore extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     let chore = this.props.chore;
     let ago = moment(chore.complete_by).fromNow();
     return (

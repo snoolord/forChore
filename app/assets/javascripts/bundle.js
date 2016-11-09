@@ -34597,7 +34597,6 @@
 	    value: function render() {
 	      var _this6 = this;
 	
-	      console.log(this.props);
 	      var housemates = (0, _values2.default)(this.props.housemates);
 	      if (this.props.loggedIn) {
 	        return _react2.default.createElement(
@@ -70897,6 +70896,7 @@
 	      if (this.props.completedChores) {
 	        completedChores = this.props.completedChores;
 	      }
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'group-show' },
@@ -74481,8 +74481,10 @@
 	  var chores = state.group.chores;
 	  var filter = state.filter.id;
 	  (0, _values2.default)(chores).forEach(function (chore) {
-	    if (!chore.chore.complete && (chore.chore.user_id === filter || filter === 0)) {
-	      current.push(chore.chore);
+	    var choreWithComments = chore.chore;
+	    choreWithComments.comments = chore.comments;
+	    if (!choreWithComments.complete && (choreWithComments.user_id === filter || filter === 0)) {
+	      current.push(choreWithComments);
 	    }
 	  });
 	  current.sort(function (a, b) {
@@ -74496,14 +74498,16 @@
 	  var chores = state.group.chores;
 	  var filter = state.filter.id;
 	  (0, _values2.default)(chores).forEach(function (chore) {
-	    if (chore.chore.complete && (chore.chore.user_id === filter || filter === 0)) {
-	      completed.push(chore.chore);
+	    var choreWithComments = chore.chore;
+	    choreWithComments.comments = chore.comments;
+	    if (choreWithComments.complete && (choreWithComments.user_id === filter || filter === 0)) {
+	      completed.push(choreWithComments);
 	    }
 	  });
 	  completed.sort(function (a, b) {
 	    return new Date(b.updated_at) - new Date(a.updated_at);
 	  });
-	  return completed.slice(0, 10);
+	  return completed;
 	};
 
 /***/ },
@@ -89106,6 +89110,7 @@
 	  _createClass(Comment, [{
 	    key: 'render',
 	    value: function render() {
+	      console.log(this.props);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -89271,6 +89276,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      console.log(this.props);
 	      var chore = this.props.chore;
 	      var ago = (0, _moment2.default)(chore.complete_by).fromNow();
 	      return _react2.default.createElement(

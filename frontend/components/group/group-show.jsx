@@ -46,6 +46,7 @@ class GroupShow extends React.Component {
     if (this.props.completedChores) {
       completedChores = this.props.completedChores;
     }
+    
     return(
       <div className="group-show">
         <div className="group-show-center">

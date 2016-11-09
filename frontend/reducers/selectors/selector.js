@@ -5,8 +5,10 @@ export const selectCurrentChores = (state) => {
   let chores = state.group.chores;
   let filter = state.filter.id;
   values(chores).forEach((chore)=> {
-    if (!chore.chore.complete && (chore.chore.user_id === filter || filter === 0)) {
-      current.push(chore.chore);
+    let choreWithComments = chore.chore;
+    choreWithComments.comments = chore.comments;
+    if (!choreWithComments.complete && (choreWithComments.user_id === filter || filter === 0)) {
+      current.push(choreWithComments);
     }
   });
   current.sort((a,b)=> {
@@ -20,12 +22,14 @@ export const selectCompletedChores = (state) => {
   let chores = state.group.chores;
   let filter = state.filter.id;
   values(chores).forEach((chore) => {
-    if (chore.chore.complete && (chore.chore.user_id === filter || filter === 0)) {
-      completed.push(chore.chore);
+    let choreWithComments = chore.chore;
+    choreWithComments.comments = chore.comments;
+    if (choreWithComments.complete && (choreWithComments.user_id === filter || filter === 0)) {
+      completed.push(choreWithComments);
     }
   });
   completed.sort((a,b) => {
     return new Date(b.updated_at) - new Date (a.updated_at);
   });
-  return completed.slice(0,10);
+  return completed;
 };
