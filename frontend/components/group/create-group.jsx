@@ -4,7 +4,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
 import values from 'lodash/values';
 import FlatButton from 'material-ui/FlatButton';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import {presets} from 'react-motion';
+import Collapse from 'react-collapse';
 import { default as Fade } from 'react-fade';
 
 const fadeDuration = 10;
@@ -16,7 +17,8 @@ class CreateGroup extends React.Component {
       housemates: ["","","","",""],
       fieldName: "housemate-fields",
       created: false,
-      clearClick: false
+      clearClick: false,
+      shouldShowFields: false
     };
     this.renderError = this.renderError.bind(this);
     this.memberUpdate = this.memberUpdate.bind(this);
@@ -39,9 +41,9 @@ class CreateGroup extends React.Component {
     return e => {
       this.setState({[field]: e.currentTarget.value}, () =>{
         if (this.state.title.length > 0 ) {
-          this.setState({fieldName: "housemate-fields-active"});
+          this.setState({fieldName: "housemate-fields-active", ["shouldShowFields"]: true});
         } else {
-          this.setState({fieldName: "housemate-fields"});
+          this.setState({fieldName: "housemate-fields", ["shouldShowFields"]: false});
         }
       });
     };
@@ -187,11 +189,13 @@ class CreateGroup extends React.Component {
               </TextField>
 
             </div>
-            <div className="housemate-text-fields">
-              {this.state.housemates.map((housemate, index) => {
-                return this.memberField(housemate, index);
-              })}
-            </div>
+              <div className="housemate-text-fields">
+                <Collapse isOpened={this.state.shouldShowFields}>
+                {this.state.housemates.map((housemate, index) => {
+                  return this.memberField(housemate, index);
+                })}
+              </Collapse>
+              </div>
             {this.addFieldButton()}
             <div className="group-save-button">
               <RaisedButton id="group-save-button" type="submit" disabled={this.state.title.length === 0 ? true : false}>Create Group</RaisedButton>

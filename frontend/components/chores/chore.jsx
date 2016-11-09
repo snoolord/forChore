@@ -4,6 +4,8 @@ import CommentContainer from '../comments/comment-container';
 import Paper from 'material-ui/Paper';
 import moment from 'moment';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import {presets} from 'react-motion';
+import Collapse from 'react-collapse';
 moment().format();
 
 class Chore extends React.Component {
@@ -64,12 +66,9 @@ class Chore extends React.Component {
             </div>
           </ListItem>
           <div>
-            <ReactCSSTransitionGroup
-              transitionName="example"
-              transitionEnterTimeout={500}
-              transitionLeaveTimeout={300}>
-              { this.state.shouldShowComment && <CommentContainer /> }
-            </ReactCSSTransitionGroup>
+            <Collapse isOpened={this.state.shouldShowComment}>
+              <CommentContainer />
+            </Collapse>
           </div>
         </div>
     );
