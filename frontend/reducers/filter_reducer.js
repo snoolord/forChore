@@ -8,7 +8,9 @@ const _defaultState = {
 const FilterReducer = function(state = _defaultState, action) {
   switch(action.type) {
     case FILTER_USER:
-      return merge({}, action.id);
+      console.log(action.id, "IN THE FILTER REDUCER");
+      let filter = {id: action.id};
+      return merge({}, filter);
     default:
       return state;
   }

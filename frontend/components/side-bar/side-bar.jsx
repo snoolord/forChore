@@ -25,6 +25,7 @@ class SideBar extends React.Component {
     this.handleDestroy = this.handleDestroy.bind(this);
     this.editButton = this.editButton.bind(this);
     this.handleTouch = this.handleTouch.bind(this);
+    this.filterBy = this.filterBy.bind(this);
   }
 
   componentDidMount() {
@@ -76,11 +77,21 @@ class SideBar extends React.Component {
       return this.props.children;
     }
   }
+
+  filterBy(housemateId) {
+    return e => {
+      console.log("filtering");
+      this.props.filterUser(housemateId);
+    };
+  }
+
   housemate(housemate) {
     if (this.props.location.pathname === '/dashboard'){
       return <div key={housemate.id}></div>;
     } else if (this.props.location.pathname.includes('groups/')){
-      return <ListItem key={housemate.id} primaryText={housemate.username}/>;
+      return <ListItem key={housemate.id}
+                       primaryText={housemate.username}
+                       onTouchTap={this.filterBy(housemate.id)}/>;
     }
   }
 

@@ -34314,6 +34314,8 @@
 	
 	var _group_actions = __webpack_require__(495);
 	
+	var _filter_actions = __webpack_require__(873);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
@@ -34333,6 +34335,9 @@
 	    },
 	    leaveGroup: function leaveGroup(userId, groupId) {
 	      return dispatch((0, _group_actions.leaveGroup)(userId, groupId));
+	    },
+	    filterUser: function filterUser(id) {
+	      return dispatch((0, _filter_actions.filterUser)(id));
 	    }
 	  };
 	};
@@ -34466,6 +34471,7 @@
 	    _this.handleDestroy = _this.handleDestroy.bind(_this);
 	    _this.editButton = _this.editButton.bind(_this);
 	    _this.handleTouch = _this.handleTouch.bind(_this);
+	    _this.filterBy = _this.filterBy.bind(_this);
 	    return _this;
 	  }
 	
@@ -34531,12 +34537,24 @@
 	      }
 	    }
 	  }, {
+	    key: 'filterBy',
+	    value: function filterBy(housemateId) {
+	      var _this4 = this;
+	
+	      return function (e) {
+	        console.log("filtering");
+	        _this4.props.filterUser(housemateId);
+	      };
+	    }
+	  }, {
 	    key: 'housemate',
 	    value: function housemate(_housemate) {
 	      if (this.props.location.pathname === '/dashboard') {
 	        return _react2.default.createElement('div', { key: _housemate.id });
 	      } else if (this.props.location.pathname.includes('groups/')) {
-	        return _react2.default.createElement(_List.ListItem, { key: _housemate.id, primaryText: _housemate.username });
+	        return _react2.default.createElement(_List.ListItem, { key: _housemate.id,
+	          primaryText: _housemate.username,
+	          onTouchTap: this.filterBy(_housemate.id) });
 	      }
 	    }
 	  }, {
@@ -34559,16 +34577,16 @@
 	  }, {
 	    key: 'handleTouch',
 	    value: function handleTouch(route) {
-	      var _this4 = this;
+	      var _this5 = this;
 	
 	      return function (e) {
-	        _this4.props.router.push(route);
+	        _this5.props.router.push(route);
 	      };
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this5 = this;
+	      var _this6 = this;
 	
 	      var housemates = (0, _values2.default)(this.props.housemates);
 	      if (this.props.loggedIn) {
@@ -34605,7 +34623,7 @@
 	              ),
 	              _react2.default.createElement(_Divider2.default, null),
 	              this.props.groups.slice(0, 5).map(function (group) {
-	                return _this5.groupLink(group.title, group.id);
+	                return _this6.groupLink(group.title, group.id);
 	              })
 	            )
 	          ),
@@ -34617,7 +34635,7 @@
 	              _List.List,
 	              null,
 	              housemates.map(function (housemate) {
-	                return _this5.housemate(housemate);
+	                return _this6.housemate(housemate);
 	              }),
 	              this.editButton()
 	            )
@@ -70844,8 +70862,6 @@
 	    value: function render() {
 	      var _this3 = this;
 	
-	      console.log(this.props);
-	
 	      var currentChores = [];
 	      var completedChores = [];
 	      if (this.props.currentChores) {
@@ -70873,9 +70889,7 @@
 	            currentChores.map(function (chore) {
 	              var ago = (0, _moment2.default)(chore.complete_by).fromNow();
 	              var reg = /[0-9]/g;
-	              console.log(ago);
 	              ago = ago.match(reg).join('');
-	              console.log(ago);
 	              return _react2.default.createElement(
 	                _List.ListItem,
 	                { key: chore.id,
@@ -74419,7 +74433,8 @@
 	  var current = [];
 	  var chores = state.group.chores;
 	  var filter = state.filter.id;
-	
+	  console.log(state);
+	  console.log(filter);
 	  (0, _values2.default)(chores).forEach(function (chore) {
 	    if (!chore.complete && (chore.user_id === filter || filter === 0)) {
 	      current.push(chore);
@@ -74436,6 +74451,7 @@
 	  var completed = [];
 	  var chores = state.group.chores;
 	  var filter = state.filter.id;
+	  console.log(filter);
 	  (0, _values2.default)(chores).forEach(function (chore) {
 	    if (chore.complete && (chore.user_id === filter || filter === 0)) {
 	      completed.push(chore);
@@ -88873,7 +88889,9 @@
 	
 	  switch (action.type) {
 	    case _filter_actions.FILTER_USER:
-	      return (0, _merge2.default)({}, action.id);
+	      console.log(action.id, "IN THE FILTER REDUCER");
+	      var filter = { id: action.id };
+	      return (0, _merge2.default)({}, filter);
 	    default:
 	      return state;
 	  }

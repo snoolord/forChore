@@ -33,8 +33,6 @@ class GroupShow extends React.Component {
   }
 
   render() {
-    console.log(this.props);
-
     let currentChores = [];
     let completedChores = [];
     if (this.props.currentChores) {
@@ -53,9 +51,7 @@ class GroupShow extends React.Component {
               {currentChores.map((chore) => {
                 let ago = moment(chore.complete_by).fromNow();
                 let reg = /[0-9]/g;
-                console.log(ago);
                 ago = ago.match(reg).join('');
-                console.log(ago);
                 return <ListItem key={chore.id}
                                  primaryText={chore.task}
                                  rightIcon={<button onClick={this.handleDestroy(chore.id)}>x</button>}>
