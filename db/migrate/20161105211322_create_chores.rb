@@ -6,6 +6,7 @@ class CreateChores < ActiveRecord::Migration
       t.string :task, null: false
       t.date :complete_by, null: false
       t.boolean :complete, default: false
+      t.boolean :dismissed, default: false
       t.integer :reminders, null: false
       t.timestamps null: false
     end

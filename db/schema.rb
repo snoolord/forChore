@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20161109170749) do
     t.string   "task",                        null: false
     t.date     "complete_by",                 null: false
     t.boolean  "complete",    default: false
+    t.boolean  "dismissed",   default: false
     t.integer  "reminders",                   null: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false

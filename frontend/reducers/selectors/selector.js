@@ -24,7 +24,7 @@ export const selectCompletedChores = (state) => {
   values(chores).forEach((chore) => {
     let choreWithComments = chore.chore;
     choreWithComments.comments = chore.comments;
-    if (choreWithComments.complete && (choreWithComments.user_id === filter || filter === 0)) {
+    if (choreWithComments.complete && (choreWithComments.user_id === filter || filter === 0) && !choreWithComments.dismissed) {
       completed.push(choreWithComments);
     }
   });

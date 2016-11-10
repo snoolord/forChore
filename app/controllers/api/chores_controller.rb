@@ -7,7 +7,7 @@ class Api::ChoresController < ApplicationController
     @chore.reminders = 0
     if @chore.save
       render :show
-    else 
+    else
       render json: @chore.errors.full_messages
     end
   end
@@ -17,9 +17,12 @@ class Api::ChoresController < ApplicationController
   end
 
   def update
-    p params[:id]
     @chore = Chore.find(params[:id].to_i)
-    if @chore.update_attribute('complete', true)
+    if @chore.complete
+      if @chore.update_attribute('dismissed', true)
+        render :show
+      end
+    elsif @chore.update_attribute('complete', true)
       render :show
     else
       render json: @chore.errors.full_messages

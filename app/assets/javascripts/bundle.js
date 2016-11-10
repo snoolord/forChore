@@ -74509,7 +74509,7 @@
 	  (0, _values2.default)(chores).forEach(function (chore) {
 	    var choreWithComments = chore.chore;
 	    choreWithComments.comments = chore.comments;
-	    if (choreWithComments.complete && (choreWithComments.user_id === filter || filter === 0)) {
+	    if (choreWithComments.complete && (choreWithComments.user_id === filter || filter === 0) && !choreWithComments.dismissed) {
 	      completed.push(choreWithComments);
 	    }
 	  });

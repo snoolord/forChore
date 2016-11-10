@@ -8,11 +8,12 @@
 /.bundle
 
 # Ignore node modules
-/node_modules/*
+node_modules/
 
-# Ignore bundle
+# Ignore Bundle
 bundle.js
 bundle.js.map
+
 
 # Ignore all logfiles and tempfiles.
 /log/*
