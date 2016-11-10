@@ -6,6 +6,10 @@ import {
         postComment
       } from '../util/comment_api_util';
 
+import {
+        fetchAGroup
+      } from '../actions/group_actions';
+
 export default ({ getState, dispatch }) => next => action => {
   const successCallback = comment => {
     // console.log(group, "In thiS SUCCESS");

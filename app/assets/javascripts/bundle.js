@@ -73737,6 +73737,8 @@
 	
 	var _group_api_util = __webpack_require__(754);
 	
+	var _comment_actions = __webpack_require__(874);
+	
 	var _user_actions = __webpack_require__(394);
 	
 	exports.default = function (_ref) {
@@ -73778,6 +73780,11 @@
 	    };
 	  };
 	};
+	
+	// case CREATE_COMMENT:
+	//   console.log(action, "GROUP MIDDLEWARE");
+	//   fetchGroup(action.groupId, successCallback, errorCallback);
+	//   return next(action);
 
 /***/ },
 /* 754 */
@@ -88995,6 +89002,8 @@
 	
 	var _comment_api_util = __webpack_require__(876);
 	
+	var _group_actions = __webpack_require__(495);
+	
 	exports.default = function (_ref) {
 	  var getState = _ref.getState,
 	      dispatch = _ref.dispatch;
@@ -89027,7 +89036,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var postComment = exports.postComment = function postComment(comment, success, error) {
+	var postComment = exports.postComment = function postComment(comment, groupId, success, error) {
 	  $.ajax({
 	    method: 'POST',
 	    url: 'api/comments',

@@ -17,6 +17,10 @@ import {
         fetchAndDeleteGrouping,
         patchGroup
       } from '../util/group_api_util';
+
+import {
+      CREATE_COMMENT
+    } from '../actions/comment_actions';
 import {
         fetchUserGroups
       } from '../actions/user_actions';
@@ -48,3 +52,8 @@ export default ({ getState, dispatch }) => next => action => {
       return next(action);
   }
 };
+
+// case CREATE_COMMENT:
+//   console.log(action, "GROUP MIDDLEWARE");
+//   fetchGroup(action.groupId, successCallback, errorCallback);
+//   return next(action);

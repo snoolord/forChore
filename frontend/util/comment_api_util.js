@@ -1,4 +1,4 @@
-export const postComment = (comment, success, error) => {
+export const postComment = (comment, groupId, success, error) => {
   $.ajax({
     method: 'POST',
     url: 'api/comments',

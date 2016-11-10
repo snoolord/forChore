@@ -14,6 +14,10 @@ class Group < ActiveRecord::Base
     through: :groupings,
     source: :user
 
+  has_many :comments,
+    through: :chores,
+    source: :comments
+
   def destroy_if_empty_housemates
     if housemates.count == 0
       self.destroy

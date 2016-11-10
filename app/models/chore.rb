@@ -11,6 +11,9 @@ class Chore < ActiveRecord::Base
     foreign_key: :group_id,
     class_name: "Group"
 
-  has_many :comments  
+  has_many :comments,
+    primary_key: :id,
+    foreign_key: :chore_id,
+    class_name: "Comment"
 
 end
