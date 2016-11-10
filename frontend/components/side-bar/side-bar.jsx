@@ -5,14 +5,9 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 import { Link, withRouter } from 'react-router';
 import values from 'lodash/values';
 
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import GroupLinkContainer from './group-link-container';
 import {List, ListItem} from 'material-ui/List';
-import ContentInbox from 'material-ui/svg-icons/content/inbox';
-import ActionGrade from 'material-ui/svg-icons/action/grade';
-import ContentSend from 'material-ui/svg-icons/content/send';
-import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import Divider from 'material-ui/Divider';
-import ActionInfo from 'material-ui/svg-icons/action/info';
 import Subheader from 'material-ui/Subheader';
 
 class SideBar extends React.Component {
@@ -23,7 +18,6 @@ class SideBar extends React.Component {
       shouldShowDust: false
     };
     this.renderCenter = this.renderCenter.bind(this);
-    this.handleDestroy = this.handleDestroy.bind(this);
     this.editButton = this.editButton.bind(this);
     this.handleTouch = this.handleTouch.bind(this);
     this.filterBy = this.filterBy.bind(this);
@@ -34,30 +28,18 @@ class SideBar extends React.Component {
     this.props.fetchUserGroups();
   }
 
-  groupLinks() {
-    // this.props.groups.forEach( (group) => {
-    //   this.groupLink(group.title, group.id);
-    // });
-    this.props.groups.map( (group) => {
-      this.groupLink(group.title, group.id);
-    });
-  }
-
-  handleDestroy(groupId) {
-    return e => {
-      this.props.leaveGroup(this.props.currentUserId, groupId);
-      this.props.router.push('/dashboard/');
-    };
-  }
+  // groupLinks() {
+  //   // this.props.groups.forEach( (group) => {
+  //   //   this.groupLink(group.title, group.id);
+  //   // });
+  //   this.props.groups.map( (group) => {
+  //     this.groupLink(group.title, group.id);
+  //   });
+  // }
 
   groupLink(groupName, groupId) {
     return (
-      <ListItem key={groupId} primaryText={groupName}
-        leftIcon={this.showGroupDust(groupId)}
-        className="group-link"
-        rightIcon={<button onClick={this.handleDestroy(groupId)}>-</button>}
-        onTouchTap={this.handleTouch('/dashboard/groups/' + groupId)}>
-      </ListItem>
+      <GroupLinkContainer key={groupId} groupName={groupName} groupId={groupId} />
     );
     // <li key={groupId + groupName}>
     //   <Link to={`/dashboard/groups/${groupId}`}>
@@ -91,13 +73,7 @@ class SideBar extends React.Component {
     }
   }
 
-  showGroupDust(groupId) {
-    if (this.props.location.pathname.includes(groupId)) {
-      return <img src="http://i.imgur.com/EhwDa8N.png" className="dust"></img>;
-    } else {
-      return <div className="dust"></div>;
-    }
-  }
+
   filterBy(housemateId) {
     return e => {
       this.props.filterUser(housemateId);

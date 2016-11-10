@@ -34430,35 +34430,15 @@
 	
 	var _values2 = _interopRequireDefault(_values);
 	
-	var _moreVert = __webpack_require__(764);
+	var _groupLinkContainer = __webpack_require__(907);
 	
-	var _moreVert2 = _interopRequireDefault(_moreVert);
+	var _groupLinkContainer2 = _interopRequireDefault(_groupLinkContainer);
 	
 	var _List = __webpack_require__(463);
-	
-	var _inbox = __webpack_require__(488);
-	
-	var _inbox2 = _interopRequireDefault(_inbox);
-	
-	var _grade = __webpack_require__(489);
-	
-	var _grade2 = _interopRequireDefault(_grade);
-	
-	var _send = __webpack_require__(490);
-	
-	var _send2 = _interopRequireDefault(_send);
-	
-	var _drafts = __webpack_require__(491);
-	
-	var _drafts2 = _interopRequireDefault(_drafts);
 	
 	var _Divider = __webpack_require__(492);
 	
 	var _Divider2 = _interopRequireDefault(_Divider);
-	
-	var _info = __webpack_require__(494);
-	
-	var _info2 = _interopRequireDefault(_info);
 	
 	var _Subheader = __webpack_require__(465);
 	
@@ -34485,7 +34465,6 @@
 	      shouldShowDust: false
 	    };
 	    _this.renderCenter = _this.renderCenter.bind(_this);
-	    _this.handleDestroy = _this.handleDestroy.bind(_this);
 	    _this.editButton = _this.editButton.bind(_this);
 	    _this.handleTouch = _this.handleTouch.bind(_this);
 	    _this.filterBy = _this.filterBy.bind(_this);
@@ -34498,40 +34477,20 @@
 	    value: function componentDidMount() {
 	      this.props.fetchUserGroups();
 	    }
-	  }, {
-	    key: 'groupLinks',
-	    value: function groupLinks() {
-	      var _this2 = this;
 	
-	      // this.props.groups.forEach( (group) => {
-	      //   this.groupLink(group.title, group.id);
-	      // });
-	      this.props.groups.map(function (group) {
-	        _this2.groupLink(group.title, group.id);
-	      });
-	    }
-	  }, {
-	    key: 'handleDestroy',
-	    value: function handleDestroy(groupId) {
-	      var _this3 = this;
+	    // groupLinks() {
+	    //   // this.props.groups.forEach( (group) => {
+	    //   //   this.groupLink(group.title, group.id);
+	    //   // });
+	    //   this.props.groups.map( (group) => {
+	    //     this.groupLink(group.title, group.id);
+	    //   });
+	    // }
 	
-	      return function (e) {
-	        _this3.props.leaveGroup(_this3.props.currentUserId, groupId);
-	        _this3.props.router.push('/dashboard/');
-	      };
-	    }
 	  }, {
 	    key: 'groupLink',
 	    value: function groupLink(groupName, groupId) {
-	      return _react2.default.createElement(_List.ListItem, { key: groupId, primaryText: groupName,
-	        leftIcon: this.showGroupDust(groupId),
-	        className: 'group-link',
-	        rightIcon: _react2.default.createElement(
-	          'button',
-	          { onClick: this.handleDestroy(groupId) },
-	          '-'
-	        ),
-	        onTouchTap: this.handleTouch('/dashboard/groups/' + groupId) });
+	      return _react2.default.createElement(_groupLinkContainer2.default, { key: groupId, groupName: groupName, groupId: groupId });
 	      // <li key={groupId + groupName}>
 	      //   <Link to={`/dashboard/groups/${groupId}`}>
 	      //     <FlatButton
@@ -34566,21 +34525,12 @@
 	      }
 	    }
 	  }, {
-	    key: 'showGroupDust',
-	    value: function showGroupDust(groupId) {
-	      if (this.props.location.pathname.includes(groupId)) {
-	        return _react2.default.createElement('img', { src: 'http://i.imgur.com/EhwDa8N.png', className: 'dust' });
-	      } else {
-	        return _react2.default.createElement('div', { className: 'dust' });
-	      }
-	    }
-	  }, {
 	    key: 'filterBy',
 	    value: function filterBy(housemateId) {
-	      var _this4 = this;
+	      var _this2 = this;
 	
 	      return function (e) {
-	        _this4.props.filterUser(housemateId);
+	        _this2.props.filterUser(housemateId);
 	      };
 	    }
 	  }, {
@@ -34614,16 +34564,16 @@
 	  }, {
 	    key: 'handleTouch',
 	    value: function handleTouch(route) {
-	      var _this5 = this;
+	      var _this3 = this;
 	
 	      return function (e) {
-	        _this5.props.router.push(route);
+	        _this3.props.router.push(route);
 	      };
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this6 = this;
+	      var _this4 = this;
 	
 	      var housemates = (0, _values2.default)(this.props.housemates);
 	
@@ -34660,7 +34610,7 @@
 	              ),
 	              _react2.default.createElement(_Divider2.default, null),
 	              this.props.groups.slice(0, 5).map(function (group) {
-	                return _this6.groupLink(group.title, group.id);
+	                return _this4.groupLink(group.title, group.id);
 	              })
 	            )
 	          ),
@@ -34672,7 +34622,7 @@
 	              _List.List,
 	              null,
 	              housemates.map(function (housemate) {
-	                return _this6.housemate(housemate);
+	                return _this4.housemate(housemate);
 	              }),
 	              this.editButton()
 	            )
@@ -42913,154 +42863,10 @@
 	exports.default = makeSelectable;
 
 /***/ },
-/* 488 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _pure = __webpack_require__(474);
-	
-	var _pure2 = _interopRequireDefault(_pure);
-	
-	var _SvgIcon = __webpack_require__(483);
-	
-	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ContentInbox = function ContentInbox(props) {
-	  return _react2.default.createElement(
-	    _SvgIcon2.default,
-	    props,
-	    _react2.default.createElement('path', { d: 'M19 3H4.99c-1.11 0-1.98.89-1.98 2L3 19c0 1.1.88 2 1.99 2H19c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 12h-4c0 1.66-1.35 3-3 3s-3-1.34-3-3H4.99V5H19v10z' })
-	  );
-	};
-	ContentInbox = (0, _pure2.default)(ContentInbox);
-	ContentInbox.displayName = 'ContentInbox';
-	ContentInbox.muiName = 'SvgIcon';
-	
-	exports.default = ContentInbox;
-
-/***/ },
-/* 489 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _pure = __webpack_require__(474);
-	
-	var _pure2 = _interopRequireDefault(_pure);
-	
-	var _SvgIcon = __webpack_require__(483);
-	
-	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ActionGrade = function ActionGrade(props) {
-	  return _react2.default.createElement(
-	    _SvgIcon2.default,
-	    props,
-	    _react2.default.createElement('path', { d: 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z' })
-	  );
-	};
-	ActionGrade = (0, _pure2.default)(ActionGrade);
-	ActionGrade.displayName = 'ActionGrade';
-	ActionGrade.muiName = 'SvgIcon';
-	
-	exports.default = ActionGrade;
-
-/***/ },
-/* 490 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _pure = __webpack_require__(474);
-	
-	var _pure2 = _interopRequireDefault(_pure);
-	
-	var _SvgIcon = __webpack_require__(483);
-	
-	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ContentSend = function ContentSend(props) {
-	  return _react2.default.createElement(
-	    _SvgIcon2.default,
-	    props,
-	    _react2.default.createElement('path', { d: 'M2.01 21L23 12 2.01 3 2 10l15 2-15 2z' })
-	  );
-	};
-	ContentSend = (0, _pure2.default)(ContentSend);
-	ContentSend.displayName = 'ContentSend';
-	ContentSend.muiName = 'SvgIcon';
-	
-	exports.default = ContentSend;
-
-/***/ },
-/* 491 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _pure = __webpack_require__(474);
-	
-	var _pure2 = _interopRequireDefault(_pure);
-	
-	var _SvgIcon = __webpack_require__(483);
-	
-	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ContentDrafts = function ContentDrafts(props) {
-	  return _react2.default.createElement(
-	    _SvgIcon2.default,
-	    props,
-	    _react2.default.createElement('path', { d: 'M21.99 8c0-.72-.37-1.35-.94-1.7L12 1 2.95 6.3C2.38 6.65 2 7.28 2 8v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2l-.01-10zM12 13L3.74 7.84 12 3l8.26 4.84L12 13z' })
-	  );
-	};
-	ContentDrafts = (0, _pure2.default)(ContentDrafts);
-	ContentDrafts.displayName = 'ContentDrafts';
-	ContentDrafts.muiName = 'SvgIcon';
-	
-	exports.default = ContentDrafts;
-
-/***/ },
+/* 488 */,
+/* 489 */,
+/* 490 */,
+/* 491 */,
 /* 492 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -43155,43 +42961,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 494 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _pure = __webpack_require__(474);
-	
-	var _pure2 = _interopRequireDefault(_pure);
-	
-	var _SvgIcon = __webpack_require__(483);
-	
-	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ActionInfo = function ActionInfo(props) {
-	  return _react2.default.createElement(
-	    _SvgIcon2.default,
-	    props,
-	    _react2.default.createElement('path', { d: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z' })
-	  );
-	};
-	ActionInfo = (0, _pure2.default)(ActionInfo);
-	ActionInfo.displayName = 'ActionInfo';
-	ActionInfo.muiName = 'SvgIcon';
-	
-	exports.default = ActionInfo;
-
-/***/ },
+/* 494 */,
 /* 495 */
 /***/ function(module, exports) {
 
@@ -74495,43 +74265,7 @@
 	exports.default = MyChore;
 
 /***/ },
-/* 764 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _pure = __webpack_require__(474);
-	
-	var _pure2 = _interopRequireDefault(_pure);
-	
-	var _SvgIcon = __webpack_require__(483);
-	
-	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var NavigationMoreVert = function NavigationMoreVert(props) {
-	  return _react2.default.createElement(
-	    _SvgIcon2.default,
-	    props,
-	    _react2.default.createElement('path', { d: 'M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' })
-	  );
-	};
-	NavigationMoreVert = (0, _pure2.default)(NavigationMoreVert);
-	NavigationMoreVert.displayName = 'NavigationMoreVert';
-	NavigationMoreVert.muiName = 'SvgIcon';
-	
-	exports.default = NavigationMoreVert;
-
-/***/ },
+/* 764 */,
 /* 765 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -108636,6 +108370,169 @@
 	}(_react2.default.Component);
 	
 	exports.default = GroupComment;
+
+/***/ },
+/* 907 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(173);
+	
+	var _session_actions = __webpack_require__(257);
+	
+	var _user_actions = __webpack_require__(394);
+	
+	var _groupLink = __webpack_require__(908);
+	
+	var _groupLink2 = _interopRequireDefault(_groupLink);
+	
+	var _group_actions = __webpack_require__(495);
+	
+	var _filter_actions = __webpack_require__(873);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    currentUserId: state.session.currentUser.id,
+	    groups: state.user.groups,
+	    state: state
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    fetchUserGroups: function fetchUserGroups() {
+	      return dispatch((0, _user_actions.fetchUserGroups)());
+	    },
+	    leaveGroup: function leaveGroup(userId, groupId) {
+	      return dispatch((0, _group_actions.leaveGroup)(userId, groupId));
+	    },
+	    filterUser: function filterUser(id) {
+	      return dispatch((0, _filter_actions.filterUser)(id));
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_groupLink2.default);
+
+/***/ },
+/* 908 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _List = __webpack_require__(463);
+	
+	var _reactRouter = __webpack_require__(203);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var GroupLink = function (_React$Component) {
+	  _inherits(GroupLink, _React$Component);
+	
+	  function GroupLink(props) {
+	    _classCallCheck(this, GroupLink);
+	
+	    var _this = _possibleConstructorReturn(this, (GroupLink.__proto__ || Object.getPrototypeOf(GroupLink)).call(this, props));
+	
+	    _this.state = {
+	      shouldShowLeaveButton: false
+	    };
+	    _this.handleDestroy = _this.handleDestroy.bind(_this);
+	    _this.handleTouch = _this.handleTouch.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(GroupLink, [{
+	    key: 'showGroupDust',
+	    value: function showGroupDust(groupId) {
+	      if (this.props.location.pathname.includes(groupId)) {
+	        return _react2.default.createElement('img', { src: 'http://i.imgur.com/EhwDa8N.png', className: 'dust' });
+	      } else {
+	        return _react2.default.createElement('div', { className: 'dust' });
+	      }
+	    }
+	  }, {
+	    key: 'handleDestroy',
+	    value: function handleDestroy(groupId) {
+	      var _this2 = this;
+	
+	      return function (e) {
+	        _this2.props.leaveGroup(_this2.props.currentUserId, groupId);
+	        _this2.props.router.push('/dashboard/');
+	      };
+	    }
+	  }, {
+	    key: 'handleTouch',
+	    value: function handleTouch(route) {
+	      var _this3 = this;
+	
+	      return function (e) {
+	        _this3.props.router.push(route);
+	      };
+	    }
+	  }, {
+	    key: 'showDeleteButton',
+	    value: function showDeleteButton(groupId) {
+	      if (this.state.shouldShowLeaveButton) {
+	        return _react2.default.createElement(
+	          'button',
+	          { onClick: this.handleDestroy(groupId) },
+	          '-'
+	        );
+	      } else {
+	        return _react2.default.createElement('div', null);
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this4 = this;
+	
+	      var groupId = this.props.groupId;
+	      var groupName = this.props.groupName;
+	      return _react2.default.createElement(_List.ListItem, { key: groupId, primaryText: groupName,
+	        leftIcon: this.showGroupDust(groupId),
+	        className: 'group-link',
+	        onMouseEnter: function onMouseEnter() {
+	          return _this4.setState(_defineProperty({}, "shouldShowLeaveButton", true));
+	        },
+	        onMouseLeave: function onMouseLeave() {
+	          return _this4.setState(_defineProperty({}, "shouldShowLeaveButton", false));
+	        },
+	        rightIcon: this.showDeleteButton(groupId),
+	        onTouchTap: this.handleTouch('/dashboard/groups/' + groupId) });
+	    }
+	  }]);
+	
+	  return GroupLink;
+	}(_react2.default.Component);
+	
+	exports.default = (0, _reactRouter.withRouter)(GroupLink);
 
 /***/ }
 /******/ ]);
