@@ -28475,7 +28475,42 @@
 	          )
 	        ),
 	        _react2.default.createElement(_splashContainer2.default, { location: this.props.location }),
-	        this.props.children
+	        this.props.children,
+	        _react2.default.createElement(
+	          'footer',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'footer' },
+	            _react2.default.createElement('img', { src: 'http://i.imgur.com/u9xEJsy.png', className: 'logo' }),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'footer-right' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'created-by' },
+	                'a solution forChores by ',
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'my-name' },
+	                  'Winston Zhao'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'a',
+	                { href: 'https://github.com/winstonjz'
+	                },
+	                _react2.default.createElement('img', { className: 'github-icon', src: 'https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' })
+	              ),
+	              _react2.default.createElement(
+	                'a',
+	                { href: 'https://www.linkedin.com/in/winstonjzhao'
+	                },
+	                _react2.default.createElement('img', { className: 'linkedin-icon', src: 'http://cdn.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-linkedin-3.png' })
+	              )
+	            )
+	          )
+	        )
 	      );
 	    }
 	  }]);
@@ -34591,14 +34626,14 @@
 	            _react2.default.createElement(
 	              _List.List,
 	              null,
-	              _react2.default.createElement(_List.ListItem, { leftIcon: this.showDust(), primaryText: 'myChores', onTouchTap: this.handleTouch('/dashboard/') }),
+	              _react2.default.createElement(_List.ListItem, { className: 'sidebar-link', leftIcon: this.showDust(), primaryText: 'yourChores', onTouchTap: this.handleTouch('/dashboard/') }),
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'groups' },
 	                _react2.default.createElement(
 	                  _Subheader2.default,
 	                  null,
-	                  'groups'
+	                  'yourGroups'
 	                ),
 	                _react2.default.createElement(
 	                  _reactRouter.Link,
@@ -69890,7 +69925,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'broom' },
-	          _react2.default.createElement('img', { src: 'http://i.imgur.com/XopfC9T.png' })
+	          _react2.default.createElement('img', { src: 'https://i.imgur.com/XopfC9T.png' })
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -73669,7 +73704,6 @@
 	      };
 	      switch (action.type) {
 	        case _user_actions.FETCH_USER_GROUPS:
-	          console.log("hitting fetch users");
 	          (0, _user_api_util.getGroups)(successUserGroupsCallback, errorCallback);
 	          return next(action);
 	        case _user_actions.FETCH_USERS:
@@ -108517,7 +108551,7 @@
 	      var groupName = this.props.groupName;
 	      return _react2.default.createElement(_List.ListItem, { key: groupId, primaryText: groupName,
 	        leftIcon: this.showGroupDust(groupId),
-	        className: 'group-link',
+	        className: 'group-link sidebar-link',
 	        onMouseEnter: function onMouseEnter() {
 	          return _this4.setState(_defineProperty({}, "shouldShowLeaveButton", true));
 	        },

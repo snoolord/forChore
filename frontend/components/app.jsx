@@ -87,6 +87,26 @@ class App extends React.Component {
         </header>
         <SplashContainer location={this.props.location} />
         {this.props.children}
+        <footer>
+          <div className="footer">
+            <img src="http://i.imgur.com/u9xEJsy.png" className="logo"></img>
+            <div className="footer-right">
+              <div className="created-by">
+                a solution forChores by <div className="my-name">Winston Zhao</div>
+              </div>
+              <a href="https://github.com/winstonjz"
+                >
+                <img className="github-icon" src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg">
+                </img>
+              </a>
+              <a href="https://www.linkedin.com/in/winstonjzhao"
+                >
+                <img className="linkedin-icon" src="http://cdn.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-linkedin-3.png">
+                </img>
+              </a>
+            </div>
+          </div>
+        </footer>
       </div>
     );
   }

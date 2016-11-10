@@ -1,0 +1,42 @@
+.github-icon {
+  width: 30px;
+}
+
+.linkedin-icon {
+  width: 30px;
+  margin: 0 10px;
+}
+footer {
+  background-color: rgba(255, 200, 78, 0.40);
+}
+.footer {
+  margin: 0 auto;
+  width: 1050px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  li {
+    display: inline;
+  }
+}
+
+.broom-li {
+  transform: rotate(90deg);
+}
+
+.broom-logo {
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  font-family: 'Ubuntu Condensed', sans-serif;
+}
+
+.my-name {
+  padding: 0 5px;
+}
+.created-by {
+  display: flex;
+}

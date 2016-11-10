@@ -121,9 +121,9 @@ class SideBar extends React.Component {
           className="sidebar"
           >
           <List>
-             <ListItem leftIcon={this.showDust()} primaryText="myChores" onTouchTap={this.handleTouch('/dashboard/')}/>
+             <ListItem className="sidebar-link" leftIcon={this.showDust()} primaryText="yourChores" onTouchTap={this.handleTouch('/dashboard/')}/>
              <div className='groups'>
-               <Subheader>groups</Subheader>
+               <Subheader>yourGroups</Subheader>
                <Link to="/create_group"
                 className="group-create-link"
                  >

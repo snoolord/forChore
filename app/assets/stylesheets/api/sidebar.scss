@@ -19,7 +19,12 @@
   font-size: 14px !important;
   height: 30px !important;
 }
-
+.dust {
+  margin-left: -40px !important;
+}
+.sidebar-link div div div {
+  margin-left: -65px;
+}
 .groups {
   display: flex;
   justify-content: space-between;
@@ -38,6 +43,7 @@
 
 .groups div {
   width: 85px;
+  padding: 5px !important;
 }
 
 .groups:hover {
@@ -51,9 +57,6 @@
   padding: 0;
 }
 
-.group-link {
-  text-align: center !important;
-}
 #my-chores {
   padding-right: 72px !important;
 }

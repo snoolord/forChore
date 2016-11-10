@@ -46,7 +46,7 @@ class GroupLink extends React.Component {
     return (
       <ListItem key={groupId} primaryText={groupName}
         leftIcon={this.showGroupDust(groupId)}
-        className="group-link"
+        className="group-link sidebar-link"
         onMouseEnter={() => this.setState({["shouldShowLeaveButton"]: true})}
         onMouseLeave={() => this.setState({["shouldShowLeaveButton"]: false})}
         rightIcon={this.showDeleteButton(groupId)}

@@ -171,7 +171,7 @@ class CreateGroup extends React.Component {
     return (
       <div className="create-group">
         <div className="broom">
-          <img src="http://i.imgur.com/XopfC9T.png"/>
+          <img src="https://i.imgur.com/XopfC9T.png"/>
         </div>
         <div className="create-group-right">
           <div className="create-group-name">
