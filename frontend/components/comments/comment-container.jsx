@@ -1,9 +1,8 @@
 import { connect } from 'react-redux';
 import Comment from './comment';
-import { createComment } from '../../actions/comment_actions';
+import { postMyComment } from '../../actions/comment_actions';
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     currentUser: state.session.currentUser,
     housemates: state.user.users,
@@ -13,7 +12,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createComment: (comment, groupId) => dispatch(createComment(comment, groupId))
+    createComment: (comment) => dispatch(postMyComment(comment))
   };
 };
 

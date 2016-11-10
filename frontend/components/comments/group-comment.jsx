@@ -24,7 +24,6 @@ class GroupComment extends React.Component {
   }
 
   render(){
-    console.log(this.props.housemates);
     return <div key={this.props.chore.id}>
       {this.props.comments.map((comment) => {
         return <div key={comment.id}>{`${this.props.housemates[comment.user_id].username} says ${comment.body}`}</div>;

@@ -19,7 +19,6 @@ class GroupShow extends React.Component {
     };
   }
 
-
   handleOpen(){
    this.setState({open: true});
   }

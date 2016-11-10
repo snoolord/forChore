@@ -42,12 +42,18 @@
 
 .groups:hover {
   opacity: 1;
+  .group-create-link {
+    color: rgb(115,194,252);
+  }
 }
 .sidebar-ul {
   list-style: none;
   padding: 0;
 }
 
+.group-link {
+  text-align: center !important;
+}
 #my-chores {
   padding-right: 72px !important;
 }

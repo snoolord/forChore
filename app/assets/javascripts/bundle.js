@@ -21550,6 +21550,8 @@
 	
 	var _filter_actions = __webpack_require__(873);
 	
+	var _user_actions = __webpack_require__(394);
+	
 	var _theme = __webpack_require__(390);
 	
 	var _theme2 = _interopRequireDefault(_theme);
@@ -21568,6 +21570,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	// actions
+	
+	// containers
 	var muiTheme = (0, _getMuiTheme2.default)({
 	  appBar: {
 	    height: 40
@@ -21591,10 +21596,6 @@
 	});
 	// themes
 	
-	// actions
-	
-	// containers
-	
 	
 	var myTheme = (0, _getMuiTheme2.default)(_theme2.default);
 	
@@ -21615,6 +21616,9 @@
 	      replace('/dashboard');
 	    }
 	  };
+	  var getUsers = function getUsers() {
+	    store.dispatch((0, _user_actions.fetchUsers)());
+	  };
 	
 	  // const _redirectIfLoggedOut = (nextState, replace) => {
 	  //   const currentUser = store.getState().session.currentUser;
@@ -21624,7 +21628,9 @@
 	  //     replace('/');
 	  //   }
 	  // };
-	
+	  var handleUpdate = function handleUpdate() {
+	    window.scroll(0, 0);
+	  };
 	
 	  var _requestAGroup = function _requestAGroup(nextState) {
 	    store.dispatch((0, _group_actions.fetchAGroup)(nextState.params.id));
@@ -21639,7 +21645,7 @@
 	      { store: store },
 	      _react2.default.createElement(
 	        _reactRouter.Router,
-	        { history: _reactRouter.hashHistory },
+	        { history: _reactRouter.hashHistory, onUpdate: handleUpdate },
 	        _react2.default.createElement(
 	          _reactRouter.Route,
 	          { path: '/', component: _app_container2.default, onEnter: _preventRootAccess },
@@ -21647,7 +21653,7 @@
 	          _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _sessionFormContainer2.default, onEnter: _redirectIfLoggedIn }),
 	          _react2.default.createElement(
 	            _reactRouter.Route,
-	            { path: '/dashboard', component: _sideBarContainer2.default },
+	            { path: '/dashboard', component: _sideBarContainer2.default, onEnter: getUsers },
 	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _myChoreContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'groups/:id', component: _groupShowContainer2.default, onEnter: _requestAGroup })
 	          )
@@ -34475,13 +34481,15 @@
 	    var _this = _possibleConstructorReturn(this, (SideBar.__proto__ || Object.getPrototypeOf(SideBar)).call(this, props));
 	
 	    _this.state = {
-	      grouping: -1
+	      grouping: -1,
+	      shouldShowDust: false
 	    };
 	    _this.renderCenter = _this.renderCenter.bind(_this);
 	    _this.handleDestroy = _this.handleDestroy.bind(_this);
 	    _this.editButton = _this.editButton.bind(_this);
 	    _this.handleTouch = _this.handleTouch.bind(_this);
 	    _this.filterBy = _this.filterBy.bind(_this);
+	    _this.showDust = _this.showDust.bind(_this);
 	    return _this;
 	  }
 	
@@ -34516,6 +34524,8 @@
 	    key: 'groupLink',
 	    value: function groupLink(groupName, groupId) {
 	      return _react2.default.createElement(_List.ListItem, { key: groupId, primaryText: groupName,
+	        leftIcon: this.showGroupDust(groupId),
+	        className: 'group-link',
 	        rightIcon: _react2.default.createElement(
 	          'button',
 	          { onClick: this.handleDestroy(groupId) },
@@ -34544,6 +34554,24 @@
 	        );
 	      } else {
 	        return this.props.children;
+	      }
+	    }
+	  }, {
+	    key: 'showDust',
+	    value: function showDust() {
+	      if (this.props.location.pathname === "/dashboard/") {
+	        return _react2.default.createElement('img', { src: 'http://i.imgur.com/EhwDa8N.png', className: 'dust' });
+	      } else {
+	        return _react2.default.createElement('div', { className: 'dust' });
+	      }
+	    }
+	  }, {
+	    key: 'showGroupDust',
+	    value: function showGroupDust(groupId) {
+	      if (this.props.location.pathname.includes(groupId)) {
+	        return _react2.default.createElement('img', { src: 'http://i.imgur.com/EhwDa8N.png', className: 'dust' });
+	      } else {
+	        return _react2.default.createElement('div', { className: 'dust' });
 	      }
 	    }
 	  }, {
@@ -34598,6 +34626,7 @@
 	      var _this6 = this;
 	
 	      var housemates = (0, _values2.default)(this.props.housemates);
+	
 	      if (this.props.loggedIn) {
 	        return _react2.default.createElement(
 	          'div',
@@ -34612,8 +34641,7 @@
 	            _react2.default.createElement(
 	              _List.List,
 	              null,
-	              _react2.default.createElement(_List.ListItem, { primaryText: 'myChores', onTouchTap: this.handleTouch('/dashboard/') }),
-	              _react2.default.createElement(_List.ListItem, { primaryText: 'recentActivity', onTouchTap: this.handleTouch('dashboard/recentActivity') }),
+	              _react2.default.createElement(_List.ListItem, { leftIcon: this.showDust(), primaryText: 'myChores', onTouchTap: this.handleTouch('/dashboard/') }),
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'groups' },
@@ -73871,6 +73899,7 @@
 	      };
 	      switch (action.type) {
 	        case _user_actions.FETCH_USER_GROUPS:
+	          console.log("hitting fetch users");
 	          (0, _user_api_util.getGroups)(successUserGroupsCallback, errorCallback);
 	          return next(action);
 	        case _user_actions.FETCH_USERS:
@@ -89048,11 +89077,19 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var CREATE_COMMENT = exports.CREATE_COMMENT = "CREATE_COMMENT";
+	var CREATE_MY_COMMENT = exports.CREATE_MY_COMMENT = "CREATE_MY_COMMENT";
+	var CREATE_GROUP_COMMENT = exports.CREATE_GROUP_COMMENT = "CREATE_GROUP_COMMENT";
 	
 	var createComment = exports.createComment = function createComment(comment) {
 	  return {
-	    type: CREATE_COMMENT,
+	    type: CREATE_GROUP_COMMENT,
+	    comment: comment
+	  };
+	};
+	
+	var postMyComment = exports.postMyComment = function postMyComment(comment) {
+	  return {
+	    type: CREATE_MY_COMMENT,
 	    comment: comment
 	  };
 	};
@@ -89073,6 +89110,8 @@
 	
 	var _group_actions = __webpack_require__(495);
 	
+	var _user_actions = __webpack_require__(394);
+	
 	exports.default = function (_ref) {
 	  var getState = _ref.getState,
 	      dispatch = _ref.dispatch;
@@ -89085,8 +89124,14 @@
 	        return console.log(errors);
 	      };
 	      switch (action.type) {
-	        case _comment_actions.CREATE_COMMENT:
+	        case _comment_actions.CREATE_GROUP_COMMENT:
 	          (0, _comment_api_util.postComment)(action.comment, successCallback, errorCallback);
+	          return next(action);
+	        case _comment_actions.CREATE_MY_COMMENT:
+	          var success = function success() {
+	            dispatch((0, _user_actions.fetchUserGroups)());
+	          };
+	          (0, _comment_api_util.postComment)(action.comment, success, errorCallback);
 	          return next(action);
 	        default:
 	          return next(action);
@@ -89135,7 +89180,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  console.log(state);
 	  return {
 	    currentUser: state.session.currentUser,
 	    housemates: state.user.users,
@@ -89145,8 +89189,8 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    createComment: function createComment(comment, groupId) {
-	      return dispatch((0, _comment_actions.createComment)(comment, groupId));
+	    createComment: function createComment(comment) {
+	      return dispatch((0, _comment_actions.postMyComment)(comment));
 	    }
 	  };
 	};
@@ -89215,6 +89259,7 @@
 	      var comment = { chore_id: this.props.chore.id,
 	        user_id: this.props.currentUser.id,
 	        body: this.state.comment };
+	      console.log("handling submit");
 	      this.props.createComment(comment);
 	      this.setState(_defineProperty({}, "comment", ''));
 	    }
@@ -89222,7 +89267,6 @@
 	    key: 'render',
 	    value: function render() {
 	      var housemates = (0, _lodash.invert)(this.props.housemates);
-	      console.log(housemates);
 	      return _react2.default.createElement(
 	        'div',
 	        { key: this.props.chore.id },
@@ -89359,9 +89403,9 @@
 	    var _this = _possibleConstructorReturn(this, (Chore.__proto__ || Object.getPrototypeOf(Chore)).call(this, props));
 	
 	    _this.state = {
-	      shouldShowComment: false
+	      shouldShowComment: false,
+	      shouldShowForChore: false
 	    };
-	    console.log(_this.props);
 	    _this.handleDestroy = _this.handleDestroy.bind(_this);
 	    _this.highlight = _this.highlight.bind(_this);
 	    _this.toggleComment = _this.toggleComment.bind(_this);
@@ -89374,6 +89418,13 @@
 	    value: function toggleComment() {
 	      this.setState({
 	        shouldShowComment: !this.state.shouldShowComment
+	      });
+	    }
+	  }, {
+	    key: 'toggleForChore',
+	    value: function toggleForChore() {
+	      this.setState({
+	        shouldShowForChore: !this.state.shouldShowForChore
 	      });
 	    }
 	  }, {
@@ -89424,8 +89475,6 @@
 	      if (chore.complete) {
 	        ago = (0, _moment2.default)(chore.updated_at).fromNow();
 	      }
-	      console.log(chore);
-	      console.log(this.props);
 	      return _react2.default.createElement(
 	        'div',
 	        { key: chore.id },
@@ -108472,7 +108521,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  console.log(state);
 	  return {
 	    currentUser: state.session.currentUser,
 	    housemates: state.group.housemates,
@@ -108482,8 +108530,8 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    createComment: function createComment(comment, groupId) {
-	      return dispatch((0, _comment_actions.createComment)(comment, groupId));
+	    createComment: function createComment(comment) {
+	      return dispatch((0, _comment_actions.createComment)(comment));
 	    }
 	  };
 	};
@@ -108560,7 +108608,6 @@
 	    value: function render() {
 	      var _this3 = this;
 	
-	      console.log(this.props.housemates);
 	      return _react2.default.createElement(
 	        'div',
 	        { key: this.props.chore.id },

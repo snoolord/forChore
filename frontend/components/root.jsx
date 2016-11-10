@@ -13,6 +13,7 @@ import MyChoreContainer from './chores/my-chore-container';
 // actions
 import { fetchAGroup } from '../actions/group_actions';
 import { filterUser } from '../actions/filter_actions';
+import { fetchUsers } from '../actions/user_actions';
 // themes
 import theme from './theme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -64,7 +65,9 @@ const Root = ({ store }) => {
       replace('/dashboard');
     }
   };
-
+  const getUsers = () => {
+    store.dispatch(fetchUsers());
+  };
 
   // const _redirectIfLoggedOut = (nextState, replace) => {
   //   const currentUser = store.getState().session.currentUser;
@@ -74,7 +77,9 @@ const Root = ({ store }) => {
   //     replace('/');
   //   }
   // };
-
+  const handleUpdate = () => {
+    window.scroll(0, 0);
+  };
 
   const _requestAGroup = (nextState) => {
     store.dispatch(fetchAGroup(nextState.params.id));
@@ -84,11 +89,11 @@ const Root = ({ store }) => {
   return (
     <MuiThemeProvider muiTheme={myTheme}>
       <Provider store={store}>
-        <Router history={hashHistory}>
+        <Router history={hashHistory} onUpdate={handleUpdate}>
           <Route path="/" component={AppContainer} onEnter={_preventRootAccess}>
             <Route path="/login" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
             <Route path="/signup" component={SessionFormContainer} onEnter={_redirectIfLoggedIn} />
-            <Route path="/dashboard" component={SideBarContainer}>
+            <Route path="/dashboard" component={SideBarContainer} onEnter={getUsers}>
               <IndexRoute component={MyChoreContainer} />
               <Route path="groups/:id" component={GroupShowContainer} onEnter={_requestAGroup} />
             </Route>

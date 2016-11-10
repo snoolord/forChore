@@ -13,9 +13,9 @@ class Chore extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      shouldShowComment: false
+      shouldShowComment: false,
+      shouldShowForChore: false,
     };
-    console.log(this.props);
     this.handleDestroy = this.handleDestroy.bind(this);
     this.highlight = this.highlight.bind(this);
     this.toggleComment = this.toggleComment.bind(this);
@@ -24,9 +24,16 @@ class Chore extends React.Component {
 
   toggleComment() {
     this.setState({
-      shouldShowComment: !this.state.shouldShowComment
+      shouldShowComment: !this.state.shouldShowComment,
     });
   }
+
+  toggleForChore() {
+    this.setState({
+      shouldShowForChore: !this.state.shouldShowForChore
+    });
+  }
+
   handleDestroy(id) {
     return e => {
       this.props.completeChore(id);
@@ -67,8 +74,6 @@ class Chore extends React.Component {
     if (chore.complete) {
       ago = moment(chore.updated_at).fromNow();
     }
-    console.log(chore);
-    console.log(this.props);
     return (
         <div key={chore.id}>
           <ListItem

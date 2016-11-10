@@ -19,13 +19,15 @@ class SideBar extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      grouping: -1
+      grouping: -1,
+      shouldShowDust: false
     };
     this.renderCenter = this.renderCenter.bind(this);
     this.handleDestroy = this.handleDestroy.bind(this);
     this.editButton = this.editButton.bind(this);
     this.handleTouch = this.handleTouch.bind(this);
     this.filterBy = this.filterBy.bind(this);
+    this.showDust = this.showDust.bind(this);
   }
 
   componentDidMount() {
@@ -51,8 +53,10 @@ class SideBar extends React.Component {
   groupLink(groupName, groupId) {
     return (
       <ListItem key={groupId} primaryText={groupName}
-         rightIcon={<button onClick={this.handleDestroy(groupId)}>-</button>}
-         onTouchTap={this.handleTouch('/dashboard/groups/' + groupId)}>
+        leftIcon={this.showGroupDust(groupId)}
+        className="group-link"
+        rightIcon={<button onClick={this.handleDestroy(groupId)}>-</button>}
+        onTouchTap={this.handleTouch('/dashboard/groups/' + groupId)}>
       </ListItem>
     );
     // <li key={groupId + groupName}>
@@ -67,6 +71,7 @@ class SideBar extends React.Component {
     // </li>
   }
 
+
   renderCenter() {
     if (this.props.location.pathname === '/dashboard') {
       return <div className="group-show">
@@ -78,6 +83,21 @@ class SideBar extends React.Component {
     }
   }
 
+  showDust() {
+    if (this.props.location.pathname === "/dashboard/") {
+      return <img src="http://i.imgur.com/EhwDa8N.png" className="dust"></img>;
+    } else {
+      return <div className="dust"></div>;
+    }
+  }
+
+  showGroupDust(groupId) {
+    if (this.props.location.pathname.includes(groupId)) {
+      return <img src="http://i.imgur.com/EhwDa8N.png" className="dust"></img>;
+    } else {
+      return <div className="dust"></div>;
+    }
+  }
   filterBy(housemateId) {
     return e => {
       this.props.filterUser(housemateId);
@@ -115,6 +135,7 @@ class SideBar extends React.Component {
   }
   render() {
     let housemates = values(this.props.housemates);
+
     if (this.props.loggedIn) {
       return (
       <div
@@ -124,8 +145,7 @@ class SideBar extends React.Component {
           className="sidebar"
           >
           <List>
-             <ListItem primaryText="myChores" onTouchTap={this.handleTouch('/dashboard/')}/>
-             <ListItem primaryText="recentActivity" onTouchTap={this.handleTouch('dashboard/recentActivity')}/>
+             <ListItem leftIcon={this.showDust()} primaryText="myChores" onTouchTap={this.handleTouch('/dashboard/')}/>
              <div className='groups'>
                <Subheader>groups</Subheader>
                <Link to="/create_group"

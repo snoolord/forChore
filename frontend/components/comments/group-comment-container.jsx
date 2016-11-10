@@ -3,7 +3,6 @@ import GroupComment from './group-comment';
 import { createComment } from '../../actions/comment_actions';
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     currentUser: state.session.currentUser,
     housemates: state.group.housemates,
@@ -13,7 +12,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createComment: (comment, groupId) => dispatch(createComment(comment, groupId))
+    createComment: (comment) => dispatch(createComment(comment))
   };
 };
 

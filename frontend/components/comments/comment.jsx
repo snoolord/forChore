@@ -19,13 +19,13 @@ class Comment extends React.Component {
     let comment = { chore_id: this.props.chore.id,
         user_id: this.props.currentUser.id,
         body: this.state.comment };
+        console.log("handling submit");
     this.props.createComment(comment);
     this.setState({["comment"]: ''});
   }
 
   render(){
     let housemates = invert(this.props.housemates);
-    console.log(housemates);
     return <div key={this.props.chore.id}>
       {this.props.comments.map((comment) => {
         return <div key={comment.id}>{`${housemates[comment.user_id].username} says ${comment.body}`}</div>;
