@@ -89169,6 +89169,7 @@
 	          'form',
 	          { className: 'comment-box', onSubmit: this.handleSubmit },
 	          _react2.default.createElement(_TextField2.default, {
+	            value: this.state.comment,
 	            id: 'comment+' + this.props.chore.id,
 	            className: 'comment-field',
 	            hintText: 'Leave comment forChore',

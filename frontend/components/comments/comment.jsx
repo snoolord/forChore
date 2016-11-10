@@ -30,6 +30,7 @@ class Comment extends React.Component {
       })}
       <form className="comment-box" onSubmit={this.handleSubmit}>
         <TextField
+          value={this.state.comment}
           id={`comment+${this.props.chore.id}`}
           className="comment-field"
           hintText="Leave comment forChore"
