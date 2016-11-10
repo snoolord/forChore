@@ -30,11 +30,11 @@ class GroupShow extends React.Component {
 
 
   currentChore(chore) {
-    return <ChoreContainer key={chore.id} chore={chore} />;
+    return <ChoreContainer key={chore.id} chore={chore} comments={chore.comments}/>;
   }
 
   completedChore(chore) {
-    return <ChoreContainer key={chore.id} chore={chore} />;
+    return <ChoreContainer key={chore.id} chore={chore} comments={chore.comments} />;
   }
 
   render() {
@@ -46,7 +46,7 @@ class GroupShow extends React.Component {
     if (this.props.completedChores) {
       completedChores = this.props.completedChores;
     }
-    
+
     return(
       <div className="group-show">
         <div className="group-show-center">

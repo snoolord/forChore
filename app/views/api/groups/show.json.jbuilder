@@ -5,7 +5,7 @@ json.extract! @group, :title
 json.chores do
   @chores.each do |chore|
     json.set! chore.id do
-      json.chore chore 
+      json.chore chore
       json.comments chore.comments
     end
     user_chores[chore.user_id] += [chore.id]

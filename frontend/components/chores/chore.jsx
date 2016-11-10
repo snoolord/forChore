@@ -52,7 +52,6 @@ class Chore extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     let chore = this.props.chore;
     let ago = moment(chore.complete_by).fromNow();
     return (
@@ -68,7 +67,7 @@ class Chore extends React.Component {
           </ListItem>
           <div>
             <Collapse isOpened={this.state.shouldShowComment}>
-              <CommentContainer />
+              <CommentContainer chore={chore} comments={this.props.comments}/>
             </Collapse>
           </div>
         </div>

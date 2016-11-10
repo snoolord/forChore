@@ -70876,12 +70876,12 @@
 	  }, {
 	    key: 'currentChore',
 	    value: function currentChore(chore) {
-	      return _react2.default.createElement(_choreContainer2.default, { key: chore.id, chore: chore });
+	      return _react2.default.createElement(_choreContainer2.default, { key: chore.id, chore: chore, comments: chore.comments });
 	    }
 	  }, {
 	    key: 'completedChore',
 	    value: function completedChore(chore) {
-	      return _react2.default.createElement(_choreContainer2.default, { key: chore.id, chore: chore });
+	      return _react2.default.createElement(_choreContainer2.default, { key: chore.id, chore: chore, comments: chore.comments });
 	    }
 	  }, {
 	    key: 'render',
@@ -88973,10 +88973,11 @@
 	});
 	var CREATE_COMMENT = exports.CREATE_COMMENT = "CREATE_COMMENT";
 	
-	var createComment = exports.createComment = function createComment(comment) {
+	var createComment = exports.createComment = function createComment(comment, groupId) {
 	  return {
 	    type: CREATE_COMMENT,
-	    comment: comment
+	    comment: comment,
+	    groupId: groupId
 	  };
 	};
 
@@ -89054,20 +89055,20 @@
 	
 	var _comment_actions = __webpack_require__(874);
 	
-	var _comment_actions2 = _interopRequireDefault(_comment_actions);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    state: state
+	    currentUser: state.session.currentUser,
+	    housemates: state.group.housemates,
+	    groupId: state.group.id
 	  };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    createComment: function createComment(comment) {
-	      return dispatch((0, _comment_actions2.default)(comment));
+	    createComment: function createComment(comment, groupId) {
+	      return dispatch((0, _comment_actions.createComment)(comment, groupId));
 	    }
 	  };
 	};
@@ -89090,7 +89091,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _TextField = __webpack_require__(500);
+	
+	var _TextField2 = _interopRequireDefault(_TextField);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -89104,17 +89111,59 @@
 	  function Comment(props) {
 	    _classCallCheck(this, Comment);
 	
-	    return _possibleConstructorReturn(this, (Comment.__proto__ || Object.getPrototypeOf(Comment)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Comment.__proto__ || Object.getPrototypeOf(Comment)).call(this, props));
+	
+	    _this.state = {
+	      comment: ''
+	    };
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(Comment, [{
+	    key: 'handleChange',
+	    value: function handleChange() {
+	      var _this2 = this;
+	
+	      return function (e) {
+	        console.log(_this2.state.comment);
+	        _this2.setState(_defineProperty({}, "comment", e.currentTarget.value));
+	      };
+	    }
+	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit() {
+	      var comment = { chore_id: this.props.chore.id,
+	        user_id: this.props.currentUser.id,
+	        body: this.state.comment };
+	      console.log(comment);
+	      this.props.createComment(comment, this.props.groupId);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+	
 	      console.log(this.props);
 	      return _react2.default.createElement(
 	        'div',
-	        null,
-	        'Hello!'
+	        { key: this.props.chore.id },
+	        this.props.comments.map(function (comment) {
+	          return _react2.default.createElement(
+	            'div',
+	            { key: comment.id },
+	            _this3.props.housemates[comment.user_id].username + ' says ' + comment.body
+	          );
+	        }),
+	        _react2.default.createElement(
+	          'form',
+	          { className: 'comment-box', onSubmit: this.handleSubmit },
+	          _react2.default.createElement(_TextField2.default, {
+	            id: 'comment+' + this.props.chore.id,
+	            className: 'comment-field',
+	            hintText: 'Leave comment forChore',
+	            onChange: this.handleChange() })
+	        )
 	      );
 	    }
 	  }]);
@@ -89276,7 +89325,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props);
 	      var chore = this.props.chore;
 	      var ago = (0, _moment2.default)(chore.complete_by).fromNow();
 	      return _react2.default.createElement(
@@ -89305,7 +89353,7 @@
 	          _react2.default.createElement(
 	            _reactCollapse2.default,
 	            { isOpened: this.state.shouldShowComment },
-	            _react2.default.createElement(_commentContainer2.default, null)
+	            _react2.default.createElement(_commentContainer2.default, { chore: chore, comments: this.props.comments })
 	          )
 	        )
 	      );
