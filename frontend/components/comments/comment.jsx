@@ -11,7 +11,6 @@ class Comment extends React.Component {
   }
   handleChange() {
     return e => {
-      console.log(this.state.comment);
       this.setState({["comment"]: e.currentTarget.value});
     };
   }
@@ -20,12 +19,11 @@ class Comment extends React.Component {
     let comment = { chore_id: this.props.chore.id,
         user_id: this.props.currentUser.id,
         body: this.state.comment };
-    console.log(comment);
-    this.props.createComment(comment, this.props.groupId);
+    this.props.createComment(comment);
+    this.setState({["comment"]: ''});
   }
 
   render(){
-    console.log(this.props);
     return <div key={this.props.chore.id}>
       {this.props.comments.map((comment) => {
         return <div key={comment.id}>{`${this.props.housemates[comment.user_id].username} says ${comment.body}`}</div>;

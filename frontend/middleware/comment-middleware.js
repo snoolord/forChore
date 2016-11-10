@@ -11,9 +11,11 @@ import {
       } from '../actions/group_actions';
 
 export default ({ getState, dispatch }) => next => action => {
+  console.log(action.type);
   const successCallback = comment => {
     // console.log(group, "In thiS SUCCESS");
-    console.log("success");
+    console.log("is it successfull");
+    dispatch(fetchAGroup(comment.group_id));
   };
   const errorCallback = errors => console.log(errors);
   switch(action.type) {

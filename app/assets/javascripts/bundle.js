@@ -71477,6 +71477,7 @@
 	  var newState = state;
 	  switch (action.type) {
 	    case _group_actions.RECEIVE_GROUP:
+	      console.log(action, "receiving group after comment");
 	      return (0, _merge2.default)({}, _defaultState, action.group);
 	    case _group_actions.RECEIVE_ERRORS:
 	      newState.errors = action.errors;
@@ -73759,6 +73760,7 @@
 	          (0, _group_api_util.createGroup)(action.group, successCallback, errorCallback);
 	          return next(action);
 	        case _group_actions.FETCH_A_GROUP:
+	          console.log(action, "I'm in the group middleware");
 	          (0, _group_api_util.fetchGroup)(action.id, successCallback, errorCallback);
 	          return next(action);
 	        case _group_actions.EDIT_GROUP:
@@ -88980,11 +88982,10 @@
 	});
 	var CREATE_COMMENT = exports.CREATE_COMMENT = "CREATE_COMMENT";
 	
-	var createComment = exports.createComment = function createComment(comment, groupId) {
+	var createComment = exports.createComment = function createComment(comment) {
 	  return {
 	    type: CREATE_COMMENT,
-	    comment: comment,
-	    groupId: groupId
+	    comment: comment
 	  };
 	};
 
@@ -89009,9 +89010,11 @@
 	      dispatch = _ref.dispatch;
 	  return function (next) {
 	    return function (action) {
+	      console.log(action.type);
 	      var successCallback = function successCallback(comment) {
 	        // console.log(group, "In thiS SUCCESS");
-	        console.log("success");
+	        console.log("is it successfull");
+	        dispatch((0, _group_actions.fetchAGroup)(comment.group_id));
 	      };
 	      var errorCallback = function errorCallback(errors) {
 	        return console.log(errors);
@@ -89036,7 +89039,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var postComment = exports.postComment = function postComment(comment, groupId, success, error) {
+	var postComment = exports.postComment = function postComment(comment, success, error) {
 	  $.ajax({
 	    method: 'POST',
 	    url: 'api/comments',
@@ -89135,7 +89138,6 @@
 	      var _this2 = this;
 	
 	      return function (e) {
-	        console.log(_this2.state.comment);
 	        _this2.setState(_defineProperty({}, "comment", e.currentTarget.value));
 	      };
 	    }
@@ -89145,15 +89147,14 @@
 	      var comment = { chore_id: this.props.chore.id,
 	        user_id: this.props.currentUser.id,
 	        body: this.state.comment };
-	      console.log(comment);
-	      this.props.createComment(comment, this.props.groupId);
+	      this.props.createComment(comment);
+	      this.setState(_defineProperty({}, "comment", ''));
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this3 = this;
 	
-	      console.log(this.props);
 	      return _react2.default.createElement(
 	        'div',
 	        { key: this.props.chore.id },
