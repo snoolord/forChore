@@ -96,7 +96,7 @@ class SideBar extends React.Component {
 
   editButton() {
     let path = this.props.location.pathname;
-    if ( path === '/dashboard') {
+    if ( path === '/dashboard/') {
       return <div
         className="edit-div"></div>;
     } else {

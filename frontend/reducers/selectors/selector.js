@@ -33,3 +33,37 @@ export const selectCompletedChores = (state) => {
   });
   return completed;
 };
+
+export const selectMyCurrentChores = (state) => {
+  let current = [];
+  console.log(state);
+  let chores = state.user.chores;
+
+  values(chores).forEach((chore)=> {
+    let choreWithComments = chore.chore;
+    choreWithComments.comments = chore.comments;
+    if (!choreWithComments.complete) {
+      current.push(choreWithComments);
+    }
+  });
+  current.sort((a,b)=> {
+    return new Date(a.complete_by) - new Date(b.complete_by);
+  });
+  return current;
+};
+
+export const selectMyCompletedChores = (state) => {
+  let completed = [];
+  let chores = state.user.chores;
+  values(chores).forEach((chore) => {
+    let choreWithComments = chore.chore;
+    choreWithComments.comments = chore.comments;
+    if (choreWithComments.complete && !choreWithComments.dismissed) {
+      completed.push(choreWithComments);
+    }
+  });
+  completed.sort((a,b) => {
+    return new Date(b.updated_at) - new Date (a.updated_at);
+  });
+  return completed;
+};

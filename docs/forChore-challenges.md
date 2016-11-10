@@ -2,3 +2,4 @@
 * Learning material-ui and how to style it
 * Creating json jbuilder to serve up data for group fetching s
 * Group create form... error validation.. removing errors onFocus.
+* 

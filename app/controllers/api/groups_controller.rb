@@ -5,6 +5,8 @@ class Api::GroupsController < ApplicationController
       @group.housemate_ids = params["group"]["housemate_ids"].map(&:to_i)
     end
     if @group.save
+      @chores = @group.chores
+      @housemates = @group.housemates
       render :show
     else
       render json: @group.errors.full_messages, status: 422

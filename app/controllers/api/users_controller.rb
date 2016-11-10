@@ -15,10 +15,12 @@ class Api::UsersController < ApplicationController
   def show
     if params[:id] == "dashboard"
       @user = current_user
+      @groups = @user.groups
+      @chores = @user.chores
       render "api/users/dashboard"
     else
       @user = User.find(params[:id])
-      
+
       render :show
     end
   end

@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
-import Comment from './comment';
+import GroupComment from './group-comment';
 import { createComment } from '../../actions/comment_actions';
 
 const mapStateToProps = (state) => {
   console.log(state);
   return {
     currentUser: state.session.currentUser,
-    housemates: state.user.users,
+    housemates: state.group.housemates,
     groupId: state.group.id
   };
 };
@@ -20,4 +20,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Comment);
+)(GroupComment);

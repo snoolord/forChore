@@ -37,7 +37,6 @@ export default ({ getState, dispatch }) => next => action => {
       createGroup(action.group, successCallback, errorCallback);
       return next(action);
     case FETCH_A_GROUP:
-      console.log(action, "I'm in the group middleware");
       fetchGroup(action.id, successCallback, errorCallback);
       return next(action);
     case EDIT_GROUP:

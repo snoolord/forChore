@@ -41,11 +41,11 @@ Objective: Create multiple groups. Have each group show page show all housemates
 
 Objective: Have functioning form to create chores for members of your forChore group. These chores will show up in your myChores Page
 
-### Phase 4 Add Comments
+### Phase 4 Add Comments (1 days) ###
 
 Objective:  Allow users to complete chores
 
-### Phase 5 Chores NewsFeed (2 days) ###
+### Phase 5 Chores NewsFeed (1 days) ###
 
 Objective: Allow users to see a news feed of chores as they are completed
 

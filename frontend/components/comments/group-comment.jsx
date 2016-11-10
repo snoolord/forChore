@@ -1,7 +1,7 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import { invert } from 'lodash';
-class Comment extends React.Component {
+class GroupComment extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -24,11 +24,10 @@ class Comment extends React.Component {
   }
 
   render(){
-    let housemates = invert(this.props.housemates);
-    console.log(housemates);
+    console.log(this.props.housemates);
     return <div key={this.props.chore.id}>
       {this.props.comments.map((comment) => {
-        return <div key={comment.id}>{`${housemates[comment.user_id].username} says ${comment.body}`}</div>;
+        return <div key={comment.id}>{`${this.props.housemates[comment.user_id].username} says ${comment.body}`}</div>;
       })}
       <form className="comment-box" onSubmit={this.handleSubmit}>
         <TextField
@@ -44,4 +43,4 @@ class Comment extends React.Component {
   }
 }
 
-export default Comment;
+export default GroupComment;

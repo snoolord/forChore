@@ -17,7 +17,7 @@ const UserReducer = function( state = _defaultState, action ) {
       let newState = state;
       newState.groups = action.groups;
       newState.chores = action.chores;
-      return merge({}, _defaultState, action.groups);
+      return merge({}, state, action.groups);
     case RECEIVE_USERS:
       return merge({}, state, action.users);
     default:

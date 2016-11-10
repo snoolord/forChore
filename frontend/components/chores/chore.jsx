@@ -6,6 +6,7 @@ import moment from 'moment';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {presets} from 'react-motion';
 import Collapse from 'react-collapse';
+import GroupCommentContainer from '../comments/group-comment-container';
 moment().format();
 
 class Chore extends React.Component {
@@ -14,9 +15,11 @@ class Chore extends React.Component {
     this.state = {
       shouldShowComment: false
     };
+    console.log(this.props);
     this.handleDestroy = this.handleDestroy.bind(this);
     this.highlight = this.highlight.bind(this);
     this.toggleComment = this.toggleComment.bind(this);
+    this.dashboard = this.dashboard.bind(this);
   }
 
   toggleComment() {
@@ -50,10 +53,22 @@ class Chore extends React.Component {
       return "";
     }
   }
+  dashboard(chore) {
+    if (this.props.dashboard) {
+      return <CommentContainer chore={chore} comments={this.props.comments}/>;
+    } else {
+      return <GroupCommentContainer chore={chore} comments={this.props.comments}/>;
+    }
+  }
 
   render() {
     let chore = this.props.chore;
     let ago = moment(chore.complete_by).fromNow();
+    if (chore.complete) {
+      ago = moment(chore.updated_at).fromNow();
+    }
+    console.log(chore);
+    console.log(this.props);
     return (
         <div key={chore.id}>
           <ListItem
@@ -67,7 +82,7 @@ class Chore extends React.Component {
           </ListItem>
           <div>
             <Collapse isOpened={this.state.shouldShowComment}>
-              <CommentContainer chore={chore} comments={this.props.comments}/>
+              {this.dashboard(chore)}
             </Collapse>
           </div>
         </div>
