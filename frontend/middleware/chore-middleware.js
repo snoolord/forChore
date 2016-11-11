@@ -27,8 +27,8 @@ export default ({ getState, dispatch }) => next => action => {
       return next(action);
     case COMPLETE_CHORE:
       const finishSuccess = chore => {
-        console.log(chore);
         dispatch(fetchAGroup(chore.chore.group_id));
+        dispatch(fetchUserGroups());
       };
       finishChore(action.id, finishSuccess, errorCallback);
       return next(action);

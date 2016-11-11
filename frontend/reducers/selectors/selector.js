@@ -36,7 +36,6 @@ export const selectCompletedChores = (state) => {
 
 export const selectMyCurrentChores = (state) => {
   let current = [];
-  console.log(state);
   let chores = state.user.chores;
 
   values(chores).forEach((chore)=> {

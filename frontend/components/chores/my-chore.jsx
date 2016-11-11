@@ -11,7 +11,6 @@ class MyChore extends React.Component {
     this.props.fetchUsers();
   }
   render() {
-    console.log(this.props);
     let currentChores = [];
     let completedChores = [];
     if (this.props.currentChores) {
