@@ -48,8 +48,8 @@ class GroupShow extends React.Component {
     return(
       <div className="group-show">
         <div className="group-show-center">
-          <h2>
-            {this.props.title}
+          <h2 className="group-title">
+            <div className="group-title-detail">{this.props.title}</div>
           </h2>
           <CreateChoreContainer state={this.props}/>
             <List>

@@ -112,7 +112,7 @@ class CreateChore extends React.Component {
     return (
       <div>
         <div className="add-chore">
-          <RaisedButton label="Add Chore" onTouchTap={this.handleOpen} />
+          <RaisedButton onTouchTap={this.handleOpen}>Add Chore</RaisedButton>
         </div>
         <div>
           {filter !== 0 ? <RaisedButton onTouchTap={this.removeFilter}>Remove Filter</RaisedButton> : <div></div>}

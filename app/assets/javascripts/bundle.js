@@ -72395,8 +72395,12 @@
 	          { className: 'group-show-center' },
 	          _react2.default.createElement(
 	            'h2',
-	            null,
-	            this.props.title
+	            { className: 'group-title' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'group-title-detail' },
+	              this.props.title
+	            )
 	          ),
 	          _react2.default.createElement(_createChoreContainer2.default, { state: this.props }),
 	          _react2.default.createElement(
@@ -72686,7 +72690,11 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'add-chore' },
-	          _react2.default.createElement(_RaisedButton2.default, { label: 'Add Chore', onTouchTap: this.handleOpen })
+	          _react2.default.createElement(
+	            _RaisedButton2.default,
+	            { onTouchTap: this.handleOpen },
+	            'Add Chore'
+	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -105223,7 +105231,6 @@
 	        'div',
 	        { key: this.props.chore.id },
 	        this.props.comments.map(function (comment) {
-	          console.log(comment.user_id);
 	          return _react2.default.createElement(
 	            'div',
 	            { key: comment.id },

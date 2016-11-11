@@ -12,12 +12,27 @@
   flex-direction: column;
   align-items: center;
 }
-h2 {
+.group-title {
   display: flex;
-  justify-content: center;
+  padding: 10px;
+  background-color: rgba(120, 118, 118, 0.2);
+}
+
+.group-title-detail {
+  font-size: 30px;
+  font-weight: bold;
 }
 
 .add-chore {
   float: right;
-  margin-top: -30px;
+  position: absolute;
+  margin-top: -46px;
+  margin-left: 485px;
+  padding: 0 10px;
+  div {
+    background-color: rgb(115,194,252) !important;
+    button {
+      color: white !important;
+    }
+  }
 }

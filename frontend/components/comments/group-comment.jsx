@@ -26,7 +26,6 @@ class GroupComment extends React.Component {
   render(){
     return <div key={this.props.chore.id}>
       {this.props.comments.map((comment) => {
-        console.log(comment.user_id);
         return <div key={comment.id}>{`${this.props.housemates[comment.user_id].username} says ${comment.body}`}</div>;
       })}
       <form className="comment-box" onSubmit={this.handleSubmit}>
