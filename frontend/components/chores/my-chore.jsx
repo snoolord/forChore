@@ -26,7 +26,7 @@ class MyChore extends React.Component {
             {this.props.currentUser + "'s "}chores
           </h2>
           <List>
-            <div className="group-columns">
+            <div className="group-columns group-header-salmon">
               <div>
                 Current Chores
               </div>
@@ -40,7 +40,7 @@ class MyChore extends React.Component {
             })}
           </List>
           <List>
-            <div className="group-columns">
+            <div className="group-columns group-header-blue">
               <div>
                 Completed Chores
               </div>

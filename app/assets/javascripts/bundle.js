@@ -34002,7 +34002,7 @@
 	    accent3Color: _colors.grey500,
 	    textColor: _colors.darkBlack,
 	    alternateTextColor: _colors.white,
-	    canvasColor: _colors.cyan500,
+	    canvasColor: _colors.white,
 	    borderColor: _colors.grey300,
 	    disabledColor: (0, _colorManipulator.fade)(_colors.darkBlack, 0.3),
 	    pickerHeaderColor: _colors.white,
@@ -72400,7 +72400,6 @@
 	    key: 'editButton',
 	    value: function editButton() {
 	      var path = this.props.location.pathname;
-	      console.log(path);
 	      if (path === '/dashboard/') {
 	        return _react2.default.createElement('div', {
 	          className: 'edit-div' });
@@ -72928,10 +72927,6 @@
 	
 	var _Paper2 = _interopRequireDefault(_Paper);
 	
-	var _moment = __webpack_require__(693);
-	
-	var _moment2 = _interopRequireDefault(_moment);
-	
 	var _reactAddonsCssTransitionGroup = __webpack_require__(801);
 	
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
@@ -72949,6 +72944,10 @@
 	var _groupCommentContainer = __webpack_require__(897);
 	
 	var _groupCommentContainer2 = _interopRequireDefault(_groupCommentContainer);
+	
+	var _moment = __webpack_require__(693);
+	
+	var _moment2 = _interopRequireDefault(_moment);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -88628,7 +88627,7 @@
 	            null,
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'group-columns' },
+	              { className: 'group-columns group-header-salmon' },
 	              _react2.default.createElement(
 	                'div',
 	                null,
@@ -88650,7 +88649,7 @@
 	            null,
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'group-columns' },
+	              { className: 'group-columns group-header-blue' },
 	              _react2.default.createElement(
 	                'div',
 	                null,
@@ -91516,6 +91515,14 @@
 	
 	var _lodash = __webpack_require__(896);
 	
+	var _RaisedButton = __webpack_require__(385);
+	
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+	
+	var _moment = __webpack_require__(693);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -91525,6 +91532,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	(0, _moment2.default)().format();
 	
 	var Comment = function (_React$Component) {
 	  _inherits(Comment, _React$Component);
@@ -91561,6 +91570,21 @@
 	      this.setState(_defineProperty({}, "comment", ''));
 	    }
 	  }, {
+	    key: 'submitButton',
+	    value: function submitButton() {
+	      if (this.state.comment.length > 0) {
+	        return _react2.default.createElement(
+	          _RaisedButton2.default,
+	          {
+	            className: 'submit-comment',
+	            type: 'submit' },
+	          'Submit'
+	        );
+	      } else {
+	        return _react2.default.createElement('div', null);
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var housemates = (0, _lodash.invert)(this.props.housemates);
@@ -91568,10 +91592,26 @@
 	        'div',
 	        { key: this.props.chore.id },
 	        this.props.comments.map(function (comment) {
+	          var time = (0, _moment2.default)(comment.created_at).format('LT on ll');
+	          var housemate = housemates[comment.user_id].username;
+	          var action = "says";
+	          if (!housemate) {
+	            housemate = "You";
+	            action = "said";
+	          }
 	          return _react2.default.createElement(
 	            'div',
-	            { key: comment.id },
-	            housemates[comment.user_id].username + ' says ' + comment.body
+	            { className: 'comment-div', key: comment.id },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'comment' },
+	              housemate + ' ' + action + ' ' + comment.body
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'comment-time' },
+	              time
+	            )
 	          );
 	        }),
 	        _react2.default.createElement(
@@ -91582,7 +91622,8 @@
 	            id: 'comment+' + this.props.chore.id,
 	            className: 'comment-field',
 	            hintText: 'Leave comment forChore',
-	            onChange: this.handleChange() })
+	            onChange: this.handleChange() }),
+	          this.submitButton()
 	        )
 	      );
 	    }
@@ -108678,6 +108719,14 @@
 	
 	var _lodash = __webpack_require__(896);
 	
+	var _RaisedButton = __webpack_require__(385);
+	
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+	
+	var _moment = __webpack_require__(693);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -108687,6 +108736,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	(0, _moment2.default)().format();
 	
 	var GroupComment = function (_React$Component) {
 	  _inherits(GroupComment, _React$Component);
@@ -108722,6 +108773,21 @@
 	      this.setState(_defineProperty({}, "comment", ''));
 	    }
 	  }, {
+	    key: 'submitButton',
+	    value: function submitButton() {
+	      if (this.state.comment.length > 0) {
+	        return _react2.default.createElement(
+	          _RaisedButton2.default,
+	          {
+	            className: 'submit-comment',
+	            type: 'submit' },
+	          'Submit'
+	        );
+	      } else {
+	        return _react2.default.createElement('div', null);
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this3 = this;
@@ -108730,10 +108796,20 @@
 	        'div',
 	        { key: this.props.chore.id },
 	        this.props.comments.map(function (comment) {
+	          var time = (0, _moment2.default)(comment.created_at).format('LT on ll');
 	          return _react2.default.createElement(
 	            'div',
-	            { key: comment.id },
-	            _this3.props.housemates[comment.user_id].username + ' says ' + comment.body
+	            { className: 'comment-div', key: comment.id },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'comment' },
+	              _this3.props.housemates[comment.user_id].username + ' says ' + comment.body
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'comment-time' },
+	              time
+	            )
 	          );
 	        }),
 	        _react2.default.createElement(
@@ -108744,7 +108820,8 @@
 	            id: 'comment+' + this.props.chore.id,
 	            className: 'comment-field',
 	            hintText: 'Leave comment forChore',
-	            onChange: this.handleChange() })
+	            onChange: this.handleChange() }),
+	          this.submitButton()
 	        )
 	      );
 	    }

@@ -2,12 +2,12 @@ import React from 'react';
 import {List, ListItem} from 'material-ui/List';
 import CommentContainer from '../comments/comment-container';
 import Paper from 'material-ui/Paper';
-import moment from 'moment';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {presets} from 'react-motion';
 import Collapse from 'react-collapse';
 import Divider from 'material-ui/Divider';
 import GroupCommentContainer from '../comments/group-comment-container';
+import moment from 'moment';
 moment().format();
 
 class Chore extends React.Component {

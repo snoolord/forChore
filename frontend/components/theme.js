@@ -20,7 +20,7 @@ const theme = {
     accent3Color: grey500,
     textColor: darkBlack,
     alternateTextColor: white,
-    canvasColor: cyan500,
+    canvasColor: white,
     borderColor: grey300,
     disabledColor: fade(darkBlack, 0.3),
     pickerHeaderColor: white,
