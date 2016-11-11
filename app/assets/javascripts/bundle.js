@@ -34570,7 +34570,7 @@
 	  }, {
 	    key: 'housemate',
 	    value: function housemate(_housemate) {
-	      if (this.props.location.pathname === '/dashboard') {
+	      if (this.props.location.pathname === '/dashboard/') {
 	        return _react2.default.createElement('div', { key: _housemate.id });
 	      } else if (this.props.location.pathname.includes('groups/')) {
 	        return _react2.default.createElement(_List.ListItem, { key: _housemate.id,
@@ -34582,7 +34582,8 @@
 	    key: 'editButton',
 	    value: function editButton() {
 	      var path = this.props.location.pathname;
-	      if (path === '/dashboard') {
+	      console.log(path);
+	      if (path === '/dashboard/') {
 	        return _react2.default.createElement('div', {
 	          className: 'edit-div' });
 	      } else {
@@ -34652,6 +34653,11 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'right-sidebar' },
+	            this.props.location.pathname === '/dashboard/' ? _react2.default.createElement('div', null) : _react2.default.createElement(
+	              'div',
+	              { className: 'filter-text' },
+	              'Filter by Housemate'
+	            ),
 	            _react2.default.createElement(
 	              _List.List,
 	              null,
@@ -88524,6 +88530,10 @@
 	
 	var _choreContainer2 = _interopRequireDefault(_choreContainer);
 	
+	var _Divider = __webpack_require__(492);
+	
+	var _Divider2 = _interopRequireDefault(_Divider);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -88565,13 +88575,28 @@
 	          { className: 'group-show-center' },
 	          _react2.default.createElement(
 	            'h2',
-	            null,
-	            'YourChores! forChore!'
+	            { className: 'my-chore-header' },
+	            this.props.currentUser + "'s ",
+	            'chores'
 	          ),
 	          _react2.default.createElement(
 	            _List.List,
 	            null,
-	            'Current Chores',
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'group-columns' },
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'Current Chores'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'status' },
+	                'Status'
+	              )
+	            ),
+	            _react2.default.createElement(_Divider2.default, null),
 	            currentChores.map(function (chore) {
 	              return _react2.default.createElement(_choreContainer2.default, { key: chore.id, chore: chore, comments: chore.comments, dashboard: true });
 	            })
@@ -88579,7 +88604,21 @@
 	          _react2.default.createElement(
 	            _List.List,
 	            null,
-	            'Completed Chores',
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'group-columns' },
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'Completed Chores'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'status' },
+	                'Status'
+	              )
+	            ),
+	            _react2.default.createElement(_Divider2.default, null),
 	            completedChores.map(function (chore) {
 	              return _react2.default.createElement(_choreContainer2.default, { key: chore.id, chore: chore, comments: chore.comments, dashboard: true });
 	            })

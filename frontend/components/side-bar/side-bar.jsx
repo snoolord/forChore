@@ -81,7 +81,7 @@ class SideBar extends React.Component {
   }
 
   housemate(housemate) {
-    if (this.props.location.pathname === '/dashboard'){
+    if (this.props.location.pathname === '/dashboard/'){
       return <div key={housemate.id}></div>;
     } else if (this.props.location.pathname.includes('groups/')){
       return <ListItem key={housemate.id}
@@ -92,7 +92,8 @@ class SideBar extends React.Component {
 
   editButton() {
     let path = this.props.location.pathname;
-    if ( path === '/dashboard') {
+    console.log(path);
+    if ( path === '/dashboard/') {
       return <div
         className="edit-div"></div>;
     } else {
@@ -138,6 +139,9 @@ class SideBar extends React.Component {
         </div>
         {this.renderCenter()}
         <div className="right-sidebar">
+          {this.props.location.pathname === '/dashboard/'
+            ? <div></div> 
+            :<div className="filter-text">Filter by Housemate</div>}
           <List>
             {housemates.map((housemate) => {
               return this.housemate(housemate);

@@ -79,6 +79,11 @@
   height: 100%;
   border-radius: 25px;
   overflow: hidden;
+  .my-chore-header{
+    background-color: rgba(120, 118, 118, 0.2);
+    padding:10px;
+    height: 30px;
+  }
 }
 .group-show-center h2 {
   margin: 0;
