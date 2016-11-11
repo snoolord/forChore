@@ -68,6 +68,13 @@ class Chore extends React.Component {
     }
   }
 
+  completeDismissButton(chore) {
+    if (chore.complete) {
+      return <a className="dimiss-complete-button" onClick={this.handleDestroy(chore.id)}>Dismiss</a>;
+    } else {
+      return <a className="dimiss-complete-button" onClick={this.handleDestroy(chore.id)}>forChore</a>;
+    }
+  }
   render() {
     let chore = this.props.chore;
     let ago = moment(chore.complete_by).fromNow();
@@ -80,7 +87,7 @@ class Chore extends React.Component {
             primaryText={chore.task}
             className={chore.complete ? "" :this.highlight(ago)}
             onTouchTap={this.toggleComment}
-            rightIcon={chore.complete ? <div></div> : <button onClick={this.handleDestroy(chore.id)}>x</button>}>
+            rightIcon={this.completeDismissButton(chore)}>
             <div>
               {ago}
             </div>

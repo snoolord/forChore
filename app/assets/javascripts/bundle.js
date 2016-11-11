@@ -89251,10 +89251,14 @@
 	            primaryText: chore.task,
 	            className: chore.complete ? "" : this.highlight(ago),
 	            onTouchTap: this.toggleComment,
-	            rightIcon: chore.complete ? _react2.default.createElement('div', null) : _react2.default.createElement(
+	            rightIcon: chore.complete ? _react2.default.createElement(
+	              'a',
+	              { className: 'dimiss-complete-button', onClick: this.handleDestroy(chore.id) },
+	              'Dismiss'
+	            ) : _react2.default.createElement(
 	              'button',
-	              { onClick: this.handleDestroy(chore.id) },
-	              'x'
+	              { className: 'dimiss-complete-button', onClick: this.handleDestroy(chore.id) },
+	              'forChore'
 	            ) },
 	          _react2.default.createElement(
 	            'div',
