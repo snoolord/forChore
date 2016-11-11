@@ -78,13 +78,25 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 30px;
+  height: 35px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   div {
+    font-size: 24px;
     padding-left: 10px
   }
   .status {
-    padding: 0 35px;
+    padding: 0 25px;
   }
+}
+.group-header-blue {
+  background-color: rgb(115,194,252);
+  color: white;
+}
+
+.group-header-salmon {
+  background-color: #ff6961 !important;
+  color: white;
 }
 // .group-columns {
 //   margin-bottom: 10px;

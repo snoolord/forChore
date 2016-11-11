@@ -12,7 +12,7 @@ const mapStateToProps = state => {
     currentUserId: state.session.currentUser.id,
     groups: state.user.groups,
     housemates: state.group.housemates,
-    state
+    filter: state.filter.id  
   };
 };
 

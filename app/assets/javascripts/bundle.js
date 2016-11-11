@@ -34002,7 +34002,7 @@
 	    accent3Color: _colors.grey500,
 	    textColor: _colors.darkBlack,
 	    alternateTextColor: _colors.white,
-	    canvasColor: _colors.white,
+	    canvasColor: _colors.cyan500,
 	    borderColor: _colors.grey300,
 	    disabledColor: (0, _colorManipulator.fade)(_colors.darkBlack, 0.3),
 	    pickerHeaderColor: _colors.white,
@@ -34374,7 +34374,7 @@
 	    currentUserId: state.session.currentUser.id,
 	    groups: state.user.groups,
 	    housemates: state.group.housemates,
-	    state: state
+	    filter: state.filter.id
 	  };
 	};
 	
@@ -34480,6 +34480,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -34496,13 +34498,15 @@
 	
 	    _this.state = {
 	      grouping: -1,
-	      shouldShowDust: false
+	      shouldShowDust: false,
+	      shouldShowHelpText: false
 	    };
 	    _this.renderCenter = _this.renderCenter.bind(_this);
-	    _this.editButton = _this.editButton.bind(_this);
 	    _this.handleTouch = _this.handleTouch.bind(_this);
 	    _this.filterBy = _this.filterBy.bind(_this);
 	    _this.showDust = _this.showDust.bind(_this);
+	    _this.filter = _this.filter.bind(_this);
+	    _this.textInsideFilterButton = _this.textInsideFilterButton.bind(_this);
 	    return _this;
 	  }
 	
@@ -34568,32 +34572,24 @@
 	      };
 	    }
 	  }, {
+	    key: 'filter',
+	    value: function filter(housemateId) {
+	      if (housemateId === this.props.filter) {
+	        return "filtered";
+	      } else {
+	        return "";
+	      }
+	    }
+	  }, {
 	    key: 'housemate',
 	    value: function housemate(_housemate) {
 	      if (this.props.location.pathname === '/dashboard/') {
 	        return _react2.default.createElement('div', { key: _housemate.id });
 	      } else if (this.props.location.pathname.includes('groups/')) {
 	        return _react2.default.createElement(_List.ListItem, { key: _housemate.id,
+	          className: this.filter(_housemate.id),
 	          primaryText: _housemate.username,
 	          onTouchTap: this.filterBy(_housemate.id) });
-	      }
-	    }
-	  }, {
-	    key: 'editButton',
-	    value: function editButton() {
-	      var path = this.props.location.pathname;
-	      console.log(path);
-	      if (path === '/dashboard/') {
-	        return _react2.default.createElement('div', {
-	          className: 'edit-div' });
-	      } else {
-	        var groupId = parseInt(path.slice(18));
-	        return _react2.default.createElement(
-	          'div',
-	          {
-	            className: 'edit-div' },
-	          _react2.default.createElement(_List.ListItem, { primaryText: 'Edit', onTouchTap: this.handleTouch('/edit_group/' + groupId) })
-	        );
 	      }
 	    }
 	  }, {
@@ -34604,6 +34600,19 @@
 	      return function (e) {
 	        _this3.props.router.push(route);
 	      };
+	    }
+	  }, {
+	    key: 'textInsideFilterButton',
+	    value: function textInsideFilterButton() {
+	      if (this.state.shouldShowHelpText && this.props.filter === 0) {
+	        return "Click Name to Filter";
+	      }
+	
+	      if (this.props.filter === 0) {
+	        return "Filter by Housemate";
+	      } else {
+	        return "Unfilter by Housemate";
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -34653,18 +34662,21 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'right-sidebar' },
-	            this.props.location.pathname === '/dashboard/' ? _react2.default.createElement('div', null) : _react2.default.createElement(
-	              'div',
-	              { className: 'filter-text' },
-	              'Filter by Housemate'
-	            ),
 	            _react2.default.createElement(
 	              _List.List,
 	              null,
+	              this.props.location.pathname === '/dashboard/' ? _react2.default.createElement('div', null) : _react2.default.createElement(_List.ListItem, { className: this.props.filter === 0 ? "filter-text" : "filtered-text",
+	                primaryText: this.textInsideFilterButton(),
+	                onMouseEnter: function onMouseEnter() {
+	                  return _this4.setState(_defineProperty({}, "shouldShowHelpText", true));
+	                },
+	                onMouseLeave: function onMouseLeave() {
+	                  return _this4.setState(_defineProperty({}, "shouldShowHelpText", false));
+	                },
+	                onTouchTap: this.filterBy(0) }),
 	              housemates.map(function (housemate) {
 	                return _this4.housemate(housemate);
-	              }),
-	              this.editButton()
+	              })
 	            )
 	          )
 	        );
@@ -72332,6 +72344,8 @@
 	
 	var _values2 = _interopRequireDefault(_values);
 	
+	var _reactRouter = __webpack_require__(203);
+	
 	var _moment = __webpack_require__(693);
 	
 	var _moment2 = _interopRequireDefault(_moment);
@@ -72357,6 +72371,8 @@
 	    _this.state = {
 	      shouldShowComment: false
 	    };
+	    _this.handleTouch = _this.handleTouch.bind(_this);
+	    _this.editButton = _this.editButton.bind(_this);
 	    return _this;
 	  }
 	
@@ -72381,9 +72397,36 @@
 	      return _react2.default.createElement(_choreContainer2.default, { key: chore.id, chore: chore, comments: chore.comments, dashboard: false });
 	    }
 	  }, {
+	    key: 'editButton',
+	    value: function editButton() {
+	      var path = this.props.location.pathname;
+	      console.log(path);
+	      if (path === '/dashboard/') {
+	        return _react2.default.createElement('div', {
+	          className: 'edit-div' });
+	      } else {
+	        var groupId = parseInt(path.slice(18));
+	        return _react2.default.createElement(
+	          'div',
+	          {
+	            className: 'edit-div' },
+	          _react2.default.createElement(_List.ListItem, { primaryText: 'Edit Group', onTouchTap: this.handleTouch('/edit_group/' + groupId) })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'handleTouch',
+	    value: function handleTouch(route) {
+	      var _this2 = this;
+	
+	      return function (e) {
+	        _this2.props.router.push(route);
+	      };
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      var currentChores = [];
 	      var completedChores = [];
@@ -72406,7 +72449,8 @@
 	              'div',
 	              { className: 'group-title-detail' },
 	              this.props.title
-	            )
+	            ),
+	            this.editButton()
 	          ),
 	          _react2.default.createElement(_createChoreContainer2.default, { state: this.props }),
 	          _react2.default.createElement(
@@ -72414,7 +72458,7 @@
 	            null,
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'group-columns' },
+	              { className: 'group-columns group-header-salmon' },
 	              _react2.default.createElement(
 	                'div',
 	                null,
@@ -72428,11 +72472,11 @@
 	            ),
 	            _react2.default.createElement(_Divider2.default, null),
 	            currentChores.map(function (chore) {
-	              return _this2.currentChore(chore);
+	              return _this3.currentChore(chore);
 	            }),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'group-columns' },
+	              { className: 'group-columns group-header-blue' },
 	              _react2.default.createElement(
 	                'div',
 	                null,
@@ -72446,7 +72490,7 @@
 	            ),
 	            _react2.default.createElement(_Divider2.default, null),
 	            completedChores.map(function (chore) {
-	              return _this2.completedChore(chore);
+	              return _this3.completedChore(chore);
 	            })
 	          )
 	        )

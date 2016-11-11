@@ -30,11 +30,15 @@
   justify-content: center;
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
+  padding: 30px;
 }
-
+.edit-div {
+  height: 30px;
+}
 .group-save-button {
   display: flex;
   justify-content: flex-start;
+
 }
 
 .group-save-button div div {
@@ -46,6 +50,7 @@
   justify-content: center;
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
+  padding: 30px;
 }
 
 .update-group-button {

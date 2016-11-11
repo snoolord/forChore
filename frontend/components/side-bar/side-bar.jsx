@@ -15,13 +15,15 @@ class SideBar extends React.Component {
     super(props);
     this.state = {
       grouping: -1,
-      shouldShowDust: false
+      shouldShowDust: false,
+      shouldShowHelpText: false
     };
     this.renderCenter = this.renderCenter.bind(this);
-    this.editButton = this.editButton.bind(this);
     this.handleTouch = this.handleTouch.bind(this);
     this.filterBy = this.filterBy.bind(this);
     this.showDust = this.showDust.bind(this);
+    this.filter = this.filter.bind(this);
+    this.textInsideFilterButton = this.textInsideFilterButton.bind(this);
   }
 
   componentDidMount() {
@@ -79,36 +81,42 @@ class SideBar extends React.Component {
       this.props.filterUser(housemateId);
     };
   }
-
+  filter(housemateId) {
+    if (housemateId === this.props.filter) {
+      return "filtered";
+    } else {
+      return "";
+    }
+  }
   housemate(housemate) {
     if (this.props.location.pathname === '/dashboard/'){
       return <div key={housemate.id}></div>;
     } else if (this.props.location.pathname.includes('groups/')){
       return <ListItem key={housemate.id}
+                       className={this.filter(housemate.id)}
                        primaryText={housemate.username}
                        onTouchTap={this.filterBy(housemate.id)}/>;
     }
   }
 
-  editButton() {
-    let path = this.props.location.pathname;
-    console.log(path);
-    if ( path === '/dashboard/') {
-      return <div
-        className="edit-div"></div>;
-    } else {
-      let groupId = parseInt(path.slice(18));
-      return <div
-        className="edit-div">
-        <ListItem primaryText="Edit" onTouchTap={this.handleTouch('/edit_group/' + groupId)}/>
-      </div>;
-    }
-  }
+
 
   handleTouch(route) {
     return e => {
       this.props.router.push(route);
     };
+  }
+
+  textInsideFilterButton() {
+    if (this.state.shouldShowHelpText && this.props.filter === 0) {
+      return "Click Name to Filter";
+    }
+
+    if (this.props.filter === 0 ) {
+      return "Filter by Housemate";
+    } else {
+      return "Unfilter by Housemate";
+    }
   }
   render() {
     let housemates = values(this.props.housemates);
@@ -139,14 +147,19 @@ class SideBar extends React.Component {
         </div>
         {this.renderCenter()}
         <div className="right-sidebar">
-          {this.props.location.pathname === '/dashboard/'
-            ? <div></div> 
-            :<div className="filter-text">Filter by Housemate</div>}
           <List>
+            {this.props.location.pathname === '/dashboard/'
+              ? <div></div>
+              : <ListItem className={this.props.filter === 0
+               ? "filter-text"
+               : "filtered-text"}
+               primaryText={this.textInsideFilterButton()}
+               onMouseEnter={()=> this.setState({["shouldShowHelpText"]: true})}
+               onMouseLeave={()=> this.setState({["shouldShowHelpText"]: false})}
+               onTouchTap={this.filterBy(0)}></ListItem>}
             {housemates.map((housemate) => {
               return this.housemate(housemate);
             })}
-            {this.editButton()}
           </List>
         </div>
       </div>

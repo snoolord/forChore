@@ -90,7 +90,21 @@
 }
 
 .right-sidebar {
-  width: 100px;
+  width: 120px;
+}
+.filtered {
+  background-color: #ff6961 !important;
+  color: white !important;
+}
+.filter-text {
+  background-color: rgba(120, 118, 118, 0.1) !important;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+}
+.filtered-text {
+  padding: 10px;
+  font-size: 14px;
 }
 
 ul {
