@@ -12,7 +12,7 @@ export const selectCurrentChores = (state) => {
     }
   });
   current.sort((a,b)=> {
-    return new Date(a.complete_by) - new Date(b.complete_by);
+    return new Date(b.created_at) - new Date(a.created_at);
   });
   return current;
 };

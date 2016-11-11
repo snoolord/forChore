@@ -73031,17 +73031,25 @@
 	    key: 'printChoreStatement',
 	    value: function printChoreStatement(chore, ago) {
 	      var task = chore.task;
-	      if (chore.complete) {
-	        return this.props.housemates[chore.user_id].username + ' completed ' + task + ' ' + ago;
+	      var action = '';
+	      var housemate = '';
+	      if (this.props.dashboard) {
+	        housemate = "You";
+	        action = ' need to ';
 	      } else {
-	        return this.props.housemates[chore.user_id].username + ' needs to ' + task + ' ' + ago;
+	        housemate = this.props.housemates[chore.user_id].username;
+	        action = ' needs to ';
+	      }
+	      if (chore.complete) {
+	        return housemate + action + task + ' ' + ago;
+	      } else {
+	        return housemate + action + task + ' ' + ago;
 	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this3 = this,
-	          _React$createElement;
+	      var _this3 = this;
 	
 	      var chore = this.props.chore;
 	      var ago = (0, _moment2.default)(chore.complete_by).fromNow();
@@ -73053,13 +73061,16 @@
 	        { key: chore.id },
 	        _react2.default.createElement(
 	          _List.ListItem,
-	          (_React$createElement = {
-	            className: chore.complete ? "" : this.highlight(ago)
-	          }, _defineProperty(_React$createElement, 'className', 'chore-item'), _defineProperty(_React$createElement, 'onTouchTap', this.toggleComment), _defineProperty(_React$createElement, 'onMouseEnter', function onMouseEnter() {
-	            return _this3.setState(_defineProperty({}, "shouldShowForChore", true));
-	          }), _defineProperty(_React$createElement, 'onMouseLeave', function onMouseLeave() {
-	            return _this3.setState(_defineProperty({}, "shouldShowForChore", false));
-	          }), _React$createElement),
+	          {
+	            className: chore.complete ? "" : this.highlight(ago),
+	            onTouchTap: this.toggleComment,
+	            onMouseEnter: function onMouseEnter() {
+	              return _this3.setState(_defineProperty({}, "shouldShowForChore", true));
+	            },
+	            onMouseLeave: function onMouseLeave() {
+	              return _this3.setState(_defineProperty({}, "shouldShowForChore", false));
+	            }
+	          },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'chore-container' },
@@ -73119,7 +73130,7 @@
 	    }
 	  });
 	  current.sort(function (a, b) {
-	    return new Date(a.complete_by) - new Date(b.complete_by);
+	    return new Date(b.created_at) - new Date(a.created_at);
 	  });
 	  return current;
 	};

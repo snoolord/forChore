@@ -92,11 +92,20 @@ class Chore extends React.Component {
 
   printChoreStatement(chore, ago) {
     let task = chore.task;
+    let action = '';
+    let housemate = '';
+    if (this.props.dashboard) {
+      housemate = "You";
+      action = ' need to ';
+    } else {
+      housemate = this.props.housemates[chore.user_id].username;
+      action = ' needs to ';
+    }
     if (chore.complete) {
-      return (this.props.housemates[chore.user_id].username + ' completed ' +
+      return (housemate + action +
       task + ' ' + ago);
     } else {
-      return (this.props.housemates[chore.user_id].username+ ' needs to ' +
+      return (housemate + action +
       task + ' '
       + ago);
 
@@ -112,7 +121,6 @@ class Chore extends React.Component {
         <div key={chore.id}>
             <ListItem
               className={chore.complete ? "" :this.highlight(ago)}
-              className="chore-item"
               onTouchTap={this.toggleComment}
               onMouseEnter={() => this.setState({["shouldShowForChore"]: true})}
               onMouseLeave={() => this.setState({["shouldShowForChore"]: false})}
