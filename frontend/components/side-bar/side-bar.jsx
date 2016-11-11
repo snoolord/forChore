@@ -57,19 +57,12 @@ class SideBar extends React.Component {
 
 
   renderCenter() {
-    if (this.props.location.pathname === '/dashboard') {
-      return <div className="group-show">
-              <div className="group-show-center">
-              </div>
-            </div>;
-    } else {
-      return this.props.children;
-    }
+    return this.props.children;
   }
 
   showDust() {
     if (this.props.location.pathname === "/dashboard/") {
-      return <img src="http://i.imgur.com/EhwDa8N.png" className="dust"></img>;
+      return <img src="https://i.imgur.com/EhwDa8N.png" className="dust"></img>;
     } else {
       return <div className="dust"></div>;
     }
@@ -89,7 +82,7 @@ class SideBar extends React.Component {
     }
   }
   housemate(housemate) {
-    if (this.props.location.pathname === '/dashboard/'){
+    if (this.props.location.pathname === '/dashboard/' || this.props.location.pathname === '/dashboard'){
       return <div key={housemate.id}></div>;
     } else if (this.props.location.pathname.includes('groups/')){
       return <ListItem key={housemate.id}

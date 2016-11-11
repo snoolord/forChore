@@ -20,12 +20,12 @@ class App extends React.Component {
     if (this.props.loggedIn) {
       return (
         <div>
-          <Link to="/dashboard/"><img src="http://i.imgur.com/u9xEJsy.png" className="logo"></img></Link>
+          <Link to="/dashboard/"><img src="https://i.imgur.com/u9xEJsy.png" className="logo"></img></Link>
         </div>
       );
     } else {
       return (
-        <Link to="/"><img src="http://i.imgur.com/u9xEJsy.png" className="logo"></img></Link>
+        <Link to="/"><img src="https://i.imgur.com/u9xEJsy.png" className="logo"></img></Link>
       );
     }
   }
@@ -100,7 +100,7 @@ class App extends React.Component {
               </a>
               <a href="https://www.linkedin.com/in/winstonjzhao"
                 >
-                <img className="linkedin-icon" src="http://cdn.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-linkedin-3.png">
+                <img className="linkedin-icon" src="https://cdn.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-linkedin-3.png">
                 </img>
               </a>
             </div>

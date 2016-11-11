@@ -28357,14 +28357,14 @@
 	          _react2.default.createElement(
 	            _reactRouter.Link,
 	            { to: '/dashboard/' },
-	            _react2.default.createElement('img', { src: 'http://i.imgur.com/u9xEJsy.png', className: 'logo' })
+	            _react2.default.createElement('img', { src: 'https://i.imgur.com/u9xEJsy.png', className: 'logo' })
 	          )
 	        );
 	      } else {
 	        return _react2.default.createElement(
 	          _reactRouter.Link,
 	          { to: '/' },
-	          _react2.default.createElement('img', { src: 'http://i.imgur.com/u9xEJsy.png', className: 'logo' })
+	          _react2.default.createElement('img', { src: 'https://i.imgur.com/u9xEJsy.png', className: 'logo' })
 	        );
 	      }
 	    }
@@ -28482,7 +28482,6 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'footer' },
-	            _react2.default.createElement('img', { src: 'http://i.imgur.com/u9xEJsy.png', className: 'logo' }),
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'footer-right' },
@@ -28506,7 +28505,7 @@
 	                'a',
 	                { href: 'https://www.linkedin.com/in/winstonjzhao'
 	                },
-	                _react2.default.createElement('img', { className: 'linkedin-icon', src: 'http://cdn.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-linkedin-3.png' })
+	                _react2.default.createElement('img', { className: 'linkedin-icon', src: 'https://cdn.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-linkedin-3.png' })
 	              )
 	            )
 	          )
@@ -34375,7 +34374,7 @@
 	    currentUserId: state.session.currentUser.id,
 	    groups: state.user.groups,
 	    housemates: state.group.housemates,
-	    state: state
+	    filter: state.filter.id
 	  };
 	};
 	
@@ -34481,6 +34480,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -34497,13 +34498,15 @@
 	
 	    _this.state = {
 	      grouping: -1,
-	      shouldShowDust: false
+	      shouldShowDust: false,
+	      shouldShowHelpText: false
 	    };
 	    _this.renderCenter = _this.renderCenter.bind(_this);
-	    _this.editButton = _this.editButton.bind(_this);
 	    _this.handleTouch = _this.handleTouch.bind(_this);
 	    _this.filterBy = _this.filterBy.bind(_this);
 	    _this.showDust = _this.showDust.bind(_this);
+	    _this.filter = _this.filter.bind(_this);
+	    _this.textInsideFilterButton = _this.textInsideFilterButton.bind(_this);
 	    return _this;
 	  }
 	
@@ -34540,21 +34543,13 @@
 	  }, {
 	    key: 'renderCenter',
 	    value: function renderCenter() {
-	      if (this.props.location.pathname === '/dashboard') {
-	        return _react2.default.createElement(
-	          'div',
-	          { className: 'group-show' },
-	          _react2.default.createElement('div', { className: 'group-show-center' })
-	        );
-	      } else {
-	        return this.props.children;
-	      }
+	      return this.props.children;
 	    }
 	  }, {
 	    key: 'showDust',
 	    value: function showDust() {
 	      if (this.props.location.pathname === "/dashboard/") {
-	        return _react2.default.createElement('img', { src: 'http://i.imgur.com/EhwDa8N.png', className: 'dust' });
+	        return _react2.default.createElement('img', { src: 'https://i.imgur.com/EhwDa8N.png', className: 'dust' });
 	      } else {
 	        return _react2.default.createElement('div', { className: 'dust' });
 	      }
@@ -34569,31 +34564,24 @@
 	      };
 	    }
 	  }, {
-	    key: 'housemate',
-	    value: function housemate(_housemate) {
-	      if (this.props.location.pathname === '/dashboard') {
-	        return _react2.default.createElement('div', { key: _housemate.id });
-	      } else if (this.props.location.pathname.includes('groups/')) {
-	        return _react2.default.createElement(_List.ListItem, { key: _housemate.id,
-	          primaryText: _housemate.username,
-	          onTouchTap: this.filterBy(_housemate.id) });
+	    key: 'filter',
+	    value: function filter(housemateId) {
+	      if (housemateId === this.props.filter) {
+	        return "filtered";
+	      } else {
+	        return "";
 	      }
 	    }
 	  }, {
-	    key: 'editButton',
-	    value: function editButton() {
-	      var path = this.props.location.pathname;
-	      if (path === '/dashboard/') {
-	        return _react2.default.createElement('div', {
-	          className: 'edit-div' });
-	      } else {
-	        var groupId = parseInt(path.slice(18));
-	        return _react2.default.createElement(
-	          'div',
-	          {
-	            className: 'edit-div' },
-	          _react2.default.createElement(_List.ListItem, { primaryText: 'Edit', onTouchTap: this.handleTouch('/edit_group/' + groupId) })
-	        );
+	    key: 'housemate',
+	    value: function housemate(_housemate) {
+	      if (this.props.location.pathname === '/dashboard/' || this.props.location.pathname === '/dashboard') {
+	        return _react2.default.createElement('div', { key: _housemate.id });
+	      } else if (this.props.location.pathname.includes('groups/')) {
+	        return _react2.default.createElement(_List.ListItem, { key: _housemate.id,
+	          className: this.filter(_housemate.id),
+	          primaryText: _housemate.username,
+	          onTouchTap: this.filterBy(_housemate.id) });
 	      }
 	    }
 	  }, {
@@ -34604,6 +34592,19 @@
 	      return function (e) {
 	        _this3.props.router.push(route);
 	      };
+	    }
+	  }, {
+	    key: 'textInsideFilterButton',
+	    value: function textInsideFilterButton() {
+	      if (this.state.shouldShowHelpText && this.props.filter === 0) {
+	        return "Click Name to Filter";
+	      }
+	
+	      if (this.props.filter === 0) {
+	        return "Filter by Housemate";
+	      } else {
+	        return "Unfilter by Housemate";
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -34626,7 +34627,7 @@
 	            _react2.default.createElement(
 	              _List.List,
 	              null,
-	              _react2.default.createElement(_List.ListItem, { className: 'sidebar-link', leftIcon: this.showDust(), primaryText: 'yourChores', onTouchTap: this.handleTouch('/dashboard/') }),
+	              _react2.default.createElement(_List.ListItem, { className: 'sidebar-link', leftIcon: this.showDust(), primaryText: 'myChores', onTouchTap: this.handleTouch('/dashboard/') }),
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'groups' },
@@ -34656,10 +34657,18 @@
 	            _react2.default.createElement(
 	              _List.List,
 	              null,
+	              this.props.location.pathname === '/dashboard/' ? _react2.default.createElement('div', null) : _react2.default.createElement(_List.ListItem, { className: this.props.filter === 0 ? "filter-text" : "filtered-text",
+	                primaryText: this.textInsideFilterButton(),
+	                onMouseEnter: function onMouseEnter() {
+	                  return _this4.setState(_defineProperty({}, "shouldShowHelpText", true));
+	                },
+	                onMouseLeave: function onMouseLeave() {
+	                  return _this4.setState(_defineProperty({}, "shouldShowHelpText", false));
+	                },
+	                onTouchTap: this.filterBy(0) }),
 	              housemates.map(function (housemate) {
 	                return _this4.housemate(housemate);
-	              }),
-	              this.editButton()
+	              })
 	            )
 	          )
 	        );
@@ -40540,7 +40549,7 @@
 	    key: 'showGroupDust',
 	    value: function showGroupDust(groupId) {
 	      if (this.props.location.pathname.includes(groupId)) {
-	        return _react2.default.createElement('img', { src: 'http://i.imgur.com/EhwDa8N.png', className: 'dust' });
+	        return _react2.default.createElement('img', { src: 'https://i.imgur.com/EhwDa8N.png', className: 'dust' });
 	      } else {
 	        return _react2.default.createElement('div', { className: 'dust' });
 	      }
@@ -43354,14 +43363,14 @@
 	              'h3',
 	              null,
 	              'Split Chores. Live Better Together.'
+	            ),
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/signup', id: 'link-to-login',
+	                className: 'splash-demo-button'
+	              },
+	              'Get Started Here!'
 	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/signup', id: 'link-to-login',
-	              className: 'splash-demo-button'
-	            },
-	            'Get Started Here!'
 	          )
 	        );
 	      }
@@ -72327,6 +72336,8 @@
 	
 	var _values2 = _interopRequireDefault(_values);
 	
+	var _reactRouter = __webpack_require__(203);
+	
 	var _moment = __webpack_require__(693);
 	
 	var _moment2 = _interopRequireDefault(_moment);
@@ -72352,6 +72363,8 @@
 	    _this.state = {
 	      shouldShowComment: false
 	    };
+	    _this.handleTouch = _this.handleTouch.bind(_this);
+	    _this.editButton = _this.editButton.bind(_this);
 	    return _this;
 	  }
 	
@@ -72376,9 +72389,35 @@
 	      return _react2.default.createElement(_choreContainer2.default, { key: chore.id, chore: chore, comments: chore.comments, dashboard: false });
 	    }
 	  }, {
+	    key: 'editButton',
+	    value: function editButton() {
+	      var path = this.props.location.pathname;
+	      if (path === '/dashboard/') {
+	        return _react2.default.createElement('div', {
+	          className: 'edit-div' });
+	      } else {
+	        var groupId = parseInt(path.slice(18));
+	        return _react2.default.createElement(
+	          'div',
+	          {
+	            className: 'edit-div' },
+	          _react2.default.createElement(_List.ListItem, { primaryText: 'Edit Group', onTouchTap: this.handleTouch('/edit_group/' + groupId) })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'handleTouch',
+	    value: function handleTouch(route) {
+	      var _this2 = this;
+	
+	      return function (e) {
+	        _this2.props.router.push(route);
+	      };
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      var currentChores = [];
 	      var completedChores = [];
@@ -72396,21 +72435,53 @@
 	          { className: 'group-show-center' },
 	          _react2.default.createElement(
 	            'h2',
-	            null,
-	            this.props.title
+	            { className: 'group-title' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'group-title-detail' },
+	              this.props.title
+	            ),
+	            this.editButton()
 	          ),
 	          _react2.default.createElement(_createChoreContainer2.default, { state: this.props }),
 	          _react2.default.createElement(
 	            _List.List,
 	            null,
-	            'current',
-	            currentChores.map(function (chore) {
-	              return _this2.currentChore(chore);
-	            }),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'group-columns group-header-salmon' },
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'Current Chores'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'status' },
+	                'Status'
+	              )
+	            ),
 	            _react2.default.createElement(_Divider2.default, null),
-	            'completed',
+	            currentChores.map(function (chore) {
+	              return _this3.currentChore(chore);
+	            }),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'group-columns group-header-blue' },
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'Completed Chores'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'status' },
+	                'Status'
+	              )
+	            ),
+	            _react2.default.createElement(_Divider2.default, null),
 	            completedChores.map(function (chore) {
-	              return _this2.completedChore(chore);
+	              return _this3.completedChore(chore);
 	            })
 	          )
 	        )
@@ -72634,7 +72705,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this4 = this;
+	      var _this4 = this,
+	          _React$createElement;
 	
 	      var housemates = [];
 	      if (this.props.housemates) {
@@ -72667,14 +72739,19 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'add-chore' },
-	          _react2.default.createElement(_RaisedButton2.default, { label: 'Add Chore', onTouchTap: this.handleOpen })
+	          _react2.default.createElement(
+	            _RaisedButton2.default,
+	            { onTouchTap: this.handleOpen },
+	            'Add Chore'
+	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
 	          null,
 	          filter !== 0 ? _react2.default.createElement(
 	            _RaisedButton2.default,
-	            { onTouchTap: this.removeFilter },
+	            { className: 'remove-filter',
+	              onTouchTap: this.removeFilter },
 	            'Remove Filter'
 	          ) : _react2.default.createElement('div', null)
 	        ),
@@ -72691,44 +72768,50 @@
 	            },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'drop-down clearfix' },
+	              { className: 'create-chore-form' },
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'drop-down-text' },
-	                'for'
+	                { className: 'drop-down clearfix' },
+	                _react2.default.createElement(
+	                  _DropDownMenu2.default,
+	                  (_React$createElement = {
+	                    style: styles.customWidth,
+	                    value: this.state.housemate,
+	                    className: 'drop-down-menu'
+	                  }, _defineProperty(_React$createElement, 'value', 1), _defineProperty(_React$createElement, 'onChange', this.update("housemate")), _React$createElement),
+	                  _react2.default.createElement(_MenuItem2.default, { value: 1, primaryText: 'So and so', style: { opacity: 0.5 }, disabled: true }),
+	                  housemates
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'drop-down-text' },
+	                  'needs to'
+	                )
 	              ),
 	              _react2.default.createElement(
-	                _DropDownMenu2.default,
-	                {
-	                  style: styles.customWidth,
-	                  value: this.state.housemate,
-	                  className: 'drop-down-menu',
-	                  onChange: this.update("housemate")
-	                },
-	                housemates
+	                'div',
+	                { className: 'task' },
+	                _react2.default.createElement(_TextField2.default, {
+	                  onChange: this.updateChore(),
+	                  hintText: 'take out the trash'
+	                })
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'date-picker' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'complete-by-text' },
+	                  'by'
+	                ),
+	                _react2.default.createElement(_DatePicker2.default, { hintText: 'this date',
+	                  className: 'date-field',
+	                  value: this.state.date,
+	                  onChange: this.upDate,
+	                  shouldDisableDate: this.disablePastDates,
+	                  textFieldStyle: { width: 100 }
+	                })
 	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'task' },
-	              _react2.default.createElement(_TextField2.default, {
-	                onChange: this.updateChore(),
-	                hintText: 'Chore'
-	              })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'date-picker' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'complete-by-text' },
-	                'by'
-	              ),
-	              _react2.default.createElement(_DatePicker2.default, { hintText: 'Date Picker',
-	                value: this.state.date,
-	                onChange: this.upDate,
-	                shouldDisableDate: this.disablePastDates
-	              })
 	            )
 	          )
 	        )
@@ -72796,6 +72879,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    housemates: state.group.housemates
+	  };
+	};
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    fetchAGroup: function fetchAGroup(id) {
@@ -72810,7 +72898,7 @@
 	  };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(_chore2.default);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_chore2.default);
 
 /***/ },
 /* 691 */
@@ -72838,10 +72926,6 @@
 	
 	var _Paper2 = _interopRequireDefault(_Paper);
 	
-	var _moment = __webpack_require__(693);
-	
-	var _moment2 = _interopRequireDefault(_moment);
-	
 	var _reactAddonsCssTransitionGroup = __webpack_require__(801);
 	
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
@@ -72852,11 +72936,21 @@
 	
 	var _reactCollapse2 = _interopRequireDefault(_reactCollapse);
 	
+	var _Divider = __webpack_require__(492);
+	
+	var _Divider2 = _interopRequireDefault(_Divider);
+	
 	var _groupCommentContainer = __webpack_require__(897);
 	
 	var _groupCommentContainer2 = _interopRequireDefault(_groupCommentContainer);
 	
+	var _moment = __webpack_require__(693);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -72882,6 +72976,7 @@
 	    _this.highlight = _this.highlight.bind(_this);
 	    _this.toggleComment = _this.toggleComment.bind(_this);
 	    _this.dashboard = _this.dashboard.bind(_this);
+	    _this.printChoreStatement = _this.printChoreStatement.bind(_this);
 	    return _this;
 	  }
 	
@@ -72940,8 +73035,70 @@
 	      }
 	    }
 	  }, {
+	    key: 'completeDismissButton',
+	    value: function completeDismissButton(chore) {
+	      if (this.state.shouldShowForChore) {
+	        if (chore.complete) {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'dismiss-button' },
+	            _react2.default.createElement(
+	              'a',
+	              { onClick: this.handleDestroy(chore.id) },
+	              'Dismiss'
+	            )
+	          );
+	        } else {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'complete-button' },
+	            _react2.default.createElement(
+	              'a',
+	              { onClick: this.handleDestroy(chore.id) },
+	              'forChore'
+	            )
+	          );
+	        }
+	      } else {
+	        if (chore.complete) {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'dismiss-complete-button-inactive' },
+	            'Completed'
+	          );
+	        } else {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'dismiss-complete-button-inactive' },
+	            'In Progress'
+	          );
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'printChoreStatement',
+	    value: function printChoreStatement(chore, ago) {
+	      var task = chore.task;
+	      var action = '';
+	      var housemate = '';
+	      if (this.props.dashboard) {
+	        housemate = "You";
+	        action = ' need to ';
+	      } else {
+	        housemate = this.props.housemates[chore.user_id].username;
+	        action = ' needs to ';
+	      }
+	      if (chore.complete) {
+	        return housemate + action + task + ' ' + ago;
+	      } else {
+	        return housemate + action + task + ' ' + ago;
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+	
 	      var chore = this.props.chore;
 	      var ago = (0, _moment2.default)(chore.complete_by).fromNow();
 	      if (chore.complete) {
@@ -72953,20 +73110,27 @@
 	        _react2.default.createElement(
 	          _List.ListItem,
 	          {
-	            primaryText: chore.task,
 	            className: chore.complete ? "" : this.highlight(ago),
 	            onTouchTap: this.toggleComment,
-	            rightIcon: chore.complete ? _react2.default.createElement('div', null) : _react2.default.createElement(
-	              'button',
-	              { onClick: this.handleDestroy(chore.id) },
-	              'x'
-	            ) },
+	            onMouseEnter: function onMouseEnter() {
+	              return _this3.setState(_defineProperty({}, "shouldShowForChore", true));
+	            },
+	            onMouseLeave: function onMouseLeave() {
+	              return _this3.setState(_defineProperty({}, "shouldShowForChore", false));
+	            }
+	          },
 	          _react2.default.createElement(
 	            'div',
-	            null,
-	            ago
+	            { className: 'chore-container' },
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              this.printChoreStatement(chore, ago)
+	            ),
+	            this.completeDismissButton(chore, ago)
 	          )
 	        ),
+	        _react2.default.createElement(_Divider2.default, null),
 	        _react2.default.createElement(
 	          'div',
 	          null,
@@ -73014,7 +73178,7 @@
 	    }
 	  });
 	  current.sort(function (a, b) {
-	    return new Date(a.complete_by) - new Date(b.complete_by);
+	    return new Date(b.created_at) - new Date(a.created_at);
 	  });
 	  return current;
 	};
@@ -73038,7 +73202,6 @@
 	
 	var selectMyCurrentChores = exports.selectMyCurrentChores = function selectMyCurrentChores(state) {
 	  var current = [];
-	  console.log(state);
 	  var chores = state.user.chores;
 	
 	  (0, _values2.default)(chores).forEach(function (chore) {
@@ -88409,6 +88572,10 @@
 	
 	var _choreContainer2 = _interopRequireDefault(_choreContainer);
 	
+	var _Divider = __webpack_require__(492);
+	
+	var _Divider2 = _interopRequireDefault(_Divider);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -88434,7 +88601,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props);
 	      var currentChores = [];
 	      var completedChores = [];
 	      if (this.props.currentChores) {
@@ -88451,13 +88617,28 @@
 	          { className: 'group-show-center' },
 	          _react2.default.createElement(
 	            'h2',
-	            null,
-	            'YourChores! forChore!'
+	            { className: 'my-chore-header' },
+	            this.props.currentUser + "'s ",
+	            'chores'
 	          ),
 	          _react2.default.createElement(
 	            _List.List,
 	            null,
-	            'Current Chores',
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'group-columns group-header-salmon' },
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'Current Chores'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'status' },
+	                'Status'
+	              )
+	            ),
+	            _react2.default.createElement(_Divider2.default, null),
 	            currentChores.map(function (chore) {
 	              return _react2.default.createElement(_choreContainer2.default, { key: chore.id, chore: chore, comments: chore.comments, dashboard: true });
 	            })
@@ -88465,7 +88646,21 @@
 	          _react2.default.createElement(
 	            _List.List,
 	            null,
-	            'Completed Chores',
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'group-columns group-header-blue' },
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'Completed Chores'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'status' },
+	                'Status'
+	              )
+	            ),
+	            _react2.default.createElement(_Divider2.default, null),
 	            completedChores.map(function (chore) {
 	              return _react2.default.createElement(_choreContainer2.default, { key: chore.id, chore: chore, comments: chore.comments, dashboard: true });
 	            })
@@ -91154,8 +91349,8 @@
 	          return next(action);
 	        case _chore_actions.COMPLETE_CHORE:
 	          var finishSuccess = function finishSuccess(chore) {
-	            console.log(chore);
 	            dispatch((0, _group_actions.fetchAGroup)(chore.chore.group_id));
+	            dispatch((0, _user_actions.fetchUserGroups)());
 	          };
 	          (0, _chore_api_util.finishChore)(action.id, finishSuccess, errorCallback);
 	          return next(action);
@@ -91319,6 +91514,14 @@
 	
 	var _lodash = __webpack_require__(896);
 	
+	var _RaisedButton = __webpack_require__(385);
+	
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+	
+	var _moment = __webpack_require__(693);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -91328,6 +91531,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	(0, _moment2.default)().format();
 	
 	var Comment = function (_React$Component) {
 	  _inherits(Comment, _React$Component);
@@ -91364,6 +91569,21 @@
 	      this.setState(_defineProperty({}, "comment", ''));
 	    }
 	  }, {
+	    key: 'submitButton',
+	    value: function submitButton() {
+	      if (this.state.comment.length > 0) {
+	        return _react2.default.createElement(
+	          _RaisedButton2.default,
+	          {
+	            className: 'submit-comment',
+	            type: 'submit' },
+	          'Submit'
+	        );
+	      } else {
+	        return _react2.default.createElement('div', null);
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var housemates = (0, _lodash.invert)(this.props.housemates);
@@ -91371,10 +91591,26 @@
 	        'div',
 	        { key: this.props.chore.id },
 	        this.props.comments.map(function (comment) {
+	          var time = (0, _moment2.default)(comment.created_at).format('LT on ll');
+	          var housemate = housemates[comment.user_id].username;
+	          var action = "says";
+	          if (!housemate) {
+	            housemate = "You";
+	            action = "said";
+	          }
 	          return _react2.default.createElement(
 	            'div',
-	            { key: comment.id },
-	            housemates[comment.user_id].username + ' says ' + comment.body
+	            { className: 'comment-div', key: comment.id },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'comment' },
+	              housemate + ' ' + action + ' ' + comment.body
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'comment-time' },
+	              time
+	            )
 	          );
 	        }),
 	        _react2.default.createElement(
@@ -91385,7 +91621,8 @@
 	            id: 'comment+' + this.props.chore.id,
 	            className: 'comment-field',
 	            hintText: 'Leave comment forChore',
-	            onChange: this.handleChange() })
+	            onChange: this.handleChange() }),
+	          this.submitButton()
 	        )
 	      );
 	    }
@@ -108481,6 +108718,14 @@
 	
 	var _lodash = __webpack_require__(896);
 	
+	var _RaisedButton = __webpack_require__(385);
+	
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+	
+	var _moment = __webpack_require__(693);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -108490,6 +108735,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	(0, _moment2.default)().format();
 	
 	var GroupComment = function (_React$Component) {
 	  _inherits(GroupComment, _React$Component);
@@ -108525,6 +108772,21 @@
 	      this.setState(_defineProperty({}, "comment", ''));
 	    }
 	  }, {
+	    key: 'submitButton',
+	    value: function submitButton() {
+	      if (this.state.comment.length > 0) {
+	        return _react2.default.createElement(
+	          _RaisedButton2.default,
+	          {
+	            className: 'submit-comment',
+	            type: 'submit' },
+	          'Submit'
+	        );
+	      } else {
+	        return _react2.default.createElement('div', null);
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this3 = this;
@@ -108533,10 +108795,20 @@
 	        'div',
 	        { key: this.props.chore.id },
 	        this.props.comments.map(function (comment) {
+	          var time = (0, _moment2.default)(comment.created_at).format('LT on ll');
 	          return _react2.default.createElement(
 	            'div',
-	            { key: comment.id },
-	            _this3.props.housemates[comment.user_id].username + ' says ' + comment.body
+	            { className: 'comment-div', key: comment.id },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'comment' },
+	              _this3.props.housemates[comment.user_id].username + ' says ' + comment.body
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'comment-time' },
+	              time
+	            )
 	          );
 	        }),
 	        _react2.default.createElement(
@@ -108547,7 +108819,8 @@
 	            id: 'comment+' + this.props.chore.id,
 	            className: 'comment-field',
 	            hintText: 'Leave comment forChore',
-	            onChange: this.handleChange() })
+	            onChange: this.handleChange() }),
+	          this.submitButton()
 	        )
 	      );
 	    }

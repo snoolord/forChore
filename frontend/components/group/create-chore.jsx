@@ -118,7 +118,7 @@ class CreateChore extends React.Component {
           {filter !== 0 ? <RaisedButton className="remove-filter"
             onTouchTap={this.removeFilter}>
             Remove Filter
-          </RaisedButton> 
+          </RaisedButton>
           : <div></div>}
         </div>
         <div className="create-chore" onSubmit={this.handleSubmit}>
@@ -128,31 +128,37 @@ class CreateChore extends React.Component {
             open={this.state.open}
             onRequestClose={this.handleClose}
             >
-            <div className="drop-down clearfix">
-              <div className="drop-down-text">for</div>
-              <DropDownMenu
-                style={styles.customWidth}
-                value={this.state.housemate}
-                className="drop-down-menu"
-                onChange={this.update("housemate")}
-                >
-                {housemates}
-              </DropDownMenu>
-            </div>
-            <div className="task">
-              <TextField
-                onChange={this.updateChore()}
-                hintText="Chore"
-                >
-              </TextField>
-            </div>
-            <div className="date-picker">
-              <div className="complete-by-text">by</div>
-              <DatePicker hintText="Date Picker"
-                value={this.state.date}
-                onChange={this.upDate}
-                shouldDisableDate={this.disablePastDates}
-                />
+            <div className="create-chore-form">
+              <div className="drop-down clearfix">
+                <DropDownMenu
+                  style={styles.customWidth}
+                  value={this.state.housemate}
+                  className="drop-down-menu"
+                  value={1}
+                  onChange={this.update("housemate")}
+                  >
+                  <MenuItem value={1} primaryText="So and so" style={{opacity: 0.5}} disabled={true}/>
+                  {housemates}
+                </DropDownMenu>
+                <div className="drop-down-text">needs to</div>
+              </div>
+              <div className="task">
+                <TextField
+                  onChange={this.updateChore()}
+                  hintText="take out the trash"
+                  >
+                </TextField>
+              </div>
+              <div className="date-picker">
+                <div className="complete-by-text">by</div>
+                <DatePicker hintText="this date"
+                  className="date-field"
+                  value={this.state.date}
+                  onChange={this.upDate}
+                  shouldDisableDate={this.disablePastDates}
+                  textFieldStyle={{width: 100}}
+                  />
+              </div>
             </div>
           </Dialog>
         </div>

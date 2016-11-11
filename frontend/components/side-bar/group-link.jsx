@@ -14,7 +14,7 @@ class GroupLink extends React.Component {
 
   showGroupDust(groupId) {
     if (this.props.location.pathname.includes(groupId)) {
-      return <img src="http://i.imgur.com/EhwDa8N.png" className="dust"></img>;
+      return <img src="https://i.imgur.com/EhwDa8N.png" className="dust"></img>;
     } else {
       return <div className="dust"></div>;
     }
