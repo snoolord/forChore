@@ -23,6 +23,17 @@
   font-weight: bold;
 }
 
+.remove-filter {
+  position: absolute;
+  margin-top: -46px;
+  margin-left: 360px;
+
+  button {
+    padding: 0 10px !important;
+    background-color: rgb(255,105,97) !important;
+    color: white !important;
+  }
+}
 .add-chore {
   float: right;
   position: absolute;

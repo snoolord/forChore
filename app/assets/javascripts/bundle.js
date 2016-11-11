@@ -72430,7 +72430,26 @@
 	            currentChores.map(function (chore) {
 	              return _this2.currentChore(chore);
 	            }),
-	            'completed',
+	            _react2.default.createElement(
+	              'div',
+	              {
+	                className: 'chore-columns' },
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'Completed!'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'due-date' },
+	                'At'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'completed-yet' },
+	                'Status'
+	              )
+	            ),
 	            _react2.default.createElement(_Divider2.default, null),
 	            completedChores.map(function (chore) {
 	              return _this2.completedChore(chore);
@@ -72701,7 +72720,8 @@
 	          null,
 	          filter !== 0 ? _react2.default.createElement(
 	            _RaisedButton2.default,
-	            { onTouchTap: this.removeFilter },
+	            { className: 'remove-filter',
+	              onTouchTap: this.removeFilter },
 	            'Remove Filter'
 	          ) : _react2.default.createElement('div', null)
 	        ),
@@ -72823,6 +72843,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    housemates: state.group.housemates
+	  };
+	};
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    fetchAGroup: function fetchAGroup(id) {
@@ -72837,7 +72862,7 @@
 	  };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(_chore2.default);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_chore2.default);
 
 /***/ },
 /* 691 */
@@ -73012,6 +73037,7 @@
 	      if (chore.complete) {
 	        ago = (0, _moment2.default)(chore.updated_at).fromNow();
 	      }
+	      console.log(this.props);
 	      return _react2.default.createElement(
 	        'div',
 	        { key: chore.id },
@@ -73027,6 +73053,11 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'chore-div' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'assigned-to' },
+	              this.props.housemates[chore.user_id].username
+	            ),
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'chore-task' },

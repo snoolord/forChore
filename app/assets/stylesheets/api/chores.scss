@@ -17,6 +17,11 @@
   justify-content: space-between;
   padding: 10px;
 }
+
+.group-title div div {
+  display: flex;
+  align-items: center;
+}
 .completed-yet {
   margin-right: 13px;
 }
@@ -41,21 +46,21 @@
 }
 .chore-div {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  div {
+    padding-top: 7px;
+  }
 }
-
 .chore-item {
-  min-height: 60px;
-  display: flex;
-  align-items: center;
+  height: 65px;
+}
+.assigned-to {
+  width: 150px;
 }
 .chore-task {
-  min-width: 100px;
-  max-width: 100px;
+  width: 150px;
 }
 
 .time-ago {
-  min-width: 100px;
-  max-width: 100px;
+  width: 150px;
+  margin-right: 28px;
 }

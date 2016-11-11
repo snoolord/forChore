@@ -90,6 +90,7 @@ class Chore extends React.Component {
     if (chore.complete) {
       ago = moment(chore.updated_at).fromNow();
     }
+    console.log(this.props);
     return (
         <div key={chore.id}>
             <ListItem
@@ -100,6 +101,9 @@ class Chore extends React.Component {
               onMouseLeave={() => this.setState({["shouldShowForChore"]: false})}
               >
               <div className="chore-div">
+                <div className="assigned-to">
+                  {this.props.housemates[chore.user_id].username}
+                </div>
                 <div className="chore-task">
                   {chore.task}
                 </div>
