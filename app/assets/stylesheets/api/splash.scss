@@ -1,31 +1,36 @@
 .splash {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  color: rgb(140, 140, 161);
+  color: rgb(115,194,252);
   font-family: 'Roboto', sans-serif;
   box-shadow: 0 0 12px rgba(0,0,0,0.2);
   height: 400px;
   margin-top: 15px;
+  margin-bottom: 15px;
+  height: calc(100% - 170px);
+  background-color: rgba(115,194,252, 0.2);
+  align-items: center;
 }
 
 .splash-demo-button{
   text-decoration: none;
-  position: absolute;
-  float: left;
   color: white !important;
-  display: block !important;
-  height: 20px;
   border-radius: 10px;
+  font-size: 20px;
 }
-
+.splash-header h2 {
+  margin: 0;
+}
 .splash-header {
   font-size: 40px;
-  padding-top: 50x !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #link-to-login {
   padding: 8px !important;
-  margin-top: 250px;
   color: white !important;
   background-color: rgb(255,105,97);
 }

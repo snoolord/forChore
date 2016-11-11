@@ -89,7 +89,6 @@ class App extends React.Component {
         {this.props.children}
         <footer>
           <div className="footer">
-            <img src="http://i.imgur.com/u9xEJsy.png" className="logo"></img>
             <div className="footer-right">
               <div className="created-by">
                 a solution forChores by <div className="my-name">Winston Zhao</div>

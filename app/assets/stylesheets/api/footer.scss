@@ -1,9 +1,9 @@
 .github-icon {
-  width: 30px;
+  width: 20px;
 }
 
 .linkedin-icon {
-  width: 30px;
+  width: 20px;
   margin: 0 10px;
 }
 footer {
@@ -11,10 +11,10 @@ footer {
 }
 .footer {
   margin: 0 auto;
-  width: 1050px;
+  width: 960px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   height: 60px;
   li {
     display: inline;
@@ -38,5 +38,6 @@ footer {
   padding: 0 5px;
 }
 .created-by {
+  color: #b99013;
   display: flex;
 }

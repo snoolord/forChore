@@ -26,12 +26,12 @@ class Splash extends React.Component {
             >
             <h2>Chores made easy.</h2>
               <h3>Split Chores. Live Better Together.</h3>
+              <Link to="/signup" id="link-to-login"
+                className="splash-demo-button"
+                >
+                Get Started Here!
+              </Link>
           </header>
-          <Link to="/signup" id="link-to-login"
-            className="splash-demo-button"
-            >
-            Get Started Here!
-          </Link>
         </div>
       );
     }

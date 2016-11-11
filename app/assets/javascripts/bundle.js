@@ -28482,7 +28482,6 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'footer' },
-	            _react2.default.createElement('img', { src: 'http://i.imgur.com/u9xEJsy.png', className: 'logo' }),
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'footer-right' },
@@ -34583,7 +34582,7 @@
 	    key: 'editButton',
 	    value: function editButton() {
 	      var path = this.props.location.pathname;
-	      if (path === '/dashboard/') {
+	      if (path === '/dashboard') {
 	        return _react2.default.createElement('div', {
 	          className: 'edit-div' });
 	      } else {
@@ -43178,14 +43177,14 @@
 	              'h3',
 	              null,
 	              'Split Chores. Live Better Together.'
+	            ),
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/signup', id: 'link-to-login',
+	                className: 'splash-demo-button'
+	              },
+	              'Get Started Here!'
 	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/signup', id: 'link-to-login',
-	              className: 'splash-demo-button'
-	            },
-	            'Get Started Here!'
 	          )
 	        );
 	      }
