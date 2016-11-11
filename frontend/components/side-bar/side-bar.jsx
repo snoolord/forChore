@@ -141,7 +141,8 @@ class SideBar extends React.Component {
         {this.renderCenter()}
         <div className="right-sidebar">
           <List>
-            {this.props.location.pathname === '/dashboard/'
+            {this.props.location.pathname === '/dashboard/' ||
+              this.props.location.pathname === '/dashboard'
               ? <div></div>
               : <ListItem className={this.props.filter === 0
                ? "filter-text"

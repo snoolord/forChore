@@ -95,13 +95,11 @@ class App extends React.Component {
               </div>
               <a href="https://github.com/winstonjz"
                 >
-                <img className="github-icon" src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg">
-                </img>
+                <i className="fa fa-github social-icon" aria-hidden="true"></i>
               </a>
               <a href="https://www.linkedin.com/in/winstonjzhao"
                 >
-                <img className="linkedin-icon" src="https://cdn.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-linkedin-3.png">
-                </img>
+                <i className="fa fa-linkedin-square social-icon" aria-hidden="true"></i>
               </a>
             </div>
           </div>

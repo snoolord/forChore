@@ -86,6 +86,11 @@ class GroupShow extends React.Component {
               {currentChores.map((chore) => {
                 return this.currentChore(chore);
               })}
+              {currentChores.length === 0
+                ? <div className="empty-chores-text-group">
+                  No chores right now!
+                  </div>
+              : <div></div>}
               <div className="group-columns group-header-blue">
                 <div>
                   Completed Chores

@@ -28499,13 +28499,13 @@
 	                'a',
 	                { href: 'https://github.com/winstonjz'
 	                },
-	                _react2.default.createElement('img', { className: 'github-icon', src: 'https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg' })
+	                _react2.default.createElement('i', { className: 'fa fa-github social-icon', 'aria-hidden': 'true' })
 	              ),
 	              _react2.default.createElement(
 	                'a',
 	                { href: 'https://www.linkedin.com/in/winstonjzhao'
 	                },
-	                _react2.default.createElement('img', { className: 'linkedin-icon', src: 'https://cdn.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-linkedin-3.png' })
+	                _react2.default.createElement('i', { className: 'fa fa-linkedin-square social-icon', 'aria-hidden': 'true' })
 	              )
 	            )
 	          )
@@ -34657,7 +34657,7 @@
 	            _react2.default.createElement(
 	              _List.List,
 	              null,
-	              this.props.location.pathname === '/dashboard/' ? _react2.default.createElement('div', null) : _react2.default.createElement(_List.ListItem, { className: this.props.filter === 0 ? "filter-text" : "filtered-text",
+	              this.props.location.pathname === '/dashboard/' || this.props.location.pathname === '/dashboard' ? _react2.default.createElement('div', null) : _react2.default.createElement(_List.ListItem, { className: this.props.filter === 0 ? "filter-text" : "filtered-text",
 	                primaryText: this.textInsideFilterButton(),
 	                onMouseEnter: function onMouseEnter() {
 	                  return _this4.setState(_defineProperty({}, "shouldShowHelpText", true));
@@ -72465,6 +72465,11 @@
 	            currentChores.map(function (chore) {
 	              return _this3.currentChore(chore);
 	            }),
+	            currentChores.length === 0 ? _react2.default.createElement(
+	              'div',
+	              { className: 'empty-chores-text-group' },
+	              'No chores right now!'
+	            ) : _react2.default.createElement('div', null),
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'group-columns group-header-blue' },
@@ -88641,11 +88646,12 @@
 	            _react2.default.createElement(_Divider2.default, null),
 	            currentChores.map(function (chore) {
 	              return _react2.default.createElement(_choreContainer2.default, { key: chore.id, chore: chore, comments: chore.comments, dashboard: true });
-	            })
-	          ),
-	          _react2.default.createElement(
-	            _List.List,
-	            null,
+	            }),
+	            currentChores.length === 0 ? _react2.default.createElement(
+	              'div',
+	              { className: 'empty-chores-text' },
+	              'No chores right now!'
+	            ) : _react2.default.createElement('div', null),
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'group-columns group-header-blue' },

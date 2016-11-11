@@ -38,8 +38,11 @@ class MyChore extends React.Component {
             {currentChores.map((chore) => {
               return <ChoreContainer key={chore.id} chore={chore} comments={chore.comments} dashboard={true}/>;
             })}
-          </List>
-          <List>
+            {currentChores.length === 0
+              ? <div className="empty-chores-text">
+                No chores right now!
+                </div>
+            : <div></div>}
             <div className="group-columns group-header-blue">
               <div>
                 Completed Chores
