@@ -74,18 +74,41 @@ class SideBar extends React.Component {
       this.props.filterUser(housemateId);
     };
   }
+
   filter(housemateId) {
     if (housemateId === this.props.filter) {
-      return "filtered";
+      return "filtered user";
     } else {
-      return "";
+      return "user";
     }
   }
+
+  avatar(username) {
+      let peanuts = {lucy: "https://i.imgur.com/e03nt0F.png",
+        marcie: "https://i.imgur.com/ggfIbEJ.png",
+        patty: "https://i.imgur.com/bNkSmxW.png",
+        pigpen: "https://i.imgur.com/SVMPURY.png",
+        sally: "https://i.imgur.com/gduAMqj.png",
+        schroeder: "https://i.imgur.com/okQu7SK.png",
+        snoopy: "https://i.imgur.com/3tozZYz.png",
+        charlie: "https://i.imgur.com/ENxlZN6.png",
+        linus: "https://i.imgur.com/W4CwLM3.png",
+        woodstock: "https://i.imgur.com/EVvCefT.png",
+        franklin: "https://i.imgur.com/Wtri51A.png"
+      };
+      if (peanuts[username.toLowerCase()]) {
+        return <img className="peanuts-user-icon" src={peanuts[username.toLowerCase()]}></img>;
+      } else {
+        return <i className="fa fa-user user-icon" aria-hidden="true"></i>;
+      }
+  }
+
   housemate(housemate) {
     if (this.props.location.pathname === '/dashboard/' || this.props.location.pathname === '/dashboard'){
       return <div key={housemate.id}></div>;
     } else if (this.props.location.pathname.includes('groups/')){
       return <ListItem key={housemate.id}
+                       leftIcon={this.avatar(housemate.username)}
                        className={this.filter(housemate.id)}
                        primaryText={housemate.username}
                        onTouchTap={this.filterBy(housemate.id)}/>;
@@ -133,7 +156,7 @@ class SideBar extends React.Component {
                </Link>
              </div>
              <Divider />
-             {this.props.groups.slice(0,5).map( (group) => {
+             {this.props.groups.slice(0,8).map( (group) => {
                return this.groupLink(group.title, group.id);
              })}
            </List>

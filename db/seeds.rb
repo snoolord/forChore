@@ -1,10 +1,102 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-
-
-User.create!(username: "demo-user", password: "password");
+Chore.create!([
+  {user_id: 9, group_id: 4, task: "buy bird bath cleaner", complete_by: "2016-11-13", complete: false, dismissed: false, reminders: 0},
+  {user_id: 5, group_id: 5, task: "feed Snoopy", complete_by: "2016-11-14", complete: false, dismissed: false, reminders: 0},
+  {user_id: 9, group_id: 5, task: "buy bird bath cleaner", complete_by: "2016-11-18", complete: false, dismissed: false, reminders: 0},
+  {user_id: 4, group_id: 5, task: "buy typewriter ink", complete_by: "2016-11-15", complete: false, dismissed: false, reminders: 0},
+  {user_id: 4, group_id: 5, task: "tidy up his room", complete_by: "2016-11-18", complete: false, dismissed: false, reminders: 0},
+  {user_id: 5, group_id: 5, task: "take Snoopy on a walk", complete_by: "2016-11-15", complete: false, dismissed: false, reminders: 0},
+  {user_id: 4, group_id: 5, task: "clean his dog bowl", complete_by: "2016-11-17", complete: true, dismissed: false, reminders: 0},
+  {user_id: 7, group_id: 6, task: "give Joe Cool a tour around school", complete_by: "2016-11-17", complete: false, dismissed: false, reminders: 0},
+  {user_id: 10, group_id: 6, task: "sweep up the classroom", complete_by: "2016-11-18", complete: false, dismissed: false, reminders: 0},
+  {user_id: 14, group_id: 6, task: "take the class books back to the library", complete_by: "2016-11-13", complete: false, dismissed: false, reminders: 0},
+  {user_id: 7, group_id: 6, task: "clean up the mess in the auditorium", complete_by: "2016-11-20", complete: false, dismissed: false, reminders: 0},
+  {user_id: 12, group_id: 6, task: "clean the hallway", complete_by: "2016-11-16", complete: false, dismissed: false, reminders: 0},
+  {user_id: 4, group_id: 6, task: "eat everyone's homework", complete_by: "2016-11-18", complete: true, dismissed: false, reminders: 0},
+  {user_id: 6, group_id: 6, task: "scrub down the desks", complete_by: "2016-11-12", complete: false, dismissed: false, reminders: 0},
+  {user_id: 10, group_id: 6, task: "move his blanket into his cubby", complete_by: "2016-11-19", complete: false, dismissed: false, reminders: 0},
+  {user_id: 5, group_id: 6, task: "move his iceskates", complete_by: "2016-11-15", complete: true, dismissed: false, reminders: 0},
+  {user_id: 13, group_id: 7, task: "buy new mitts", complete_by: "2016-11-19", complete: false, dismissed: false, reminders: 0},
+  {user_id: 11, group_id: 7, task: "clean the third base plate", complete_by: "2016-11-14", complete: false, dismissed: false, reminders: 0},
+  {user_id: 6, group_id: 7, task: "help Charlie brown bring all the baseball bats to the field", complete_by: "2016-11-19", complete: false, dismissed: false, reminders: 0},
+  {user_id: 10, group_id: 7, task: "bring the league notebook", complete_by: "2016-11-20", complete: false, dismissed: false, reminders: 0},
+  {user_id: 7, group_id: 7, task: "talk to the groundskeeper", complete_by: "2016-11-18", complete: true, dismissed: false, reminders: 0},
+  {user_id: 9, group_id: 7, task: "clean up where he ate at the game", complete_by: "2016-11-13", complete: true, dismissed: false, reminders: 0},
+  {user_id: 5, group_id: 7, task: "pick up all the stray balls", complete_by: "2016-11-20", complete: true, dismissed: false, reminders: 0},
+  {user_id: 10, group_id: 7, task: "get his blanket off the pitcher's mound", complete_by: "2016-11-13", complete: false, dismissed: false, reminders: 0},
+  {user_id: 11, group_id: 7, task: "clean his mess from last week", complete_by: "2016-11-16", complete: false, dismissed: false, reminders: 0},
+  {user_id: 5, group_id: 8, task: "take his laundry out of the washer", complete_by: "2016-11-14", complete: false, dismissed: false, reminders: 0},
+  {user_id: 9, group_id: 8, task: "clean his mess on the roof", complete_by: "2016-11-17", complete: false, dismissed: false, reminders: 0},
+  {user_id: 4, group_id: 8, task: "clean his tracks inside the house", complete_by: "2016-11-20", complete: false, dismissed: false, reminders: 0},
+  {user_id: 12, group_id: 8, task: "take out the trash", complete_by: "2016-11-13", complete: false, dismissed: false, reminders: 0},
+  {user_id: 4, group_id: 8, task: "wash the dishes", complete_by: "2016-11-19", complete: false, dismissed: false, reminders: 0},
+  {user_id: 5, group_id: 8, task: "take out the trash", complete_by: "2016-11-13", complete: false, dismissed: false, reminders: 0},
+  {user_id: 9, group_id: 8, task: "wash the windows", complete_by: "2016-11-15", complete: true, dismissed: false, reminders: 0},
+  {user_id: 5, group_id: 8, task: "wash the dishes", complete_by: "2016-11-13", complete: true, dismissed: false, reminders: 0},
+  {user_id: 5, group_id: 8, task: "tidy up his room", complete_by: "2016-11-14", complete: true, dismissed: false, reminders: 0},
+  {user_id: 5, group_id: 8, task: "get the mailman to drop off the packages inside", complete_by: "2016-11-15", complete: false, dismissed: false, reminders: 0},
+  {user_id: 4, group_id: 7, task: "clean the pitcher's mound", complete_by: "2016-11-19", complete: false, dismissed: false, reminders: 0}
+])
+Comment.create!([
+  {user_id: 4, chore_id: 1, body: "Nice job woodstock"},
+  {user_id: 4, chore_id: 2, body: "I'm hungry!"},
+  {user_id: 4, chore_id: 4, body: "anyone know a good place to buy?"},
+  {user_id: 4, chore_id: 6, body: "I'm getting angsty"}
+])
+Group.create!([
+  {title: "d", creator_id: 3},
+  {title: "43", creator_id: 4},
+  {title: "Snoopy's house", creator_id: 5},
+  {title: "Linus", creator_id: 10},
+  {title: "Snoopy's Doghouse", creator_id: 4},
+  {title: "Schoolhouse", creator_id: 4},
+  {title: "Baseball Team", creator_id: 4},
+  {title: "Charlie Brown's House", creator_id: 4}
+])
+Grouping.create!([
+  {user_id: 3, group_id: 1},
+  {user_id: 1, group_id: 1},
+  {user_id: 1, group_id: 2},
+  {user_id: 5, group_id: 3},
+  {user_id: 10, group_id: 4},
+  {user_id: 9, group_id: 4},
+  {user_id: 5, group_id: 4},
+  {user_id: 10, group_id: 3},
+  {user_id: 7, group_id: 3},
+  {user_id: 6, group_id: 3},
+  {user_id: 4, group_id: 5},
+  {user_id: 5, group_id: 5},
+  {user_id: 9, group_id: 5},
+  {user_id: 4, group_id: 6},
+  {user_id: 5, group_id: 6},
+  {user_id: 6, group_id: 6},
+  {user_id: 7, group_id: 6},
+  {user_id: 10, group_id: 6},
+  {user_id: 13, group_id: 6},
+  {user_id: 12, group_id: 6},
+  {user_id: 14, group_id: 6},
+  {user_id: 4, group_id: 7},
+  {user_id: 13, group_id: 7},
+  {user_id: 5, group_id: 7},
+  {user_id: 7, group_id: 7},
+  {user_id: 6, group_id: 7},
+  {user_id: 11, group_id: 7},
+  {user_id: 9, group_id: 7},
+  {user_id: 10, group_id: 7},
+  {user_id: 4, group_id: 8},
+  {user_id: 12, group_id: 8},
+  {user_id: 5, group_id: 8},
+  {user_id: 9, group_id: 8}
+])
+User.create!([
+  {username: "Charlie", session_token: "n-eeSrC7rMU3AOFINXNUDA", password_digest: "$2a$10$VHMTPmM43WnwkV64vgjKa.wrRDzXCTSWJnm0CPJRPP5MvRumxb7i."},
+  {username: "Patty", session_token: "bfmDdSGDALCvCfrC2eTQrg", password_digest: "$2a$10$66GP5/..v71S366dYnFNPulSJWIm07iZiBHI/o1N5eFTIg21N2vUK"},
+  {username: "Schroeder", session_token: "bswqgz6CSJKlk3rHIyNbFA", password_digest: "$2a$10$giW98D2yNgP50J5AYnGNm.cX7qUvYKjJEpfUu6YcoawFKz/.B/xXy"},
+  {username: "Marcie", session_token: "sJGMI9jKAtsRu9zt3rEIdw", password_digest: "$2a$10$wz8SaYM6bBy/sigqJRnNQOiYLFprRgoEFLo5XgJLeeKOmTzKhjubK"},
+  {username: "Woodstock", session_token: "UYv84ZdZiFyHumrzBDaQvQ", password_digest: "$2a$10$CDHloohQFfMPs0nLdX3XGeZcujoj.JhboX92ab63cnbdF5bXGAJGK"},
+  {username: "Linus", session_token: "ldO939_L5R7xWs0dfsnMXA", password_digest: "$2a$10$MZHedeXu4Wafbgbga6uJ6.UDoqjpR7c89cKmlStYzO9995KoPXkiu"},
+  {username: "Pigpen", session_token: "m9HOfoC0q04k1RtrqrietQ", password_digest: "$2a$10$tHDNoceRu8AfBCZIOTQqNOJF8HxAJ0.0utaoOtqX3.VwGSZI.X5UK"},
+  {username: "Sally", session_token: "ebZSVXNnNMhaJmDJlsHVzg", password_digest: "$2a$10$1SQWwmOHJP49I6LvN4Jh8OgRguVUnOfzgxRNdUqL0fkpHYQokDJBq"},
+  {username: "Lucy", session_token: "923-ZhONe1jxZeISFXLZEw", password_digest: "$2a$10$D9Zx7ask5Nblszu2IT6PtuEaXWt2wTNjMGrlNZ8YPW2vkydp0mW8e"},
+  {username: "Franklin", session_token: "LLLK9PKHk-2JEeGzyqCVVA", password_digest: "$2a$10$Qv7toVA/K/RFXiE8gOu8N.wSJGu23cPSET3LqygDtN2yP18Kz3x9K"},
+  {username: "Snoopy", session_token: "gLMgSfMHi3KTitlrVjsLQg", password_digest: "$2a$10$IJJJreMrhigBLlIRYM85yOnJLqF9rQXA3l9nfgKQG37ZovGdYe6w2"}
+])

@@ -34567,9 +34567,30 @@
 	    key: 'filter',
 	    value: function filter(housemateId) {
 	      if (housemateId === this.props.filter) {
-	        return "filtered";
+	        return "filtered user";
 	      } else {
-	        return "";
+	        return "user";
+	      }
+	    }
+	  }, {
+	    key: 'avatar',
+	    value: function avatar(username) {
+	      var peanuts = { lucy: "https://i.imgur.com/e03nt0F.png",
+	        marcie: "https://i.imgur.com/ggfIbEJ.png",
+	        patty: "https://i.imgur.com/bNkSmxW.png",
+	        pigpen: "https://i.imgur.com/SVMPURY.png",
+	        sally: "https://i.imgur.com/gduAMqj.png",
+	        schroeder: "https://i.imgur.com/okQu7SK.png",
+	        snoopy: "https://i.imgur.com/3tozZYz.png",
+	        charlie: "https://i.imgur.com/ENxlZN6.png",
+	        linus: "https://i.imgur.com/W4CwLM3.png",
+	        woodstock: "https://i.imgur.com/EVvCefT.png",
+	        franklin: "https://i.imgur.com/Wtri51A.png"
+	      };
+	      if (peanuts[username.toLowerCase()]) {
+	        return _react2.default.createElement('img', { className: 'peanuts-user-icon', src: peanuts[username.toLowerCase()] });
+	      } else {
+	        return _react2.default.createElement('i', { className: 'fa fa-user user-icon', 'aria-hidden': 'true' });
 	      }
 	    }
 	  }, {
@@ -34579,6 +34600,7 @@
 	        return _react2.default.createElement('div', { key: _housemate.id });
 	      } else if (this.props.location.pathname.includes('groups/')) {
 	        return _react2.default.createElement(_List.ListItem, { key: _housemate.id,
+	          leftIcon: this.avatar(_housemate.username),
 	          className: this.filter(_housemate.id),
 	          primaryText: _housemate.username,
 	          onTouchTap: this.filterBy(_housemate.id) });
@@ -34645,7 +34667,7 @@
 	                )
 	              ),
 	              _react2.default.createElement(_Divider2.default, null),
-	              this.props.groups.slice(0, 5).map(function (group) {
+	              this.props.groups.slice(0, 8).map(function (group) {
 	                return _this4.groupLink(group.title, group.id);
 	              })
 	            )
@@ -43637,7 +43659,7 @@
 	                { id: 'demo-login-button',
 	                  backgroundColor: styles.floatingLabelFocusStyle.color,
 	                  onTouchTap: function onTouchTap() {
-	                    return _this3.props.login({ username: "demo-user", password: "password" });
+	                    return _this3.props.login({ username: "Snoopy", password: "123456" });
 	                  } },
 	                'Demo Login'
 	              ),
@@ -72695,7 +72717,7 @@
 	      chore.complete_by = this.state.date;
 	      this.props.createChore(chore);
 	      this.props.fetchAGroup(chore.group_id);
-	      this.setState({ open: false });
+	      this.setState({ open: false, date: null });
 	    }
 	  }, {
 	    key: 'disablePastDates',
@@ -72710,8 +72732,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this4 = this,
-	          _React$createElement;
+	      var _this4 = this;
 	
 	      var housemates = [];
 	      if (this.props.housemates) {
@@ -72779,12 +72800,12 @@
 	                { className: 'drop-down clearfix' },
 	                _react2.default.createElement(
 	                  _DropDownMenu2.default,
-	                  (_React$createElement = {
+	                  {
 	                    style: styles.customWidth,
 	                    value: this.state.housemate,
-	                    className: 'drop-down-menu'
-	                  }, _defineProperty(_React$createElement, 'value', 1), _defineProperty(_React$createElement, 'onChange', this.update("housemate")), _React$createElement),
-	                  _react2.default.createElement(_MenuItem2.default, { value: 1, primaryText: 'So and so', style: { opacity: 0.5 }, disabled: true }),
+	                    className: 'drop-down-menu',
+	                    onChange: this.update("housemate")
+	                  },
 	                  housemates
 	                ),
 	                _react2.default.createElement(
@@ -73094,7 +73115,7 @@
 	        action = ' needs to ';
 	      }
 	      if (chore.complete) {
-	        return housemate + action + task + ' ' + ago;
+	        return housemate + ' completed ' + task + ' ' + ago;
 	      } else {
 	        return housemate + action + task + ' ' + ago;
 	      }

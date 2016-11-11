@@ -11,7 +11,29 @@
   margin: auto;
   float: left;
 }
+.user {
+  height: 50px !important;
+  font-size: 14px !important;
+  div div div {
+    width: 100px;
+    text-align: center;
+    right: 0px;
+    position: absolute;
+  }
+}
+.user-icon {
+  top: 14px !important;
+  left: 7px !important;
+  margin: 0 !important;
+}
 
+.peanuts-user-icon {
+  width: 30px !important;
+  height: 30px !important;
+  top: 9px !important;
+  left: 1px !important;
+  margin: 0 !important;
+}
 .sidebar a .sidebar-button {
   height: 100px;
   padding-right: 50px !important;
@@ -80,6 +102,7 @@
   border-radius: 25px;
   overflow: hidden;
   .my-chore-header{
+    font-size: 30px;
     background-color: rgba(120, 118, 118, 0.2);
     padding:10px;
     height: 35px;

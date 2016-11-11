@@ -102,7 +102,7 @@ class Chore extends React.Component {
       action = ' needs to ';
     }
     if (chore.complete) {
-      return (housemate + action +
+      return (housemate + ' completed ' +
       task + ' ' + ago);
     } else {
       return (housemate + action +

@@ -112,7 +112,7 @@ class SessionForm extends React.Component {
               className="login-buttons">
               <RaisedButton id="demo-login-button"
                 backgroundColor={styles.floatingLabelFocusStyle.color}
-                onTouchTap={ () => this.props.login( { username: "demo-user", password: "password"} )}>
+                onTouchTap={ () => this.props.login( { username: "Snoopy", password: "123456"} )}>
                 Demo Login
               </RaisedButton>
               <RaisedButton id="session-submit-button" type="submit"

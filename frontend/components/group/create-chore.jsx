@@ -69,7 +69,7 @@ class CreateChore extends React.Component {
     chore.complete_by = this.state.date;
     this.props.createChore(chore);
     this.props.fetchAGroup(chore.group_id);
-    this.setState({open: false});
+    this.setState({open: false, date: null});
   }
 
   disablePastDates(date) {
@@ -134,10 +134,8 @@ class CreateChore extends React.Component {
                   style={styles.customWidth}
                   value={this.state.housemate}
                   className="drop-down-menu"
-                  value={1}
                   onChange={this.update("housemate")}
                   >
-                  <MenuItem value={1} primaryText="So and so" style={{opacity: 0.5}} disabled={true}/>
                   {housemates}
                 </DropDownMenu>
                 <div className="drop-down-text">needs to</div>
