@@ -21,6 +21,7 @@ class Chore extends React.Component {
     this.highlight = this.highlight.bind(this);
     this.toggleComment = this.toggleComment.bind(this);
     this.dashboard = this.dashboard.bind(this);
+    this.printChoreStatement = this.printChoreStatement.bind(this);
   }
 
   toggleComment() {
@@ -81,7 +82,24 @@ class Chore extends React.Component {
           </div>;
           }
     } else {
-      return <div className="dismiss-complete-button-inactive"></div>;
+      if (chore.complete) {
+        return <div className="dismiss-complete-button-inactive">Completed</div>;
+      } else {
+        return <div className="dismiss-complete-button-inactive">In Progress</div>;
+      }
+    }
+  }
+
+  printChoreStatement(chore, ago) {
+    let task = chore.task;
+    if (chore.complete) {
+      return (this.props.housemates[chore.user_id].username + ' completed ' +
+      task + ' ' + ago);
+    } else {
+      return (this.props.housemates[chore.user_id].username+ ' needs to ' +
+      task + ' '
+      + ago);
+
     }
   }
   render() {
@@ -90,7 +108,6 @@ class Chore extends React.Component {
     if (chore.complete) {
       ago = moment(chore.updated_at).fromNow();
     }
-    console.log(this.props);
     return (
         <div key={chore.id}>
             <ListItem
@@ -100,17 +117,11 @@ class Chore extends React.Component {
               onMouseEnter={() => this.setState({["shouldShowForChore"]: true})}
               onMouseLeave={() => this.setState({["shouldShowForChore"]: false})}
               >
-              <div className="chore-div">
-                <div className="assigned-to">
-                  {this.props.housemates[chore.user_id].username}
+              <div className="chore-container">
+                <div>
+                  {this.printChoreStatement(chore, ago)}
                 </div>
-                <div className="chore-task">
-                  {chore.task}
-                </div>
-                <div className="time-ago">
-                  {ago}
-                </div>
-                {this.completeDismissButton(chore)}
+                {this.completeDismissButton(chore, ago)}
               </div>
             </ListItem>
 

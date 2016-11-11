@@ -53,31 +53,23 @@ class GroupShow extends React.Component {
           </h2>
           <CreateChoreContainer state={this.props}/>
             <List>
-              <div
-                className="chore-columns">
+              <div className="group-columns">
                 <div>
-                  To Complete!
+                  Current Chores
                 </div>
-                <div className="due-date">
-                  Due Date
-                </div>
-                <div className="completed-yet">
-                  Completed?
+                <div className="status">
+                  Status
                 </div>
               </div>
               <Divider/>
               {currentChores.map((chore) => {
                 return this.currentChore(chore);
               })}
-              <div
-                className="chore-columns">
+              <div className="group-columns">
                 <div>
-                  Completed!
+                  Completed Chores
                 </div>
-                <div className="due-date">
-                  At
-                </div>
-                <div className="completed-yet">
+                <div className="status">
                   Status
                 </div>
               </div>

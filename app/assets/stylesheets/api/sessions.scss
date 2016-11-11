@@ -45,6 +45,8 @@ html, body, main, .main{
 
 .center-container {
   width: 960px;
+  height: auto !important;
+  min-height: 960px;
   margin: auto;
 }
 .login-form-container {
