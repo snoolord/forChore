@@ -1,6 +1,61 @@
 // Place all the styles related to the api/chores controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.dismiss-complete-button {
-  font-size: 12px !important;
+.dismiss-button {
+  font-size: 14px !important;
+  background-color: rgb(115,194,252);
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 0 5px;
+  a {
+    text-align: center;
+  }
+}
+.chore-columns {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+.completed-yet {
+  margin-right: 13px;
+}
+.due-date {
+  margin-right: 20px;
+}
+.complete-button {
+  font-size: 14px !important;
+  background-color: rgb(115,194,252);
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 0 3px;
+  a {
+    text-align: center;
+  }
+}
+.dismiss-complete-button-inactive {
+  min-width: 60px;
+  padding: 5px 10px;
+  min-height: 15px;
+}
+.chore-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chore-item {
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+}
+.chore-task {
+  min-width: 100px;
+  max-width: 100px;
+}
+
+.time-ago {
+  min-width: 100px;
+  max-width: 100px;
 }

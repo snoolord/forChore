@@ -72402,12 +72402,32 @@
 	          _react2.default.createElement(
 	            _List.List,
 	            null,
-	            'current',
+	            _react2.default.createElement(
+	              'div',
+	              {
+	                className: 'chore-columns' },
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'To Complete!'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'due-date' },
+	                'Due Date'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'completed-yet' },
+	                'Completed?'
+	              )
+	            ),
+	            _react2.default.createElement(_Divider2.default, null),
 	            currentChores.map(function (chore) {
 	              return _this2.currentChore(chore);
 	            }),
-	            _react2.default.createElement(_Divider2.default, null),
 	            'completed',
+	            _react2.default.createElement(_Divider2.default, null),
 	            completedChores.map(function (chore) {
 	              return _this2.completedChore(chore);
 	            })
@@ -72851,11 +72871,17 @@
 	
 	var _reactCollapse2 = _interopRequireDefault(_reactCollapse);
 	
+	var _Divider = __webpack_require__(492);
+	
+	var _Divider2 = _interopRequireDefault(_Divider);
+	
 	var _groupCommentContainer = __webpack_require__(807);
 	
 	var _groupCommentContainer2 = _interopRequireDefault(_groupCommentContainer);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -72941,23 +72967,38 @@
 	  }, {
 	    key: 'completeDismissButton',
 	    value: function completeDismissButton(chore) {
-	      if (chore.complete) {
-	        return _react2.default.createElement(
-	          'a',
-	          { className: 'dimiss-complete-button', onClick: this.handleDestroy(chore.id) },
-	          'Dismiss'
-	        );
+	      if (this.state.shouldShowForChore) {
+	        if (chore.complete) {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'dismiss-button' },
+	            _react2.default.createElement(
+	              'a',
+	              { onClick: this.handleDestroy(chore.id) },
+	              'Dismiss'
+	            )
+	          );
+	        } else {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'complete-button' },
+	            _react2.default.createElement(
+	              'a',
+	              { onClick: this.handleDestroy(chore.id) },
+	              'forChore'
+	            )
+	          );
+	        }
 	      } else {
-	        return _react2.default.createElement(
-	          'a',
-	          { className: 'dimiss-complete-button', onClick: this.handleDestroy(chore.id) },
-	          'forChore'
-	        );
+	        return _react2.default.createElement('div', { className: 'dismiss-complete-button-inactive' });
 	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this,
+	          _React$createElement;
+	
 	      var chore = this.props.chore;
 	      var ago = (0, _moment2.default)(chore.complete_by).fromNow();
 	      if (chore.complete) {
@@ -72968,17 +73009,30 @@
 	        { key: chore.id },
 	        _react2.default.createElement(
 	          _List.ListItem,
-	          {
-	            primaryText: chore.task,
-	            className: chore.complete ? "" : this.highlight(ago),
-	            onTouchTap: this.toggleComment,
-	            rightIcon: this.completeDismissButton(chore) },
+	          (_React$createElement = {
+	            className: chore.complete ? "" : this.highlight(ago)
+	          }, _defineProperty(_React$createElement, 'className', 'chore-item'), _defineProperty(_React$createElement, 'onTouchTap', this.toggleComment), _defineProperty(_React$createElement, 'onMouseEnter', function onMouseEnter() {
+	            return _this3.setState(_defineProperty({}, "shouldShowForChore", true));
+	          }), _defineProperty(_React$createElement, 'onMouseLeave', function onMouseLeave() {
+	            return _this3.setState(_defineProperty({}, "shouldShowForChore", false));
+	          }), _React$createElement),
 	          _react2.default.createElement(
 	            'div',
-	            null,
-	            ago
+	            { className: 'chore-div' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'chore-task' },
+	              chore.task
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'time-ago' },
+	              ago
+	            ),
+	            this.completeDismissButton(chore)
 	          )
 	        ),
+	        _react2.default.createElement(_Divider2.default, null),
 	        _react2.default.createElement(
 	          'div',
 	          null,

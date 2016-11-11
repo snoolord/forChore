@@ -6,6 +6,7 @@ import moment from 'moment';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {presets} from 'react-motion';
 import Collapse from 'react-collapse';
+import Divider from 'material-ui/Divider';
 import GroupCommentContainer from '../comments/group-comment-container';
 moment().format();
 
@@ -69,10 +70,18 @@ class Chore extends React.Component {
   }
 
   completeDismissButton(chore) {
-    if (chore.complete) {
-      return <a className="dimiss-complete-button" onClick={this.handleDestroy(chore.id)}>Dismiss</a>;
+    if (this.state.shouldShowForChore) {
+      if (chore.complete) {
+        return <div className="dismiss-button">
+                  <a onClick={this.handleDestroy(chore.id)}>Dismiss</a>
+               </div>;
+        } else {
+          return <div className="complete-button">
+            <a onClick={this.handleDestroy(chore.id)}>forChore</a>
+          </div>;
+          }
     } else {
-      return <a className="dimiss-complete-button" onClick={this.handleDestroy(chore.id)}>forChore</a>;
+      return <div className="dismiss-complete-button-inactive"></div>;
     }
   }
   render() {
@@ -83,15 +92,25 @@ class Chore extends React.Component {
     }
     return (
         <div key={chore.id}>
-          <ListItem
-            primaryText={chore.task}
-            className={chore.complete ? "" :this.highlight(ago)}
-            onTouchTap={this.toggleComment}
-            rightIcon={this.completeDismissButton(chore)}>
-            <div>
-              {ago}
-            </div>
-          </ListItem>
+            <ListItem
+              className={chore.complete ? "" :this.highlight(ago)}
+              className="chore-item"
+              onTouchTap={this.toggleComment}
+              onMouseEnter={() => this.setState({["shouldShowForChore"]: true})}
+              onMouseLeave={() => this.setState({["shouldShowForChore"]: false})}
+              >
+              <div className="chore-div">
+                <div className="chore-task">
+                  {chore.task}
+                </div>
+                <div className="time-ago">
+                  {ago}
+                </div>
+                {this.completeDismissButton(chore)}
+              </div>
+            </ListItem>
+
+          <Divider/>
           <div>
             <Collapse isOpened={this.state.shouldShowComment}>
               {this.dashboard(chore)}
