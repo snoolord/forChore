@@ -24,7 +24,7 @@ class Chore extends React.Component {
     this.printChoreStatement = this.printChoreStatement.bind(this);
   }
 
-  toggleComment() {
+  toggleComment(e) {
     this.setState({
       shouldShowComment: !this.state.shouldShowComment,
     });
@@ -38,6 +38,7 @@ class Chore extends React.Component {
 
   handleDestroy(id) {
     return e => {
+      e.stopPropagation();
       this.props.completeChore(id);
     };
   }
@@ -108,7 +109,6 @@ class Chore extends React.Component {
       return (housemate + action +
       task + ' '
       + ago);
-
     }
   }
   render() {
@@ -121,7 +121,7 @@ class Chore extends React.Component {
         <div key={chore.id}>
             <ListItem
               className={chore.complete ? "" :this.highlight(ago)}
-              onTouchTap={this.toggleComment}
+              onClick={this.toggleComment}
               onMouseEnter={() => this.setState({["shouldShowForChore"]: true})}
               onMouseLeave={() => this.setState({["shouldShowForChore"]: false})}
               >

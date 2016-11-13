@@ -84,17 +84,17 @@ class SideBar extends React.Component {
   }
 
   avatar(username) {
-      let peanuts = {lucy: "https://i.imgur.com/e03nt0F.png",
-        marcie: "https://i.imgur.com/ggfIbEJ.png",
-        patty: "https://i.imgur.com/bNkSmxW.png",
-        pigpen: "https://i.imgur.com/SVMPURY.png",
-        sally: "https://i.imgur.com/gduAMqj.png",
-        schroeder: "https://i.imgur.com/okQu7SK.png",
-        snoopy: "https://i.imgur.com/3tozZYz.png",
-        charlie: "https://i.imgur.com/ENxlZN6.png",
-        linus: "https://i.imgur.com/W4CwLM3.png",
-        woodstock: "https://i.imgur.com/EVvCefT.png",
-        franklin: "https://i.imgur.com/Wtri51A.png"
+      let peanuts = {lucy: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/lucy_gx7jfn.png",
+        marcie: "http://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/marcie_ehcbyu.png",
+        patty: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/peppermint-patty_tyubwk.png",
+        pigpen: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016809/pigpen_e2bftl.png",
+        sally: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016805/sally_jjx4w7.png",
+        schroeder: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016805/schroeder_xqvydo.png",
+        snoopy: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016805/snoopy_pxac26.png",
+        charlie: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/charlie-brown_owvwz0.png",
+        linus: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/linus_g5lfo2.png",
+        woodstock: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016798/woodstock_ukk03o.png",
+        franklin: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/franklin_kl3qke.png"
       };
       if (peanuts[username.toLowerCase()]) {
         return <img className="peanuts-user-icon" src={peanuts[username.toLowerCase()]}></img>;
