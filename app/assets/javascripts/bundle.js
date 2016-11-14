@@ -34575,17 +34575,17 @@
 	  }, {
 	    key: 'avatar',
 	    value: function avatar(username) {
-	      var peanuts = { lucy: "http://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/lucy_gx7jfn.png",
+	      var peanuts = { lucy: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/lucy_gx7jfn.png",
 	        marcie: "http://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/marcie_ehcbyu.png",
 	        patty: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/peppermint-patty_tyubwk.png",
 	        pigpen: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016809/pigpen_e2bftl.png",
-	        sally: "http://res.cloudinary.com/dn4angt2n/image/upload/v1479016805/sally_jjx4w7.png",
-	        schroeder: "http://res.cloudinary.com/dn4angt2n/image/upload/v1479016805/schroeder_xqvydo.png",
-	        snoopy: "http://res.cloudinary.com/dn4angt2n/image/upload/v1479016805/snoopy_pxac26.png",
-	        charlie: "http://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/charlie-brown_owvwz0.png",
-	        linus: "http://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/linus_g5lfo2.png",
-	        woodstock: "http://res.cloudinary.com/dn4angt2n/image/upload/v1479016798/woodstock_ukk03o.png",
-	        franklin: "http://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/franklin_kl3qke.png"
+	        sally: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016805/sally_jjx4w7.png",
+	        schroeder: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016805/schroeder_xqvydo.png",
+	        snoopy: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016805/snoopy_pxac26.png",
+	        charlie: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/charlie-brown_owvwz0.png",
+	        linus: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/linus_g5lfo2.png",
+	        woodstock: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016798/woodstock_ukk03o.png",
+	        franklin: "https://res.cloudinary.com/dn4angt2n/image/upload/v1479016807/franklin_kl3qke.png"
 	      };
 	      if (peanuts[username.toLowerCase()]) {
 	        return _react2.default.createElement('img', { className: 'peanuts-user-icon', src: peanuts[username.toLowerCase()] });
