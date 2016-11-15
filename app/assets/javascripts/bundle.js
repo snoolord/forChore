@@ -21552,6 +21552,8 @@
 	
 	var _user_actions = __webpack_require__(394);
 	
+	var _session_actions = __webpack_require__(257);
+	
 	var _theme = __webpack_require__(390);
 	
 	var _theme2 = _interopRequireDefault(_theme);
@@ -21570,9 +21572,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// actions
-	
-	// containers
 	var muiTheme = (0, _getMuiTheme2.default)({
 	  appBar: {
 	    height: 40
@@ -21596,6 +21595,10 @@
 	});
 	// themes
 	
+	// actions
+	
+	// containers
+	
 	
 	var myTheme = (0, _getMuiTheme2.default)(_theme2.default);
 	
@@ -21604,6 +21607,8 @@
 	
 	
 	  var _redirectIfLoggedIn = function _redirectIfLoggedIn(nextState, replace) {
+	    var errors = [];
+	    store.dispatch((0, _session_actions.receiveErrors)(errors));
 	    var currentUser = store.getState().session.currentUser;
 	    if (currentUser) {
 	      replace('/dashboard');
@@ -108360,7 +108365,9 @@
 	      return (0, _merge2.default)({}, _nullUser);
 	    case _session_actions.RECEIVE_ERRORS:
 	      var errors = { errors: action.errors };
-	      return (0, _merge2.default)({}, state, errors);
+	      var newState = state;
+	      newState.errors = action.errors;
+	      return (0, _merge2.default)({}, newState);
 	    default:
 	      return state;
 	  }

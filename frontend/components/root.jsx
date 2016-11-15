@@ -14,6 +14,7 @@ import MyChoreContainer from './chores/my-chore-container';
 import { fetchAGroup } from '../actions/group_actions';
 import { filterUser } from '../actions/filter_actions';
 import { fetchUsers } from '../actions/user_actions';
+import { receiveErrors } from '../actions/session_actions';
 // themes
 import theme from './theme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -53,6 +54,8 @@ const myTheme = getMuiTheme(theme);
 const Root = ({ store }) => {
 
   const _redirectIfLoggedIn = (nextState, replace) => {
+    let errors = [];
+    store.dispatch(receiveErrors(errors));
     const currentUser = store.getState().session.currentUser;
     if (currentUser) {
       replace('/dashboard');

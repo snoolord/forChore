@@ -43,6 +43,7 @@ class SessionForm extends React.Component {
 			this.props.router.push("/dashboard");
 		}
 	}
+
   update(field) {
 		return e => this.setState({
 			[field]: e.currentTarget.value
