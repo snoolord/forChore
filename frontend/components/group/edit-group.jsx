@@ -38,17 +38,20 @@ class EditGroup extends React.Component {
 
   componentWillReceiveProps() {
     this.state.title = this.props.title;
+    if (this.state.housemates.length > 0 ) {
+      
+    } else {
+      let vals = values(this.props.housemates);
+      let housematesUsernames = [];
+      vals.forEach((object) => {
+        if (object.username === this.props.currentUser.username) {
 
-    let vals = values(this.props.housemates);
-    let housematesUsernames = [];
-    vals.forEach((object) => {
-      if (object.username === this.props.currentUser.username) {
-
-      } else {
-        housematesUsernames.push(object.username);
-      }
-    });
-    this.state.housemates = housematesUsernames;
+        } else {
+          housematesUsernames.push(object.username);
+        }
+      });
+      this.state.housemates = housematesUsernames;
+    }
   }
   componentDidMount() {
     // create get all users actions\

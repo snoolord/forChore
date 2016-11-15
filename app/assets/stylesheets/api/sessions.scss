@@ -52,11 +52,12 @@ html, body, main, .main{
 .login-form-container {
   margin-top: 100px;
   border-radius: 10px !important;
- text-align: center;
- height: 280px;
- font-family: 'Ubuntu Condensed', sans-serif !important  ;
+  text-align: center;
+  height: 340px;
+  font-family: 'Ubuntu Condensed', sans-serif !important  ;
 }
 .login-form-box {
+
   padding: 25px;
 }
 .login-box {
@@ -70,7 +71,13 @@ html, body, main, .main{
  height: calc(100% - 170px);
  background-color: rgba(115,194,252, 0.2);
 }
+.session-username {
+  height: 100px;
+}
 
+.session-password {
+  height: 100px;  
+}
 .session-form-instead-button {
  font-size: 12px;
 }

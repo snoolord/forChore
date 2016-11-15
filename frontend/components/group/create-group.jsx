@@ -91,7 +91,6 @@ class CreateGroup extends React.Component {
     })){
       let group = { creator_id: this.props.currentUser.id, title: this.state.title, housemate_ids: values(filledOutUsers) };
       this.props.createAGroup(group);
-      console.log(this.props);
       this.setState({["created"]: true});
     } else {
       this.props.receiveErrors(errors);

@@ -21,11 +21,11 @@ const GroupReducer = function(state = _defaultState, action) {
       return merge({}, _defaultState, action.group);
     case RECEIVE_GROUP_ERRORS:
       newState.errors = action.errors;
-      return newState;
+      return merge({}, newState);
     case CLEAR_ERRORS:
       let errorState = state;
       errorState.errors = [];
-      return errorState;
+      return merge({}, errorState);
     default:
       return state;
   }
