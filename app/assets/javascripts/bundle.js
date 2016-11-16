@@ -73137,7 +73137,7 @@
 	      }
 	      return _react2.default.createElement(
 	        'div',
-	        { key: chore.id },
+	        { className: 'chore', key: chore.id },
 	        _react2.default.createElement(
 	          _List.ListItem,
 	          {

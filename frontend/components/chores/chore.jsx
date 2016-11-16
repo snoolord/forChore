@@ -118,7 +118,7 @@ class Chore extends React.Component {
       ago = moment(chore.updated_at).fromNow();
     }
     return (
-        <div key={chore.id}>
+        <div className="chore" key={chore.id}>
             <ListItem
               className={chore.complete ? "" :this.highlight(ago)}
               onClick={this.toggleComment}
