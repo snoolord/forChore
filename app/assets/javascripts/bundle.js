@@ -40575,7 +40575,7 @@
 	  _createClass(GroupLink, [{
 	    key: 'showGroupDust',
 	    value: function showGroupDust(groupId) {
-	      if (this.props.location.pathname.includes(groupId)) {
+	      if (parseInt(this.props.location.pathname.slice(18)) === groupId) {
 	        return _react2.default.createElement('img', { src: 'https://i.imgur.com/EhwDa8N.png', className: 'dust' });
 	      } else {
 	        return _react2.default.createElement('div', { className: 'dust' });
@@ -73086,7 +73086,7 @@
 	            _react2.default.createElement(
 	              'a',
 	              { onClick: this.handleDestroy(chore.id) },
-	              'forChore'
+	              'Complete'
 	            )
 	          );
 	        }

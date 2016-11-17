@@ -79,7 +79,7 @@ class Chore extends React.Component {
                </div>;
         } else {
           return <div className="complete-button">
-            <a onClick={this.handleDestroy(chore.id)}>forChore</a>
+            <a onClick={this.handleDestroy(chore.id)}>Complete</a>
           </div>;
           }
     } else {
