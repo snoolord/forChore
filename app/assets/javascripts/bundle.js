@@ -105979,6 +105979,9 @@
 	    fetchUsers: function fetchUsers() {
 	      return dispatch((0, _user_actions.fetchUsers)());
 	    },
+	    completeChore: function completeChore(id) {
+	      return dispatch((0, _chore_actions.completeChore)(id));
+	    },
 	    createChore: function createChore(chore) {
 	      return dispatch((0, _chore_actions.createChore)(chore));
 	    }
@@ -106253,6 +106256,7 @@
 	  var newState = state;
 	  switch (action.type) {
 	    case _group_actions.RECEIVE_GROUP:
+	      console.log("receiving group:", action.group);
 	      return (0, _merge2.default)({}, _defaultState, action.group);
 	    case _group_actions.RECEIVE_GROUP_ERRORS:
 	      newState.errors = action.errors;
@@ -108574,8 +108578,9 @@
 	          (0, _group_api_util.createGroup)(action.group, successCallback, errorCallback);
 	          return next(action);
 	        case _group_actions.FETCH_A_GROUP:
+	          console.log("fetching current group:", action.id);
 	          (0, _group_api_util.fetchGroup)(action.id, successCallback, errorCallback);
-	          return next(action);
+	          break;
 	        case _group_actions.EDIT_GROUP:
 	          // console.log("let's edit");
 	          (0, _group_api_util.patchGroup)(action.id, action.group, successCallback, errorCallback);
@@ -108687,6 +108692,7 @@
 	      };
 	      switch (action.type) {
 	        case _user_actions.FETCH_USER_GROUPS:
+	          console.log("fetching user groups");
 	          (0, _user_api_util.getGroups)(successUserGroupsCallback, errorCallback);
 	          return next(action);
 	        case _user_actions.FETCH_USERS:
@@ -108832,14 +108838,18 @@
 	      var errorCallback = function errorCallback(errors) {
 	        return console.log(errors);
 	      };
+	      console.log(action);
 	      switch (action.type) {
 	        case _comment_actions.CREATE_GROUP_COMMENT:
+	          console.log("creating group comment");
 	          (0, _comment_api_util.postComment)(action.comment, successCallback, errorCallback);
 	          return next(action);
 	        case _comment_actions.CREATE_MY_COMMENT:
 	          var success = function success() {
+	            console.log("fetching user groups");
 	            dispatch((0, _user_actions.fetchUserGroups)());
 	          };
+	          console.log("creating my comment");
 	          (0, _comment_api_util.postComment)(action.comment, success, errorCallback);
 	          return next(action);
 	        default:

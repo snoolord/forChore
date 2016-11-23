@@ -39,7 +39,7 @@ class EditGroup extends React.Component {
   componentWillReceiveProps() {
     this.state.title = this.props.title;
     if (this.state.housemates.length > 0 ) {
-      
+        
     } else {
       let vals = values(this.props.housemates);
       let housematesUsernames = [];

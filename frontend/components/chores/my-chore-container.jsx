@@ -3,6 +3,7 @@ import MyChore from './my-chore';
 import { createChore } from '../../actions/chore_actions';
 import { selectMyCurrentChores, selectMyCompletedChores } from '../../reducers/selectors/selector';
 import { fetchUsers } from '../../actions/user_actions';
+import { completeChore } from '../../actions/chore_actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -17,6 +18,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchUsers: () => dispatch(fetchUsers()),
+    completeChore: id => dispatch(completeChore(id)),
     createChore: (chore) => dispatch(createChore(chore))
   };
 };

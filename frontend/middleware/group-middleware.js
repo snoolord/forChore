@@ -37,8 +37,9 @@ export default ({ getState, dispatch }) => next => action => {
       createGroup(action.group, successCallback, errorCallback);
       return next(action);
     case FETCH_A_GROUP:
+      console.log("fetching current group:", action.id);
       fetchGroup(action.id, successCallback, errorCallback);
-      return next(action);
+      break;
     case EDIT_GROUP:
       // console.log("let's edit");
       patchGroup(action.id, action.group, successCallback, errorCallback);
