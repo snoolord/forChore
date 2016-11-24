@@ -20,7 +20,6 @@ export default ({ getState, dispatch }) => next => action => {
     dispatch(fetchAGroup(comment.group_id));
   };
   const errorCallback = errors => console.log(errors);
-  console.log(action);
   switch(action.type) {
     case CREATE_GROUP_COMMENT:
       console.log("creating group comment");

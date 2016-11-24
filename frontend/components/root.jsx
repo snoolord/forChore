@@ -55,6 +55,7 @@ const Root = ({ store }) => {
 
   const _redirectIfLoggedIn = (nextState, replace) => {
     let errors = [];
+    console.log("are we redirecting!!!");
     store.dispatch(receiveErrors(errors));
     const currentUser = store.getState().session.currentUser;
     if (currentUser) {
@@ -65,6 +66,7 @@ const Root = ({ store }) => {
   const _preventRootAccess = (nextState, replace) => {
     const currentUser = store.getState().session.currentUser;
     if (currentUser && nextState.location.pathname === '/') {
+      console.log("whats going on are we preventing root access?");
       replace('/dashboard');
     }
   };

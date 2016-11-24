@@ -19,6 +19,7 @@ const UserReducer = function( state = _defaultState, action ) {
       newState.chores = action.chores;
       return merge({}, state, action.groups);
     case RECEIVE_USERS:
+      console.log("hey i'm receiving users");
       return merge({}, state, action.users);
     default:
       return state;

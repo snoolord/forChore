@@ -21608,6 +21608,7 @@
 	
 	  var _redirectIfLoggedIn = function _redirectIfLoggedIn(nextState, replace) {
 	    var errors = [];
+	    console.log("are we redirecting!!!");
 	    store.dispatch((0, _session_actions.receiveErrors)(errors));
 	    var currentUser = store.getState().session.currentUser;
 	    if (currentUser) {
@@ -21618,6 +21619,7 @@
 	  var _preventRootAccess = function _preventRootAccess(nextState, replace) {
 	    var currentUser = store.getState().session.currentUser;
 	    if (currentUser && nextState.location.pathname === '/') {
+	      console.log("whats going on are we preventing root access?");
 	      replace('/dashboard');
 	    }
 	  };
@@ -108414,6 +108416,7 @@
 	      newState.chores = action.chores;
 	      return (0, _merge2.default)({}, state, action.groups);
 	    case _user_actions.RECEIVE_USERS:
+	      console.log("hey i'm receiving users");
 	      return (0, _merge2.default)({}, state, action.users);
 	    default:
 	      return state;
@@ -108838,7 +108841,6 @@
 	      var errorCallback = function errorCallback(errors) {
 	        return console.log(errors);
 	      };
-	      console.log(action);
 	      switch (action.type) {
 	        case _comment_actions.CREATE_GROUP_COMMENT:
 	          console.log("creating group comment");
