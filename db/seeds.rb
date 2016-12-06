@@ -46,25 +46,112 @@ Grouping.create!([
   {user_id: 9, group_id: 4},
   {user_id: 10, group_id: 4}
 ]);
+#
+# current_date[2] = current_day.to_s
+# date1 = current_date.join('-')
+#
+# current_day = current_date[2].to_i + 3
+# current_date[2] = current_day.to_s
+# date2 = current_date.join('-')
+
+dates = []
+
+current_date = Time.now.to_s.split(' ')[0].split('-')
+i = 1
+while i < 10
+  current_day = current_date[2].to_i + 1
+  current_day = 0 unless current_day < 29
+  current_date[2] = current_day.to_s
+  dates << current_date.join('-')
+  i += 1
+end
+
 Chore.create!([
-  {user_id: 3, group_id: 1, task: "buy bird bath cleaner", complete_by: "2016-11-13", complete: false, dismissed: false, reminders: 0},
-  {user_id: 2, group_id: 1, task: "feed Snoopy", complete_by: "2016-11-14", complete: false, dismissed: false, reminders: 0},
-  {user_id: 1, group_id: 1, task: "buy typewriter ink", complete_by: "2016-11-15", complete: false, dismissed: false, reminders: 0},
-  {user_id: 1, group_id: 1, task: "tidy up his room", complete_by: "2016-11-18", complete: false, dismissed: false, reminders: 0},
-  {user_id: 2, group_id: 1, task: "take Snoopy on a walk", complete_by: "2016-11-15", complete: false, dismissed: false, reminders: 0},
-  {user_id: 1, group_id: 1, task: "clean his dog bowl", complete_by: "2016-11-17", complete: true, dismissed: false, reminders: 0},
-  {user_id: 3, group_id: 2, task: "clean his mess on the roof", complete_by: "2016-11-17", complete: false, dismissed: false, reminders: 0},
-  {user_id: 3, group_id: 2, task: "clean his tracks inside the house", complete_by: "2016-11-20", complete: false, dismissed: false, reminders: 0},
-  {user_id: 2, group_id: 2, task: "take out the trash", complete_by: "2016-11-13", complete: false, dismissed: false, reminders: 0},
-  {user_id: 4, group_id: 2, task: "wash the dishes", complete_by: "2016-11-19", complete: false, dismissed: false, reminders: 0},
-  {user_id: 2, group_id: 2, task: "take out the trash", complete_by: "2016-11-13", complete: false, dismissed: false, reminders: 0},
-  {user_id: 4, group_id: 2, task: "wash the windows", complete_by: "2016-11-15", complete: true, dismissed: false, reminders: 0},
-  {user_id: 2, group_id: 2, task: "wash the dishes", complete_by: "2016-11-13", complete: true, dismissed: false, reminders: 0},
-  {user_id: 2, group_id: 2, task: "tidy up his room", complete_by: "2016-11-14", complete: true, dismissed: false, reminders: 0},
-  {user_id: 2, group_id: 2, task: "get the mailman to drop off the packages inside", complete_by: "2016-11-15", complete: false, dismissed: false, reminders: 0},
-  {user_id: 2, group_id: 2, task: "take his laundry out of the washer", complete_by: "2016-11-14", complete: false, dismissed: false, reminders: 0},
-  {user_id: 1, group_id: 2, task: "clean the pitcher's mound", complete_by: "2016-11-19", complete: false, dismissed: false, reminders: 0},
-  {user_id: 7, group_id: 3, task: "give Joe Cool a tour around school", complete_by: "2016-11-17", complete: false, dismissed: false, reminders: 0},
-  {user_id: 5, group_id: 3, task: "clean up the auditorium", complete_by: "2016-11-19", complete: false, dismissed: false, reminders: 0},
-  {user_id: 4, group_id: 3, task: "regrade papers", complete_by: "2016-11-13", complete: false, dismissed: false, reminders: 0},
+  {user_id: 2, group_id: 1, task: "buy bird bath cleaner", complete_by: dates[8], complete: false, dismissed: false, reminders: 0},
+  {user_id: 2, group_id: 1, task: "feed Snoopy", complete_by: dates[0], complete: false, dismissed: false, reminders: 0},
+  {user_id: 1, group_id: 1, task: "buy typewriter ink", complete_by: dates[3], complete: false, dismissed: false, reminders: 0},
+  {user_id: 1, group_id: 1, task: "tidy up his room", complete_by: dates[1], complete: false, dismissed: false, reminders: 0},
+  {user_id: 2, group_id: 1, task: "take Snoopy on a walk", complete_by: dates[3], complete: false, dismissed: false, reminders: 0},
+  {user_id: 1, group_id: 1, task: "clean his dog bowl", complete_by: dates[8], complete: true, dismissed: false, reminders: 0},
+  {user_id: 3, group_id: 2, task: "clean his mess on the roof", complete_by: dates[0], complete: false, dismissed: false, reminders: 0},
+  {user_id: 3, group_id: 2, task: "clean his tracks inside the house", complete_by: dates[3], complete: false, dismissed: false, reminders: 0},
+  {user_id: 2, group_id: 2, task: "take out the trash", complete_by: dates[7], complete: false, dismissed: false, reminders: 0},
+  {user_id: 4, group_id: 2, task: "wash the dishes", complete_by: dates[8], complete: false, dismissed: false, reminders: 0},
+  {user_id: 4, group_id: 2, task: "wash the windows", complete_by: dates[5], complete: true, dismissed: false, reminders: 0},
+  {user_id: 2, group_id: 2, task: "tidy up his room", complete_by: dates[2], complete: true, dismissed: false, reminders: 0},
+  {user_id: 2, group_id: 2, task: "get the mailman to drop off the packages inside", complete_by: dates[5], complete: false, dismissed: false, reminders: 0},
+  {user_id: 2, group_id: 2, task: "take his laundry out of the washer", complete_by: dates[3], complete: false, dismissed: false, reminders: 0},
+  {user_id: 1, group_id: 2, task: "clean the pitcher's mound", complete_by: dates[6], complete: false, dismissed: false, reminders: 0},
+  {user_id: 7, group_id: 3, task: "give Joe Cool a tour around school", complete_by: dates[4], complete: false, dismissed: false, reminders: 0},
+  {user_id: 5, group_id: 3, task: "clean up the auditorium", complete_by: dates[2], complete: false, dismissed: false, reminders: 0},
+  {user_id: 4, group_id: 4, task: "bring baseball bats", complete_by: dates[2], complete: false, dismissed: false, reminders: 0},
+  {user_id: 8, group_id: 4, task: "clean bleachers", complete_by: dates[2], complete: false, dismissed: false, reminders: 0},
+  {user_id: 3, group_id: 4, task: "bring balls", complete_by: dates[2], complete: false, dismissed: false, reminders: 0},
+  {user_id: 2, group_id: 4, task: "set up popcorn machine", complete_by: dates[2], complete: false, dismissed: false, reminders: 0},
+  {user_id: 1, group_id: 4, task: "bring camera", complete_by: dates[2], complete: false, dismissed: false, reminders: 0},
+  {user_id: 2, group_id: 4, task: "call ref", complete_by: dates[2], complete: false, dismissed: false, reminders: 0},
+  {user_id: 4, group_id: 4, task: "bring baseball bats", complete_by: dates[8], complete: false, dismissed: false, reminders: 0},
+  {user_id: 8, group_id: 4, task: "clean bleachers", complete_by: dates[8], complete: false, dismissed: false, reminders: 0},
+  {user_id: 3, group_id: 4, task: "bring balls", complete_by: dates[8], complete: false, dismissed: false, reminders: 0},
+  {user_id: 2, group_id: 4, task: "set up popcorn machine", complete_by: dates[8], complete: false, dismissed: false, reminders: 0},
+  {user_id: 1, group_id: 4, task: "bring camera", complete_by: dates[8], complete: false, dismissed: false, reminders: 0},
+  {user_id: 2, group_id: 4, task: "call ref", complete_by: dates[8], complete: false, dismissed: false, reminders: 0}
+])
+Comment.create!([
+  {user_id: 1, chore_id: 2, body: "I'm so hungry!!"},
+  {user_id: 2, chore_id: 2, body: "I'll feed you after school, Snoopy!"},
+
+  {user_id: 3, chore_id: 1, body: "My bath is so dirty!"},
+  {user_id: 2, chore_id: 1, body: "I'll go to the hardware store soon!"},
+
+  {user_id: 1, chore_id: 3, body: "What brand do you guys think is best?"},
+  {user_id: 2, chore_id: 3, body: "I think Epson has the nicest ink"},
+  {user_id: 3, chore_id: 3, body: "I agree!"},
+
+  {user_id: 2, chore_id: 4, body: "Snoopy! Your doghouse is too messy"},
+  {user_id: 1, chore_id: 4, body: "I'll clean it after I take down the Red Baron!"},
+
+  {user_id: 1, chore_id: 5, body: "I'm getting restless, Charlie Brown!!"},
+  {user_id: 2, chore_id: 5, body: "Ok, Ok, Snoopy. Let's go for a walk."},
+
+  {user_id: 2, chore_id: 6, body: "Thanks, Snoopy!"},
+  {user_id: 3, chore_id: 6, body: "Thanks, Snoopy!"},
+
+  {user_id: 2, chore_id: 7, body: "Woodstock! Your friends made a huge mess"},
+  {user_id: 3, chore_id: 7, body: "I'm on it!"},
+
+  {user_id: 4, chore_id: 8, body: "Woodstock, your footprints are all over the rug"},
+  {user_id: 3, chore_id: 8, body: "I'll call the rug cleaners"},
+
+  {user_id: 4, chore_id: 9, body: "Big Brother, please take out the trash"},
+  {user_id: 2, chore_id: 9, body: "On it, Sally!"},
+
+  {user_id: 2, chore_id: 10, body: "Sally, the dishes are dirty!"},
+  {user_id: 4, chore_id: 10, body: "I'm on it, Big Brother"},
+
+  {user_id: 2, chore_id: 11, body: "The windows have mud on them"},
+  {user_id: 4, chore_id: 11, body: "I'm on it, Big Brother"},
+
+  {user_id: 1, chore_id: 12, body: "I can't sleep here. Your room is too messy, Charlie Brown!!"},
+  {user_id: 2, chore_id: 12, body: "Oh, sorry, Snoopy!"},
+
+  {user_id: 3, chore_id: 13, body: "My package is coming today, watch out for it!"},
+  {user_id: 2, chore_id: 13, body: "I got it, Woodstock!"},
+
+  {user_id: 3, chore_id: 14, body: "I need to do laundry!"},
+  {user_id: 2, chore_id: 14, body: "I'll take it out after school"},
+
+  {user_id: 2, chore_id: 15, body: "It needs to be ready by game day"},
+  {user_id: 1, chore_id: 15, body: "I'm on it"},
+
+  {user_id: 1, chore_id: 16, body: "Looking forward to the tour"},
+  {user_id: 7, chore_id: 16, body: "Me too!"},
+
+  {user_id: 2, chore_id: 17, body: "Thanks, Sally!"},
+  {user_id: 4, chore_id: 18, body: "Thanks, Linus!"},
+  {user_id: 1, chore_id: 19, body: "Thanks, Woodstock!"},
+  {user_id: 4, chore_id: 20, body: "Thanks, Big Brother!"},
+  {user_id: 3, chore_id: 21, body: "Thanks, Snoopy!"},
+  {user_id: 8, chore_id: 22, body: "Thanks, Good Ol' Charlie Brown!"},
+
 ])
