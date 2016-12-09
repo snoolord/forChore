@@ -114,13 +114,6 @@ class CreateChore extends React.Component {
         <div className="add-chore">
           <RaisedButton onTouchTap={this.handleOpen}>Add Chore</RaisedButton>
         </div>
-        <div>
-          {filter !== 0 ? <RaisedButton className="remove-filter"
-            onTouchTap={this.removeFilter}>
-            Remove Filter
-          </RaisedButton>
-          : <div></div>}
-        </div>
         <div className="create-chore" onSubmit={this.handleSubmit}>
           <Dialog
             actions={actions}

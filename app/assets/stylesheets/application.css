@@ -18,4 +18,5 @@ body {
   overflow-x: hidden;
   margin: 0;
   background-color: rgba(51,51,51, 0.04)!important;
+  -webkit-font-smoothing: antialiased;
 }

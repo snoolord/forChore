@@ -147,11 +147,11 @@ Comment.create!([
   {user_id: 1, chore_id: 16, body: "Looking forward to the tour"},
   {user_id: 7, chore_id: 16, body: "Me too!"},
 
-  {user_id: 2, chore_id: 17, body: "Thanks, Sally!"},
-  {user_id: 4, chore_id: 18, body: "Thanks, Linus!"},
-  {user_id: 1, chore_id: 19, body: "Thanks, Woodstock!"},
-  {user_id: 4, chore_id: 20, body: "Thanks, Big Brother!"},
-  {user_id: 3, chore_id: 21, body: "Thanks, Snoopy!"},
-  {user_id: 8, chore_id: 22, body: "Thanks, Good Ol' Charlie Brown!"},
+  {user_id: 2, chore_id: 17, body: "Thanks!"},
+  {user_id: 4, chore_id: 18, body: "Thanks!"},
+  {user_id: 1, chore_id: 19, body: "Thanks!"},
+  {user_id: 4, chore_id: 20, body: "Thanks!"},
+  {user_id: 3, chore_id: 21, body: "Thanks!"},
+  {user_id: 8, chore_id: 22, body: "Thanks!"},
 
 ])

@@ -72779,16 +72779,6 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          null,
-	          filter !== 0 ? _react2.default.createElement(
-	            _RaisedButton2.default,
-	            { className: 'remove-filter',
-	              onTouchTap: this.removeFilter },
-	            'Remove Filter'
-	          ) : _react2.default.createElement('div', null)
-	        ),
-	        _react2.default.createElement(
-	          'div',
 	          { className: 'create-chore', onSubmit: this.handleSubmit },
 	          _react2.default.createElement(
 	            _Dialog2.default,
@@ -106061,7 +106051,7 @@
 	            'h2',
 	            { className: 'my-chore-header' },
 	            this.props.currentUser + "'s ",
-	            'chores'
+	            'Chores'
 	          ),
 	          _react2.default.createElement(
 	            _List.List,

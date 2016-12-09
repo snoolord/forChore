@@ -23,7 +23,7 @@ class MyChore extends React.Component {
       <div className="group-show">
         <div className="group-show-center">
           <h2 className="my-chore-header">
-            {this.props.currentUser + "'s "}chores
+            {this.props.currentUser + "'s "}Chores
           </h2>
           <List>
             <div className="group-columns group-header-salmon">
