@@ -30,4 +30,4 @@ const ChoreReducer = function(state = _defaultState, action) {
   }
 };
 
-export default GroupReducer;
+export default ChoreReducer;
