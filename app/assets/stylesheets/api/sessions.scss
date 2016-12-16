@@ -1,7 +1,7 @@
 // Place all the styles related to the api/sessions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-html, body, main, .main{
+html, body, main, .main, #root{
    height: 100%;
    width: 100%;
 }
@@ -9,6 +9,7 @@ html, body, main, .main{
 #root, .center-container  {
    height: 100%;
 }
+
 .logo-button {
    margin-top: 5px !important;
    color: white !important;
@@ -53,17 +54,17 @@ html, body, main, .main{
    margin-top: 100px;
    border-radius: 10px !important;
    text-align: center;
-   height: 340px;
+   height: 300px;
    font-family: 'Ubuntu Condensed', sans-serif !important  ;
 }
 .login-form-box {
-
    padding: 25px;
+   box-shadow: 0 0 12px rgba(0,0,0,0.2);
+
 }
 .login-box {
    display: flex;
    justify-content: center;
-   padding: 25px;
    box-shadow: 0 0 12px rgba(0,0,0,0.2);
    height: 400px;
    margin-top: 15px;
@@ -72,19 +73,21 @@ html, body, main, .main{
    background-color: rgba(115,194,252, 0.2);
 }
 .session-username {
-   margin: 0;
-   height: 100px;
+   height: 61px;
 }
 
 .session-password {
-   height: 100px;
+   height: 61px;
 }
 .session-form-instead-button {
    font-size: 12px;
 }
 
 .main-header {
-   align-content: center;
+   width: 100%;
+   background-color: rgba(255, 200, 78, 0.40);
+   display: flex;
+   justify-content: center;
 }
 
 .clearfix:after {
@@ -95,18 +98,14 @@ html, body, main, .main{
    clear: both;
 }
 
-.main-full-header {
-   width: 100%;
-   background-color: rgba(255, 200, 78, 0.40);
-}
-
 .icon-spacing {
-   margin: auto;
    display: flex;
    width: 960px;
    justify-content: space-between;
 }
+
 .login-buttons {
+   margin-top: 10px;
    display: flex;
    justify-content: space-around;
 }

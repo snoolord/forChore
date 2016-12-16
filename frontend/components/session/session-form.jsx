@@ -83,15 +83,12 @@ class SessionForm extends React.Component {
 	render() {
 		return (
       <div className="login-box">
-        <Card className="login-form-container">
+        <div className="login-form-container">
           <form onSubmit={this.handleSubmit.bind(this)} className="login-form-box">
-            Welcome to forChore!
-
+            <img src="https://i.imgur.com/u9xEJsy.png" className="logo"></img>
             <div className="session-username">
               <TextField
-                floatingLabelText="Username"
-                floatingLabelStyle={styles.floatingLabelStyle}
-                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                hintText="Username"
                 errorText={this.renderErrors('username')}
                 onChange={this.update("username")}
                 >
@@ -101,9 +98,7 @@ class SessionForm extends React.Component {
             <div className="session-password">
               <TextField
                 type="password"
-                floatingLabelText="Password"
-                floatingLabelStyle={styles.floatingLabelStyle}
-                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                hintText="Password"
                 onChange={this.update("password")}
                 errorText={this.renderErrors('password')}
                 >
@@ -121,7 +116,7 @@ class SessionForm extends React.Component {
                 >{this.props.path === 'login' ? 'Login' : 'Sign Up'}</RaisedButton>
             </div>
           </form>
-        </Card>
+       </div>
       </div>
 		);
 	}

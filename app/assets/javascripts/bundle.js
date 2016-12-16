@@ -21572,35 +21572,13 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var muiTheme = (0, _getMuiTheme2.default)({
-	  appBar: {
-	    height: 40
-	  },
-	  palette: {
-	    primary1Color: _colors.pink500,
-	    primary2Color: _colors.blue700,
-	    primary3Color: _colors.grey400,
-	    accent1Color: _colors.pinkA200,
-	    accent2Color: _colors.grey100,
-	    accent3Color: _colors.grey500,
-	    textColor: _colors.darkBlack,
-	    alternateTextColor: _colors.white,
-	    canvasColor: _colors.white,
-	    borderColor: _colors.grey300,
-	    disabledColor: (0, _colorManipulator.fade)(_colors.darkBlack, 0.3),
-	    pickerHeaderColor: _colors.pink500,
-	    clockCircleColor: (0, _colorManipulator.fade)(_colors.darkBlack, 0.07),
-	    shadowColor: _colors.fullBlack
-	  }
-	});
+	var myTheme = (0, _getMuiTheme2.default)(_theme2.default);
 	// themes
 	
 	// actions
 	
 	// containers
 	
-	
-	var myTheme = (0, _getMuiTheme2.default)(_theme2.default);
 	
 	var Root = function Root(_ref) {
 	  var store = _ref.store;
@@ -28302,7 +28280,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	   value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -28346,182 +28324,176 @@
 	var style = {};
 	
 	var App = function (_React$Component) {
-	  _inherits(App, _React$Component);
+	   _inherits(App, _React$Component);
 	
-	  function App(props) {
-	    _classCallCheck(this, App);
+	   function App(props) {
+	      _classCallCheck(this, App);
 	
-	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-	  }
+	      return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	   }
 	
-	  _createClass(App, [{
-	    key: 'logo',
-	    value: function logo() {
-	      if (this.props.loggedIn) {
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/dashboard/' },
-	            _react2.default.createElement('img', { src: 'https://i.imgur.com/u9xEJsy.png', className: 'logo' })
-	          )
-	        );
-	      } else {
-	        return _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/' },
-	          _react2.default.createElement('img', { src: 'https://i.imgur.com/u9xEJsy.png', className: 'logo' })
-	        );
+	   _createClass(App, [{
+	      key: 'logo',
+	      value: function logo() {
+	         if (this.props.loggedIn) {
+	            return _react2.default.createElement(
+	               'div',
+	               null,
+	               _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: '/dashboard/' },
+	                  _react2.default.createElement('img', { src: 'https://i.imgur.com/u9xEJsy.png', className: 'logo' })
+	               )
+	            );
+	         } else {
+	            return _react2.default.createElement(
+	               _reactRouter.Link,
+	               { to: '/' },
+	               _react2.default.createElement('img', { src: 'https://i.imgur.com/u9xEJsy.png', className: 'logo' })
+	            );
+	         }
 	      }
-	    }
-	  }, {
-	    key: 'handleLogout',
-	    value: function handleLogout() {
-	      this.props.logout();
-	      this.props.router.push("/");
-	    }
-	  }, {
-	    key: 'headerLinks',
-	    value: function headerLinks() {
-	      var path = this.props.location.pathname.slice(1);
-	      if (path === "" && !this.props.loggedIn) {
-	        return _react2.default.createElement(
-	          'nav',
-	          null,
-	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/login', className: 'current' },
-	            _react2.default.createElement(
-	              _FlatButton2.default,
-	              { className: 'login-signup' },
-	              'Login'
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/signup', className: 'current' },
-	            _react2.default.createElement(
-	              _FlatButton2.default,
-	              { className: 'login-signup' },
-	              'Sign Up'
-	            )
-	          )
-	        );
-	      } else if (path === "login" && !this.props.loggedIn) {
-	        return _react2.default.createElement(
-	          'nav',
-	          null,
-	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/signup', className: 'current' },
-	            _react2.default.createElement(
-	              _FlatButton2.default,
-	              { className: 'login-signup' },
-	              'Sign Up'
-	            )
-	          )
-	        );
-	      } else if (path === "signup" && !this.props.loggedIn) {
-	        return _react2.default.createElement(
-	          'nav',
-	          null,
-	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/login', className: 'current' },
-	            _react2.default.createElement(
-	              _FlatButton2.default,
-	              { className: 'login-signup' },
-	              'Login'
-	            )
-	          )
-	        );
-	      } else if (this.props.loggedIn) {
-	        return _react2.default.createElement(
-	          'nav',
-	          null,
-	          _react2.default.createElement(
-	            _FlatButton2.default,
-	            {
-	              className: 'logout-signup',
-	              id: 'logout-button',
-	              onClick: this.handleLogout.bind(this),
-	              style: { verticalAlign: 'middle' }
-	            },
-	            'Logout'
-	          )
-	        );
+	   }, {
+	      key: 'handleLogout',
+	      value: function handleLogout() {
+	         this.props.logout();
+	         this.props.router.push("/");
 	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'main' },
-	        _react2.default.createElement(
-	          'header',
-	          null,
-	          _react2.default.createElement(
-	            'nav',
-	            {
-	              className: 'main-full-header'
-	            },
-	            _react2.default.createElement(
-	              'nav',
-	              {
-	                className: 'main-header'
-	              },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'icon-spacing' },
-	                this.logo(),
-	                this.headerLinks()
-	              )
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(_splashContainer2.default, { location: this.props.location }),
-	        this.props.children,
-	        _react2.default.createElement(
-	          'footer',
-	          null,
-	          _react2.default.createElement(
+	   }, {
+	      key: 'headerLinks',
+	      value: function headerLinks() {
+	         var path = this.props.location.pathname.slice(1);
+	         if (path === "" && !this.props.loggedIn) {
+	            return _react2.default.createElement(
+	               'nav',
+	               { className: 'nav-links' },
+	               _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: '/login', className: 'current' },
+	                  _react2.default.createElement(
+	                     _FlatButton2.default,
+	                     { className: 'login-signup' },
+	                     'Login'
+	                  )
+	               ),
+	               _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: '/signup', className: 'current' },
+	                  _react2.default.createElement(
+	                     _FlatButton2.default,
+	                     { className: 'login-signup' },
+	                     'Sign Up'
+	                  )
+	               )
+	            );
+	         } else if (path === "login" && !this.props.loggedIn) {
+	            return _react2.default.createElement(
+	               'nav',
+	               { className: 'nav-links' },
+	               _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: '/signup', className: 'current' },
+	                  _react2.default.createElement(
+	                     _FlatButton2.default,
+	                     { className: 'login-signup' },
+	                     'Sign Up'
+	                  )
+	               )
+	            );
+	         } else if (path === "signup" && !this.props.loggedIn) {
+	            return _react2.default.createElement(
+	               'nav',
+	               { className: 'nav-links' },
+	               _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: '/login', className: 'current' },
+	                  _react2.default.createElement(
+	                     _FlatButton2.default,
+	                     { className: 'login-signup' },
+	                     'Login'
+	                  )
+	               )
+	            );
+	         } else if (this.props.loggedIn) {
+	            return _react2.default.createElement(
+	               'nav',
+	               null,
+	               _react2.default.createElement(
+	                  _FlatButton2.default,
+	                  {
+	                     className: 'logout-signup',
+	                     id: 'logout-button',
+	                     onClick: this.handleLogout.bind(this),
+	                     style: { verticalAlign: 'middle' }
+	                  },
+	                  'Logout'
+	               )
+	            );
+	         }
+	      }
+	   }, {
+	      key: 'render',
+	      value: function render() {
+	         return _react2.default.createElement(
 	            'div',
-	            { className: 'footer' },
+	            { className: 'main' },
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'footer-right' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'created-by' },
-	                'a solution forChores by ',
-	                _react2.default.createElement(
+	               'header',
+	               null,
+	               _react2.default.createElement(
+	                  'nav',
+	                  {
+	                     className: 'main-header'
+	                  },
+	                  _react2.default.createElement(
+	                     'div',
+	                     { className: 'icon-spacing' },
+	                     this.logo(),
+	                     this.headerLinks()
+	                  )
+	               )
+	            ),
+	            _react2.default.createElement(_splashContainer2.default, { location: this.props.location }),
+	            this.props.children,
+	            _react2.default.createElement(
+	               'footer',
+	               null,
+	               _react2.default.createElement(
 	                  'div',
-	                  { className: 'my-name' },
-	                  'Winston Zhao'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'a',
-	                { href: 'https://github.com/winstonjz'
-	                },
-	                _react2.default.createElement('i', { className: 'fa fa-github social-icon', 'aria-hidden': 'true' })
-	              ),
-	              _react2.default.createElement(
-	                'a',
-	                { href: 'https://www.linkedin.com/in/winstonjzhao'
-	                },
-	                _react2.default.createElement('i', { className: 'fa fa-linkedin-square social-icon', 'aria-hidden': 'true' })
-	              )
+	                  { className: 'footer' },
+	                  _react2.default.createElement(
+	                     'div',
+	                     { className: 'footer-right' },
+	                     _react2.default.createElement(
+	                        'div',
+	                        { className: 'created-by' },
+	                        'a solution forChores by ',
+	                        _react2.default.createElement(
+	                           'div',
+	                           { className: 'my-name' },
+	                           'Winston Zhao'
+	                        )
+	                     ),
+	                     _react2.default.createElement(
+	                        'a',
+	                        { href: 'https://github.com/winstonjz'
+	                        },
+	                        _react2.default.createElement('i', { className: 'fa fa-github social-icon', 'aria-hidden': 'true' })
+	                     ),
+	                     _react2.default.createElement(
+	                        'a',
+	                        { href: 'https://www.linkedin.com/in/winstonjzhao'
+	                        },
+	                        _react2.default.createElement('i', { className: 'fa fa-linkedin-square social-icon', 'aria-hidden': 'true' })
+	                     )
+	                  )
+	               )
 	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
+	         );
+	      }
+	   }]);
 	
-	  return App;
+	   return App;
 	}(_react2.default.Component);
 	
 	exports.default = App;
@@ -34001,9 +33973,9 @@
 	  spacing: _spacing2.default,
 	  fontFamily: 'Roboto, sans-serif',
 	  palette: {
-	    primary1Color: _colors.grey500,
+	    primary1Color: _colors.cyan500,
 	    primary2Color: _colors.cyan700,
-	    primary3Color: _colors.grey400,
+	    primary3Color: _colors.cyan500,
 	    accent1Color: _colors.cyan500,
 	    accent2Color: _colors.grey100,
 	    accent3Color: _colors.grey500,
@@ -43627,19 +43599,17 @@
 	        'div',
 	        { className: 'login-box' },
 	        _react2.default.createElement(
-	          _Card2.default,
+	          'div',
 	          { className: 'login-form-container' },
 	          _react2.default.createElement(
 	            'form',
 	            { onSubmit: this.handleSubmit.bind(this), className: 'login-form-box' },
-	            'Welcome to forChore!',
+	            _react2.default.createElement('img', { src: 'https://i.imgur.com/u9xEJsy.png', className: 'logo' }),
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'session-username' },
 	              _react2.default.createElement(_TextField2.default, {
-	                floatingLabelText: 'Username',
-	                floatingLabelStyle: styles.floatingLabelStyle,
-	                floatingLabelFocusStyle: styles.floatingLabelFocusStyle,
+	                hintText: 'Username',
 	                errorText: this.renderErrors('username'),
 	                onChange: this.update("username")
 	              })
@@ -43650,9 +43620,7 @@
 	              { className: 'session-password' },
 	              _react2.default.createElement(_TextField2.default, {
 	                type: 'password',
-	                floatingLabelText: 'Password',
-	                floatingLabelStyle: styles.floatingLabelStyle,
-	                floatingLabelFocusStyle: styles.floatingLabelFocusStyle,
+	                hintText: 'Password',
 	                onChange: this.update("password"),
 	                errorText: this.renderErrors('password')
 	              })
